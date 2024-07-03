@@ -189,19 +189,13 @@ The preHandle() Method − preHandle() is used for intercepting the request prio
 preHandle() implementation looks like:
 ```java
  @Override
-
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-
+    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o)
+            throws Exception {
         logger.info(" Pre handle ");
-
         if(httpServletRequest.getMethod().equals("GET"))
-
             return true;
-
         else
-
             return false;
-
     }
 ```
 The postHandle() Method − postHandle() is used for intercepting a request following the implementation of the handler. It allows the manipulation of the ModelAndView Object before users render it.
@@ -209,25 +203,16 @@ The postHandle() Method − postHandle() is used for intercepting a request foll
 postHandle() implementation looks like:
 ```java
 @Override
-
-    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-
+    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+                           Object o, ModelAndView modelAndView) throws Exception {
         logger.info(" Post handle ");
-
         if(modelAndView.getModelMap().containsKey("status")){
-
             String status = (String) modelAndView.getModelMap().get("status");
-
             if(status.equals("SUCCESS!")){
-
                 status = "Authentication " + status;
-
                 modelAndView.getModelMap().put("status",status);
-
             }
-
         }
-
     }
 ```
 The afterCompletion() Method − A HandlerInterceptor callback approach, the afterCompletion() method is used when the entire request gets completed.
@@ -235,13 +220,10 @@ The afterCompletion() Method − A HandlerInterceptor callback approach, the aft
 afterCompletion() looks like:
 ```java
 @Override
-
-    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
-
+    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+                                Object o, Exception e) throws Exception {
         logger.info(" After Completion ");
-
     }
-
 }
 ```
 ### 25. What is a Swagger in Spring Boot?
