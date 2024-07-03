@@ -142,6 +142,8 @@ WebSocket scope is associated with the lifecycle of a WebSocket session and appl
 #### Scoped Beans as Dependencies
 The Spring IoC container manages not only the instantiation of your objects (beans), but also the wiring up of collaborators (or dependencies). If you want to inject (for example) an HTTP request-scoped bean into another bean of a longer-lived scope, you may choose to inject an AOP proxy in place of the scoped bean. That is, you need to inject a proxy object that exposes the same public interface as the scoped object but that can also retrieve the real target object from the relevant scope (such as an HTTP request) and delegate method calls onto the real object.
 
+**Note**:
+```
 You may also use <aop:scoped-proxy/> between beans that are scoped as singleton, with the reference then going through an intermediate proxy that is serializable and therefore able to re-obtain the target singleton bean on deserialization.
 
 When declaring <aop:scoped-proxy/> against a bean of scope prototype, every method call on the shared proxy leads to the creation of a new target instance to which the call is then being forwarded.
@@ -151,7 +153,7 @@ Also, scoped proxies are not the only way to access beans from shorter scopes in
 As an extended variant, you may declare ObjectProvider<MyTargetBean> which delivers several additional access variants, including getIfAvailable and getIfUnique.
 
 The JSR-330 variant of this is called Provider and is used with a Provider<MyTargetBean> declaration and a corresponding get() call for every retrieval attempt. See here for more details on JSR-330 overall.
-
+```
 The configuration in the following example is only one line, but it is important to understand the “why” as well as the “how” behind it:
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -259,8 +261,9 @@ This method is declared on the ConfigurableBeanFactory interface, which is avail
 The first argument to the registerScope(..) method is the unique name associated with a scope. Examples of such names in the Spring container itself are singleton and prototype. The second argument to the registerScope(..) method is an actual instance of the custom Scope implementation that you wish to register and use.
 
 Suppose that you write your custom Scope implementation, and then register it as shown in the next example.
-
+```
 The next example uses SimpleThreadScope, which is included with Spring but is not registered by default. The instructions would be the same for your own custom Scope implementations.
+```
 ```java
 Scope threadScope = new SimpleThreadScope();
 beanFactory.registerScope("thread", threadScope);
@@ -301,4 +304,7 @@ With a custom Scope implementation, you are not limited to programmatic registra
 
 </beans>
 ```
+**Note**:
+```
 When you place <aop:scoped-proxy/> within a <bean> declaration for a FactoryBean implementation, it is the factory bean itself that is scoped, not the object returned from getObject().
+```
