@@ -1,15 +1,19 @@
 # SPRING 
 
 ## 4.  What is Spring?
+
 Spring is an open source framework created to address the complexity of enterprise application development. One of the chief advantages of the Spring framework is its layered architecture, which allows you to be selective about which of its components you use while also providing a cohesive framework for J2EE application development. 
 
 ## 5. What are the advantages of Spring framework?
+
 The advantages of Spring are as follows: 
  	Spring has layered architecture. Use what you need and leave you don't need now. 
  	Spring Enables POJO Programming. There is no behind the scene magic here. POJO programming enables continuous integration and testability. 
  	Dependency Injection and Inversion of Control Simplifies JDBC 
  	Open source and no vendor lock-in. 
+  
 ## 6. What are features of Spring?
+
  	Lightweight:
 Spring is lightweight when it comes to size and transparency. The basic version of spring framework is around 1MB. And the processing overhead is also very negligible.
  	Inversion of control (IOC):
@@ -26,22 +30,23 @@ Spring framework provides a generic abstraction layer for transaction management
 The JDBC abstraction layer of the Spring offers a meaningful exception hierarchy, which simplifies the error handling strategy. Integration with Hibernate, JDO, and iBATIS: Spring provides best Integration services with Hibernate, JDO and iBATIS
 
 ## 7. How many modules are there in Spring? What are they?
+
 (Roll over to view the Image )
  
        Spring comprises of seven modules. They are.. 
- 	The core container:
+-	The core container:
 The core container provides the essential functionality of the Spring framework. A primary component of the core container is the BeanFactory, an implementation of the Factory pattern. The BeanFactory applies the Inversion of Control (IOC) pattern to separate an application's configuration and dependency specification from the actual application code. 
- 	Spring context:
+- 	Spring context:
 The Spring context is a configuration file that provides context information to the Spring framework. The Spring context includes enterprise services such as JNDI, EJB, e-mail, internalization, validation, and scheduling functionality. 
- 	Spring AOP:
+- 	Spring AOP:
 The Spring AOP module integrates aspect-oriented programming functionality directly into the Spring framework, through its configuration management feature. As a result you can easily AOP-enable any object managed by the Spring framework. The Spring AOP module provides transaction management services for objects in any Spring-based application. With Spring AOP you can incorporate declarative transaction management into your applications without relying on EJB components. 
- 	Spring DAO:
+- 	Spring DAO:
 The Spring JDBC DAO abstraction layer offers a meaningful exception hierarchy for managing the exception handling and error messages thrown by different database vendors. The exception hierarchy simplifies error handling and greatly reduces the amount of exception code you need to write, such as opening and closing connections. Spring DAO's JDBC-oriented exceptions comply to its generic DAO exception hierarchy. 
- 	Spring ORM:
+- 	Spring ORM:
 The Spring framework plugs into several ORM frameworks to provide its Object Relational tool, including JDO, Hibernate, and iBatis SQL Maps. All of these comply to Spring's generic transaction and DAO exception hierarchies. 
- 	Spring Web module:
+- 	Spring Web module:
 The Web context module builds on top of the application context module, providing contexts for Web-based applications. As a result, the Spring framework supports integration with Jakarta Struts. The Web module also eases the tasks of handling multi-part requests and binding request parameters to domain objects. 
- 	Spring MVC framework:
+- 	Spring MVC framework:
 The Model-View-Controller (MVC) framework is a full-featured MVC implementation for building Web applications. The MVC framework is highly configurable via strategy interfaces and accommodates numerous view technologies including JSP, Velocity, Tiles, iText, and POI. 
 
 ## 1.  What is IOC (or Dependency Injection)? 
@@ -115,11 +120,11 @@ The act of creating associations between application components (beans) within t
 
 ## 16. What do you mean by Auto Wiring?
 The Spring container is able to autowire relationships between collaborating beans. This means that it is possible to automatically let Spring resolve collaborators (other beans) for your bean by inspecting the contents of the BeanFactory. The autowiring functionality has five modes.
- 	no 
- 	byName
- 	byType 
- 	constructor 
- 	autodirect 
+ 	- no 
+ 	- byName
+ 	- byType 
+ 	- constructor 
+ 	- autodirect 
 
 ## 17. What is DelegatingVariableResolver?
 Spring provides a custom JavaServer Faces VariableResolver implementation that extends the standard Java Server Faces managed beans mechanism which lets you use JSF and Spring together. This variable resolver is called as DelegatingVariableResolver
@@ -127,6 +132,7 @@ Spring provides a custom JavaServer Faces VariableResolver implementation that e
 ## 18. How to integrate  Java Server Faces (JSF) with Spring? 
 JSF and Spring do share some of the same features, most noticeably in the area of IOC services. By declaring JSF managed-beans in the faces-config.xml configuration file, you allow the FacesServlet to instantiate that bean at startup. Your JSF pages have access to these beans and all of their properties.We can integrate JSF and Spring in two ways: 
  	DelegatingVariableResolver: Spring comes with a JSF variable resolver that lets you use JSF and Spring together. 
+  ```xml
  	<?xml version="1.0" encoding="UTF-8"?>
  	<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
  	   "http://www.springframework.org/dtd/spring-beans.dtd">
@@ -138,7 +144,7 @@ JSF and Spring do share some of the same features, most noticeably in the area o
  	      </variable-resolver>
  	   </application>
  	</faces-config>
- 
+ ```
 The DelegatingVariableResolver will first delegate value lookups to the default resolver of the underlying JSF implementation, and then to Spring's 'business context' WebApplicationContext. This allows one to easily inject dependencies into one's JSF-managed beans. 
  	FacesContextUtils:custom VariableResolver works well when mapping one's properties to beans in faces-config.xml, but at times one may need to grab a bean explicitly. The FacesContextUtils class makes this easy. It is similar to WebApplicationContextUtils, except that it takes a FacesContext parameter rather than a ServletContext parameter. 
  	ApplicationContext ctx = FacesContextUtils.getWebApplicationContext(FacesContext.getCurrentInstance());
