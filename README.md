@@ -963,4 +963,12 @@ Spring Boot automatically configures Hibernate as the default JPA implementation
 
 **servlet vs filter vs interceptor**:
 
-| Feature | Servlet | Filter | Interceptor | |---------------|---------------------|--------------------|--------------------| | Purpose | Generate dynamic | Perform pre and | Manage cross-cutting| | | content, process | post-processing of | concerns in | | | client requests | requests and | applications | | Lifecycle | Managed by Servlet | N/A | N/A | | | container | | | | Invocation | Directly invoked | Invoked before | Invoked at specific | | | by client requests | and after servlet | points in the | | | | execution | application flow | | Usage | Processing client | Intercepting and | Managing | | | requests, generating| modifying requests | cross-cutting | | | responses | and responses | concerns |
+| Feature | Servlet | Filter | Interceptor | 
+|--------------|-----------------------------------------------|----------------------------------------------|----------------------------------------------| 
+| Type | Interface | Interface | Interface | 
+| Purpose | Handle client requests and responses | Intercept and manipulate requests and responses| Intercept and manipulate requests and responses| 
+| Sequence | Executes before filters and interceptors | Executes before and after servlets, and other filters | Executes before and after servlets, filters, and other interceptors| | Configuration| Defined in web.xml or via annotations | Defined in web.xml or via annotations | Usually configured using annotations in Spring| 
+| Context | Servlet API | Servlet API | Spring framework or other frameworks | 
+| Scope | Application-wide | Application-wide | Typically used at controller level in Spring | 
+| Example | HttpServlet | javax.servlet.Filter | HandlerInterceptor |
+
