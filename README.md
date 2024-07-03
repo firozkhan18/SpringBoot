@@ -972,3 +972,13 @@ Spring Boot automatically configures Hibernate as the default JPA implementation
 | Scope | Application-wide | Application-wide | Typically used at controller level in Spring | 
 | Example | HttpServlet | javax.servlet.Filter | HandlerInterceptor |
 
+
+
+Setter Dependency Injection (SDI) vs. Constructor Dependency Injection (CDI)
+| Setter DI | Constructor DI |
+|--------------|-----------------------------------------------|
+| Poor readability as it adds a lot of boiler plate codes in the application.|Good readability as it is separately present in the code.|	
+| The bean must include getter and setter methods for the properties.|The bean class must declare a matching constructor with arguments. Otherwise, BeanCreationException will be thrown.|
+| Requires addition of @Autowired annotation, above the setter in the code and hence, it increases the coupling between the class and the DI container.|	Best in the case of loose coupling with the DI container as it is not even required to add @Autowired annotation in the code.(Implicit constructor injections for single constructor scenarios after spring 4.0)|
+|Circular dependencies or partial dependencies result with Setter DI because object creation happens before the injections.|	No scope for circular or partial dependency because dependencies are resolved before object creation itself.|
+|Preferred option when properties are less and mutable objects can be created.|	Preferred option when properties on the bean are more and immutable objects (eg: financial processes) are important for application.|
