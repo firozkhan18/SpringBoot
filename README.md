@@ -972,9 +972,8 @@ Spring Boot automatically configures Hibernate as the default JPA implementation
 | Scope | Application-wide | Application-wide | Typically used at controller level in Spring | 
 | Example | HttpServlet | javax.servlet.Filter | HandlerInterceptor |
 
+### 51. Setter Dependency Injection (SDI) vs. Constructor Dependency Injection (CDI)
 
-
-Setter Dependency Injection (SDI) vs. Constructor Dependency Injection (CDI)
 | Setter DI | Constructor DI |
 |--------------|-----------------------------------------------|
 | Poor readability as it adds a lot of boiler plate codes in the application.|Good readability as it is separately present in the code.|	
@@ -982,3 +981,62 @@ Setter Dependency Injection (SDI) vs. Constructor Dependency Injection (CDI)
 | Requires addition of @Autowired annotation, above the setter in the code and hence, it increases the coupling between the class and the DI container.|	Best in the case of loose coupling with the DI container as it is not even required to add @Autowired annotation in the code.(Implicit constructor injections for single constructor scenarios after spring 4.0)|
 |Circular dependencies or partial dependencies result with Setter DI because object creation happens before the injections.|	No scope for circular or partial dependency because dependencies are resolved before object creation itself.|
 |Preferred option when properties are less and mutable objects can be created.|	Preferred option when properties on the bean are more and immutable objects (eg: financial processes) are important for application.|
+
+### 52. What is Spring Dependency Injection? Need for Dependency Injection ? Types of Spring Dependency Injection with example and compare with both xml and annotation based configuration with example.
+
+Spring Dependency Injection is a design pattern used in Spring Framework where the components of an application are provided with their dependencies rather than being responsible for creating them. Dependency Injection helps in decoupling the code and making it easier to test and maintain.
+
+The need for Dependency Injection arises when the components of an application have dependencies on other components or services. Using Dependency Injection, these dependencies can be injected into the components at runtime, making the code more modular and flexible.
+
+There are two types of Dependency Injection in Spring Framework:
+
+- Constructor Injection: In Constructor Injection, dependencies are provided to a component through its constructor.
+Example of Constructor Injection:
+```java
+ 
+public class UserService {
+    private UserRepository userRepository;
+    
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+}
+```
+- Setter Injection: In Setter Injection, dependencies are provided to a component through setter methods.
+Example of Setter Injection:
+```java
+ 
+public class UserService {
+    private UserRepository userRepository;
+    
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+}
+```
+Now, let's compare XML-based configuration and Annotation-based configuration in Spring Dependency Injection:
+```xml
+- XML-Based Configuration:
+ 
+<bean id="userRepository" class="com.example.UserRepositoryImpl" />
+<bean id="userService" class="com.example.UserService">
+    <property name="userRepository" ref="userRepository" />
+</bean>
+```
+- Annotation-Based Configuration:
+```java
+@Component
+public class UserRepositoryImpl implements UserRepository {
+    // implementation
+}
+
+@Component
+public class UserService {
+    @Autowired
+    private UserRepository userRepository;
+    // other methods
+}
+```
+In both XML-based and Annotation-based configurations, we are configuring the dependencies for UserService. However, in XML-based configuration, we need to explicitly define the dependencies in an XML file. On the other hand, in Annotation-based configuration, we use annotations like @Component and @Autowired to define and inject dependencies.
+
+Overall, Dependency Injection in Spring Framework helps in achieving loose coupling between components, making the code more maintainable and testable. The choice between XML-based and Annotation-based configuration depends on the preference and requirements of the developers.
