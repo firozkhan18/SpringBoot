@@ -38,17 +38,22 @@ Primarily used for developing microservices-based applications, Spring Boot offe
 - Supports HTTP client Feign
 
 ### 4. Why Spring Boot is preferred over any other framework?
-The Spring cloud that comes with Spring Boot, includes vast libraries, which is one of the major reasons why most developers prefer the Java-based Spring Boot. In addition, Spring Boot offers superior compatibility with Spring frameworks, and it also provides excellent support for docker containerization, heightening performance, and useability. Some of the most compelling reasons for using Spring Boot include: 
 
-Provides the best means to configure Java beans
-Offers robust batch processing 
-Helps users effectively manage Representational State Transfer (REST) endpoints
-Integrates an auto-configuration tool, eliminating the need for manual configuration 
-Enables  annotation-based configurations
-Ease of dependency management
-Includes embedded servlet containers
+The Spring cloud that comes with Spring Boot, includes vast libraries, which is one of the major reasons why most developers prefer the Java-based Spring Boot. 
+In addition, Spring Boot offers superior compatibility with Spring frameworks, and it also provides excellent support for docker containerization, heightening performance, and useability. 
+
+Some of the most compelling reasons for using Spring Boot include: 
+
+- Provides the best means to configure Java beans
+- Offers robust batch processing 
+- Helps users effectively manage Representational State Transfer (REST) endpoints
+- Integrates an auto-configuration tool, eliminating the need for manual configuration 
+- Enables  annotation-based configurations
+- Ease of dependency management
+- Includes embedded servlet containers
 
 ### 5. What are the key dependencies of Spring Boot?
+
 Mentioned below are important Spring Boot dependencies that need to be added to a Gradle-based or Maven-based application, to ensure application compatibility with Spring Boot features.
 
 spring-boot-starter-parent
@@ -59,6 +64,7 @@ spring-boot-starter-actuator
 Spring-boot-starter-web
 
 ### 6. What are the advantages of Spring Boot?
+
 The advantages of Spring Boot are as follows:
 
 It is very simple to create Spring-based apps in Java or Groovy.
@@ -69,15 +75,21 @@ To minimize developer effort, it employs the "Opinionated Defaults Configuration
 It provides Embedded HTTP servers such as Tomcat, Jetty, and others to help us build and test our web applications quickly.
 
 ### 7. What are the features of Spring Boot?
+
 Features of Spring Boot
 
-It is an excellent Spring module for developing online applications.
-Spring Application class offers an easy way to bootstrap a Spring application that can be started from the main method.
-Spring Boot utilizes application events and listeners to handle a variety of tasks. It enables us to build factory files for adding listeners.
-Spring Boot allows you to activate admin-related features for your application.   
+- It is an excellent Spring module for developing online applications.
+- Spring Application class offers an easy way to bootstrap a Spring application that can be started from the main method.
+- Spring Boot utilizes application events and listeners to handle a variety of tasks. It enables us to build factory files for adding listeners.
+- Spring Boot allows you to activate admin-related features for your application.   
 
 ### 8. How do you create a Spring Boot application using Maven?
-Let us learn how to create a Spring Boot application with Maven. Consider Maven is already installed and configured on your machine. Firstly create a Spring Boot application and to make it simpler create an application with a single main class.
+
+Let us learn how to create a Spring Boot application with Maven. 
+
+Consider Maven is already installed and configured on your machine.
+
+Firstly create a Spring Boot application and to make it simpler create an application with a single main class.
 
 ### 9. How do you create a Spring Boot project using Spring Initializer?
 
@@ -107,10 +119,10 @@ Check out the simplest method possible used to create a basic "Hello World!" exa
 
 ### 12. What are the Spring Boot Annotations?
 
-@SpringBootApplication: A configuration class that defines one or more @Bean methods and initiates auto-configuration and component scanning is indicated by the annotation.
-@EnableAutoConfiguration: Using the jar dependencies you have provided, the @EnableAutoConfiguration annotation instructs Spring Boot to "guess" how you want to configure Spring.
-@ConditionalOnMissingClass: The Class conditions are these comments' home. Depending on the existence or absence of particular classes, a configuration can be included using the @ConditionalOnClass and @ConditionalOnMissingClass annotations.
-@Conditional: A class evaluating the specific condition can be made for circumstances that are even more complicated.
+- **@SpringBootApplication**: A configuration class that defines one or more **@Bean** methods and initiates auto-configuration and component scanning is indicated by the annotation.
+- **@EnableAutoConfiguration**: Using the jar dependencies you have provided, the **@EnableAutoConfiguration** annotation instructs Spring Boot to "guess" how you want to configure Spring.
+- **@ConditionalOnMissingClass**: The Class conditions are these comments' home. Depending on the existence or absence of particular classes, a configuration can be included using the **@ConditionalOnClass** and **@ConditionalOnMissingClass** annotations.
+- **@Conditional**: A class evaluating the specific condition can be made for circumstances that are even more complicated.
 
 ### 13. What are the Spring Boot properties?
 
