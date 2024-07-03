@@ -267,31 +267,11 @@ A Java Persistence API (JPA) implementation, Hibernate facilitates Object-Relati
 
 A Spring Data sub-project, Spring Data JPA, on the other hand, gives abstraction over the DAL (Data Access Layer) applying JPA and Object–Relational Mapping implementations, such as Hibernate. Spring Data JPA facilitates the smooth implementation of JPA repositories, and it intends to improve the overall implementation of DAL to a great extent. 
 
-Become a Software Development Professional
-Full Stack Java Developer
-Full Stack Java Developer
-Kickstart Full Stack Java Developer career with industry-aligned curriculum by experts
-Hands-on practice through 20+ projects, assessments, and tests
-6 Months months
-View Program
-Java Certification Training
-Java Certification Training
-24x7 learner assistance and support
-View Program
-Here's what learners are saying regarding our programs:
-Mayur Kharad
-Mayur Kharad
-Product Engineer, IKS Health
-During the lockdown, I realized I needed to upskill myself, and my journey with Simplilearn has been fantastic. I learned many things during the full stack java developer course, thanks to trainer Virendra Sharma. I've always wanted to work in this sector, and after completing my certification in Fullstack Java Development, I got placed at IKS Health through Simplilearn.
-
-Himanshu Sukhija
-Himanshu Sukhija
-Software Engineer at Tata Consultancy Services, Tata Consultancy Services
-I have enrolled in Simplilearn's Java Certification Course. The content in the Java course is highly informative, and the trainer is exceptionally knowledgeable with outstanding skills in explaining the concepts.
-
-Not sure what you’re looking for?View all Related Programs
-
 ### 28. How are the @RestController and @Controller Annotation different?
 The traditional Spring @Controller annotation specifies that an annotated class represents a controller. It’s basically a @Component specialization, and it is autodetected via the classpath scanning. The @Controller annotation is used along with the annotated handler methodologies based on @RequestMapping annotations.
 
 Developers use the @RestController annotation to develop RESTful web services, utilizing the Spring Model–View–Controller (MVC). The Spring @RestController maps the request data to specified request handler methods. Once the handler method generates the response body, the @RestController modifies it to XML or JSON response.
+
+### 29. In springboot application.properties or application.yml file which one is loading automatically or which one is default property?
+
+In a Spring Boot application, the default property file that gets loaded automatically is the application.properties file. If both application.properties and application.yml files are present in the classpath, the properties defined in the application.properties file will take precedence over the properties defined in the application.yml file.
