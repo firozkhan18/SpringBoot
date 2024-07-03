@@ -195,9 +195,10 @@ A prominent functionality of Spring Boot, Interceptor uses the annotated class @
 
 The interface contains 3 main methods, which are:
 
-The preHandle() Method − preHandle() is used for intercepting the request prior to the implementation of the handler. If preHandle() returns a “true” boolean value, developers can continue with handler execution. If preHandle() returns a “false” boolean value, developers should stop the handler execution. 
+**The preHandle() Method** − preHandle() is used for intercepting the request prior to the implementation of the handler. If preHandle() returns a “true” boolean value, developers can continue with handler execution. If preHandle() returns a “false” boolean value, developers should stop the handler execution. 
 
 preHandle() implementation looks like:
+
 ```java
  @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o)
@@ -209,9 +210,10 @@ preHandle() implementation looks like:
             return false;
     }
 ```
-The postHandle() Method − postHandle() is used for intercepting a request following the implementation of the handler. It allows the manipulation of the ModelAndView Object before users render it.
+**The postHandle() Method** − postHandle() is used for intercepting a request following the implementation of the handler. It allows the manipulation of the ModelAndView Object before users render it.
 
 postHandle() implementation looks like:
+
 ```java
 @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
@@ -226,9 +228,10 @@ postHandle() implementation looks like:
         }
     }
 ```
-The afterCompletion() Method − A HandlerInterceptor callback approach, the afterCompletion() method is used when the entire request gets completed.
+**The afterCompletion() Method** − A HandlerInterceptor callback approach, the afterCompletion() method is used when the entire request gets completed.
 
 afterCompletion() looks like:
+
 ```java
 @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
@@ -237,6 +240,7 @@ afterCompletion() looks like:
     }
 }
 ```
+
 ### 25. What is a Swagger in Spring Boot?
 
 Swagger is used for clearly detailing and documenting RESTful APIs in a machine-readable and human-readable format, which is easily comprehensible for testers and developers, as well as individuals having little knowledge of source code.
