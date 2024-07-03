@@ -56,27 +56,27 @@ Some of the most compelling reasons for using Spring Boot include:
 
 Mentioned below are important Spring Boot dependencies that need to be added to a Gradle-based or Maven-based application, to ensure application compatibility with Spring Boot features.
 
-spring-boot-starter-parent
-spring-boot-maven-plugin
-spring-boot-starter-test
-spring-boot-starter-security
-spring-boot-starter-actuator
-Spring-boot-starter-web
+- spring-boot-starter-parent
+- spring-boot-maven-plugin
+- spring-boot-starter-test
+- spring-boot-starter-security
+- spring-boot-starter-actuator
+- Spring-boot-starter-web
 
 ### 6. What are the advantages of Spring Boot?
 
 The advantages of Spring Boot are as follows:
 
-It is very simple to create Spring-based apps in Java or Groovy.
-It cuts down on development time and also increases the output.
-It eliminates the requirement to write repetitive code, annotations, and XML configuration.
-It is very simple to combine Spring Boot Application with its Spring Ecosystem, which includes Spring JDBC, Spring ORM, Spring Data, and Spring Security, among other things.
-To minimize developer effort, it employs the "Opinionated Defaults Configuration" approach.
-It provides Embedded HTTP servers such as Tomcat, Jetty, and others to help us build and test our web applications quickly.
+- It is very simple to create Spring-based apps in Java or Groovy.
+- It cuts down on development time and also increases the output.
+- It eliminates the requirement to write repetitive code, annotations, and XML configuration.
+- It is very simple to combine Spring Boot Application with its Spring Ecosystem, which includes Spring JDBC, Spring ORM, Spring Data, and Spring Security, among other things.
+- To minimize developer effort, it employs the **"Opinionated Defaults Configuration"** approach.
+- It provides Embedded HTTP servers such as Tomcat, Jetty, and others to help us build and test our web applications quickly.
 
 ### 7. What are the features of Spring Boot?
 
-Features of Spring Boot
+Features of Spring Boot:
 
 - It is an excellent Spring module for developing online applications.
 - Spring Application class offers an easy way to bootstrap a Spring application that can be started from the main method.
@@ -105,13 +105,13 @@ Select File -> Import -> Existing Maven Project in Eclipse. On the next page, na
 
 ### 10. How do you create a Spring Boot project using boot CLI?
 
-Setting up the CLI: By using SDKMAN, the Spring Boot CLI (Command-Line Interface) can be directly installed!
+- Setting up the CLI: By using SDKMAN, the Spring Boot CLI (Command-Line Interface) can be directly installed!
 
-Employing the CLI: Once the CLI has been installed, you can launch it by typing spring and hitting Enter.
+- Employing the CLI: Once the CLI has been installed, you can launch it by typing spring and hitting Enter.
 
-Launch a New project: By using start.spring.io and the init command, you can initiate a new project without leaving the shell.
+- Launch a New project: By using start.spring.io and the init command, you can initiate a new project without leaving the shell.
 
-Using the Embedded Shell: For the BASH and zsh shells, Spring Boot provides command-line completion routines.
+- Using the Embedded Shell: For the BASH and zsh shells, Spring Boot provides command-line completion routines.
 
 ### 11. How do you create a simple Spring Boot application?
 
@@ -126,7 +126,7 @@ Check out the simplest method possible used to create a basic "Hello World!" exa
 
 ### 13. What are the Spring Boot properties?
 
-Spring Boot Properties files are used to configure its auto-configuration and application properties. Spring Boot has many properties that can be used to configure the behavior of the application. Some of the commonly used properties in Spring Boot include server.port, spring.profiles.active, spring.datasource.url, spring.jpa.show-sql, and many more.
+Spring Boot Properties files are used to configure its auto-configuration and application properties. Spring Boot has many properties that can be used to configure the behavior of the application. Some of the commonly used properties in Spring Boot include **server.port**, t**spring.profiles.active**, t**spring.datasource.url**, t**spring.jpa.show-sql**, and many more.
 
 ### 14. What are the Spring Boot Starters?
 
@@ -144,42 +144,39 @@ Thyme leaf is a popular templating engine used in Spring Boot applications for b
 
 ### 17. How to use thyme leaf?
 
-​​To use Thymeleaf in a Spring Boot application you should include the thymeleaf-spring-boot-starter dependency in your project. 
+​​To use Thymeleaf in a Spring Boot application you should include the **thymeleaf-spring-boot-starter** dependency in your project. 
 
 ### 18. How do you connect Spring Boot to the database using JPA?
 
-To connect Spring Boot to a database using JPA, configure the JPA properties in the application.properties or application.yml file. 
+To connect Spring Boot to a database using JPA, configure the JPA properties in the **application.properties** or **application.yml** file. 
 
 ### 19. How to connect the Spring Boot application to a database using JDBC?
 
-To connect the Spring Boot to a database using JDBC, configure the JDBC properties in the application.properties or application.yml file.
+To connect the Spring Boot to a database using JDBC, configure the JDBC properties in the **application.properties** or **application.yml** file.
 
 ### 20. What is @RestController annotation in Spring Boot?
 
-@RestController is a Spring Boot annotation used to create RESTful web services.
+**@RestController** is a Spring Boot annotation used to create RESTful web services.
 
 ### 21. What is @RequestMapping annotation in Spring Boot?
 
-@RequestMapping is a Spring Boot annotation used to map a URL request to a controller method.
+**@RequestMapping** is a Spring Boot annotation used to map a URL request to a controller method.
 
 ### 22. How do you create a Spring Boot application using Spring Starter Project Wizard?
 
 Follow the steps mentioned below to create a Spring Boot application using the Spring Starter Project Wizard, you need to follow these steps:
 
-Open your preferred IDE and select the "New Project" option.
-Next choose the "Spring Initializr" or "Spring Starter Project" option.
-Fill in the required project information, such as project name, description, and dependencies.
-Click on "Generate" to create the project structure and download the necessary dependencies.
-Start coding your application logic.
+- Open your preferred IDE and select the "New Project" option.
+- Next choose the "Spring Initializr" or "Spring Starter Project" option.
+- Fill in the required project information, such as project name, description, and dependencies.
+- Click on "Generate" to create the project structure and download the necessary dependencies.
+- Start coding your application logic.
 
 ### 23. Spring Vs Spring Boot?
 
 Spring is a framework that provides various modules for building enterprise-level applications.
 
 Spring Boot is a framework that simplifies Spring development by providing a pre-configured environment that enables developers to focus on building the application logic.
-
-Top Spring Boot Interview Questions for Experienced Developers
-The spring boot interview questions for experienced developers deal with the concepts in greater depth and are meant to test the working knowledge of the candidates.   
 
 ### 24. What annotations are used to create an Interceptor?
 
@@ -190,7 +187,7 @@ The interface contains 3 main methods, which are:
 The preHandle() Method − preHandle() is used for intercepting the request prior to the implementation of the handler. If preHandle() returns a “true” boolean value, developers can continue with handler execution. If preHandle() returns a “false” boolean value, developers should stop the handler execution. 
 
 preHandle() implementation looks like:
-
+```java
  @Override
 
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
@@ -206,11 +203,11 @@ preHandle() implementation looks like:
             return false;
 
     }
-
+```
 The postHandle() Method − postHandle() is used for intercepting a request following the implementation of the handler. It allows the manipulation of the ModelAndView Object before users render it.
 
 postHandle() implementation looks like:
-
+```java
 @Override
 
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
@@ -232,11 +229,11 @@ postHandle() implementation looks like:
         }
 
     }
-
+```
 The afterCompletion() Method − A HandlerInterceptor callback approach, the afterCompletion() method is used when the entire request gets completed.
 
 afterCompletion() looks like:
-
+```java
 @Override
 
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
@@ -246,7 +243,7 @@ afterCompletion() looks like:
     }
 
 }
-
+```
 ### 25. What is a Swagger in Spring Boot?
 
 Swagger is used for clearly detailing and documenting RESTful APIs in a machine-readable and human-readable format, which is easily comprehensible for testers and developers, as well as individuals having little knowledge of source code.
