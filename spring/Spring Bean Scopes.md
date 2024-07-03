@@ -22,9 +22,9 @@ The singleton scope is the default scope.
 |-----------|-----------|-----------|
 |singleton (default)|	@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)|	Single bean instance per Spring IoC container. Useful for stateless beans.|
 |prototype	|@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)	|A new bean instance is created every time a bean is requested.Useful for stateful beans.|
-|request	|@RequestScope	Only a single instance will be created and available during the complete lifecycle of an HTTP request.Useful for handling request-specific data such as request parameters etc.|
+|request	|@RequestScope	|Only a single instance will be created and available during the complete lifecycle of an HTTP request.Useful for handling request-specific data such as request parameters etc.|
 |session	|@SessionScope|	Only a single instance will be created and available during the complete lifecycle of an HTTP Session.Useful for handling session-specific data such as authenticated user details, preferences, shopping cart items, etc.|
-|application	|@ApplicationScope	Only a single instance will be created and available during the complete lifecycle of ServletContext.Useful for creating beans with broader visibility than the default singleton scope.|
+|application	|@ApplicationScope|	Only a single instance will be created and available during the complete lifecycle of ServletContext.Useful for creating beans with broader visibility than the default singleton scope.|
 |websocket |	@Scope(scopeName = “websocket”,proxyMode = ScopedProxyMode.TARGET_CLASS)	|Only a single instance will be created and available during the complete lifecycle of WebSocket.Useful to manage the state of WebSocket sessions.|
 
 ### 2. Singleton Bean Scope
