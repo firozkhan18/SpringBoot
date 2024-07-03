@@ -204,8 +204,8 @@ preHandle() implementation looks like:
 
 ```java
  @Override
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o)
-            throws Exception {
+    public boolean preHandle(HttpServletRequest httpServletRequest,
+               HttpServletResponse httpServletResponse, Object o) throws Exception {
         logger.info(" Pre handle ");
         if(httpServletRequest.getMethod().equals("GET"))
             return true;
@@ -219,7 +219,8 @@ postHandle() implementation looks like:
 
 ```java
 @Override
-    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+    public void postHandle(HttpServletRequest httpServletRequest,
+                     HttpServletResponse httpServletResponse,
                            Object o, ModelAndView modelAndView) throws Exception {
         logger.info(" Post handle ");
         if(modelAndView.getModelMap().containsKey("status")){
@@ -237,7 +238,8 @@ afterCompletion() looks like:
 
 ```java
 @Override
-    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+    public void afterCompletion(HttpServletRequest httpServletRequest,
+                           HttpServletResponse httpServletResponse,
                                 Object o, Exception e) throws Exception {
         logger.info(" After Completion ");
     }
@@ -505,7 +507,7 @@ Note: Both annotations handle requests, but @RestController prioritizes data res
 
 ### 23. What is the difference between RequestMapping and GetMapping?
 
-Features
+#### Features
 
 @RequestMapping
 
@@ -517,13 +519,13 @@ Annotations
 
 @GetMapping
 
-Purpose
+#### Purpose
 
 Handles various types of HTTP requests (GET, POST, etc.)
 
 Specifically handles HTTP GET requests.
 
-Example
+#### Example
 
 @RequestMapping(value = “/example”, method = RequestMethod.GET)
 
@@ -531,31 +533,31 @@ Example
 
 ### 24. What are the differences between @SpringBootApplication and @EnableAutoConfiguration annotation?
 
-Features
+#### Features
 
 @SpringBootApplication
 
 @EnableAutoConfiguration
 
-When to use
+#### When to use
 
 When we want to use auto-configuration
 
 When we want to customize auto-configuration
 
-Entry point
+#### Entry point
 
 Typically used on the main class of a Spring Boot application, serving as the entry point.
 
 Can be used on any configuration class or in conjunction with @SpringBootApplication.
 
-Component Scanning
+#### Component Scanning
 
 Includes @ComponentScan annotation to enable component scanning.
 
 Does not perform component scanning by itself.
 
-Example
+#### Example
 
 @SpringBootApplication public class MyApplication { public static void main(String[] args) { SpringApplication.run(MyApplication.class, args); } }
 
