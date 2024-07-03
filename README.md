@@ -1338,23 +1338,24 @@ application.run(args);
 
 #### 14. How to Enable Debug Logging?
 The easiest way to enable debug logging is to set it through the properties file:
-
+```
 debug=true
-
-# For trace level logging
-# trace=true 
-
+```
+- For trace level logging
+```
+trace=true 
+```
 We can pass the debug flag during application startup as well.
-
+```
 java -jar application.jar --debug
-
+```
 #### 15. How to Check all the Environment Properties in the Application?
 The easiest way to list down all the properties in an application is by including the actuator module and accessing the URL endpoint /env.
 
 Do not forget to enable the endpoint in the properties configuration.
-
+```
 management.endpoints.web.exposure.include=env
-
+```
 #### 16. How do we Define and Load Properties?
 Spring boot provides many ways to set up and access properties in an application.
 
@@ -1380,12 +1381,12 @@ To work with JPA-based repositories, first, we need to include spring-boot-start
 Spring Boot configures Hibernate as the default JPA provider, so the application will automatically have all necessary beans such as entityManagerFactory.
 
 For connecting with a database, we need to specify the datasource configuration in the application.properties file.
-
+```
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.datasource.username=root
 spring.datasource.password=sa
 spring.datasource.url=jdbc:mysql://localhost:3306/testDb?createDatabaseIfNotExist=true
-
+```
 Also, note that Spring boot uses HikariCP as the default connection pool. So if you need to change the connection pool, configure the respective properties.
 
 #### 18. Why do we use Spring Boot Maven Plugin?
@@ -1401,7 +1402,7 @@ spring-boot:build-info: generate a build information that can be used by the Act
 Executable jars (sometimes called”fat jar”) are archives containing the compiled classes and all of the jar dependencies that the application needs to run.
 
 To create an executable jar, we shall add spring-boot-maven-plugin in pom.xml. By default, this plugin package the application as .jar file only.
-
+```pom
 <build>
     <plugins>
         <plugin>
@@ -1410,11 +1411,11 @@ To create an executable jar, we shall add spring-boot-maven-plugin in pom.xml. B
         </plugin>
     </plugins>
 </build>
-
+```
 The first logical step to create a war file is to declare the packaging type ‘war’ in pom.xml file.
 
 The second thing is set the scope of embedded server dependency to ‘provided‘ because server dependencies will be provided by the application server where we will deploy the war file.
-
+```pom
 <packaging>war</packaging>
  
 <dependency>
@@ -1422,7 +1423,7 @@ The second thing is set the scope of embedded server dependency to ‘provided�
     <artifactId>spring-boot-starter-tomcat</artifactId>
     <scope>provided</scope>
 </dependency>
-
+```
 #### 20. How to Configure Logging in Spring Boot?
 Spring Boot uses Commons Logging for all logging internal to the framework and thus it is a mandatory dependency. For other logging needs, Spring boot supports default configuration for Java Util Logging, Log4J2, and Logback.
 
@@ -1431,7 +1432,7 @@ When added directly or transitively, spring-boot-starter-logging module configur
 The default logging uses a console logger with a log level set to DEBUG, which we can change in the custom logback.xml file.
 
 To use Log4j2, we must exclude spring-boot-starter-logging module and import spring-boot-starter-log4j2 module. The custom configuration can be done in the log4j2.xml file.
-
+```pom
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-web</artifactId>
@@ -1446,17 +1447,17 @@ To use Log4j2, we must exclude spring-boot-starter-logging module and import spr
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-log4j2</artifactId>
 </dependency>
-
+```
 #### 21. What is the Spring Actuator? What are its Advantages?
 Spring boot’s actuator module allows us to monitor and manage application usages in the production environment, without coding and configuration for any of them. This monitoring and management information is exposed via REST-like endpoint URLs.
 
 The simplest way to enable the features is to add a dependency to the spring-boot-starter-actuator starter pom file.
-
+```pom
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-actuator</artifactId>
 </dependency>
-
+```
 The actuator module includes several built-in endpoints and lets us add our own. Further, each individual endpoint can be enabled or disabled as well.
 
 Some of the important and widely used actuator endpoints are given below:
@@ -1473,12 +1474,12 @@ Endpoint	Usage
 Spring Boot uses some relaxed rules for resolving configuration property names such that we can write a simple property name in multiple ways.
 
 For example, a simple property log.level.my-package can be written in the following ways and all are correct and will be resolved by framework for its value based on property source.
-
+```
 log.level.my-package = debug    	//Kebab case
 log.level.my_package = debug 		//Underscore notation
 log.level.myPackage = debug 		//Camel case
 LOG.LEVEL.MY-PACKAGE = debug 		//Upper case format
-
+```
 Following is a list of the relaxed binding rules per property source.
 
 Property Source	Types Allowed
@@ -1506,7 +1507,7 @@ The @SpringBootTest annotation helps in writing integration tests. It starts the
 We can also provide test-specific beans configuration using nested @Configuration class or explicit @TestConfiguration classes.
 
 It also registers a TestRestTemplate and/or WebTestClient bean for use in web tests.
-
+```java
 @SpringBootTest(classes = SpringBootDemoApplication.class, 
         webEnvironment = WebEnvironment.RANDOM_PORT)
 public class EmployeeControllerIntegrationTests 
@@ -1519,14 +1520,14 @@ public class EmployeeControllerIntegrationTests
   
     //tests
 }
-
+```
 #### 24. What are Spring Profiles?
 We can assume profiles as the various runtime environments where we will deploy the application, and we expect the application to behave differently. For example, localhost, dev, test and prod.
 
 Spring profiles allow us to map our beans to different profiles. Based on the profile, only mapped beans will be activated and other beans will be deactivated.
 
 To create a new profile, we can use the @Profile annotation. In the given example, we have configured two profiles localhost and non-localhost environments for datasource configuration.
-
+```java
 @Profile("localhost")
 public class LocalhostDatasourceConfig {
    //...
@@ -1536,7 +1537,7 @@ public class LocalhostDatasourceConfig {
 public class DatasourceConfig {
    //...
 }
-
+```
 To activate a profile, we can pass the Spring.profiles.active property during the application startup. This property can also be defined using the system property in the respective machines.
 
 java -jar app.jar -Dspring.profiles.active=localhost
@@ -1565,13 +1566,13 @@ CSRF stands for Cross-Site Request Forgery or Session Riding. It targets an end-
 The unwanted actions are generally the form of URL requests that may happen either by clicking on injected links by the bad actor or by image URLs that do not need even a click.
 
 In a Spring boot applications, CSRF protection is enabled by default. We can disable it using the following spring HttpSecurity interface configuration.
-
+```java
 @Override
 protected void configure(HttpSecurity http) throws Exception {
     http
       .csrf().disable();
 }
-
+```
 #### 28. Explain CORS in Spring Boot
 CORS (Cross-origin resource sharing) allows a webpage to request additional resources into the browser from other domains e.g. fonts, CSS or static images from CDN. CORS helps in serving web content from multiple domains into browsers that usually have the same-origin security policy.
 
