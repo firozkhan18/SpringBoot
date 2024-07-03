@@ -1040,3 +1040,43 @@ public class UserService {
 In both XML-based and Annotation-based configurations, we are configuring the dependencies for UserService. However, in XML-based configuration, we need to explicitly define the dependencies in an XML file. On the other hand, in Annotation-based configuration, we use annotations like @Component and @Autowired to define and inject dependencies.
 
 Overall, Dependency Injection in Spring Framework helps in achieving loose coupling between components, making the code more maintainable and testable. The choice between XML-based and Annotation-based configuration depends on the preference and requirements of the developers.
+
+
+Spring – IoC Container
+Last Updated : 20 Jul, 2021
+The Spring framework can be considered as a collection of sub-frameworks, also referred to as layers, such as Spring AOP, Spring ORM, Spring Web Flow, and Spring Web MVC. You can use any of these modules separately while constructing a Web application. The modules may also be grouped together to provide better functionalities in a web application. 
+
+Prior to penetrating down to Spring to container do remember that Spring provides two types of Containers namely as follows:
+
+BeanFactory Container
+ApplicationContext Container
+The features of the Spring framework such as IoC, AOP, and transaction management, make it unique among the list of frameworks. Some of the most important features of the Spring framework are as follows:
+
+- IoC container
+- Data Access Framework
+- Spring MVC
+- Transaction Management
+- Spring Web Services
+- JDBC abstraction layer
+- Spring TestContext framework
+  
+Spring IoC Container is the core of Spring Framework. It creates the objects, configures and assembles their dependencies, manages their entire life cycle. The Container uses Dependency Injection(DI) to manage the components that make up the application. It gets the information about the objects from a configuration file(XML) or Java Code or Java Annotations and Java POJO class. These objects are called Beans. Since the Controlling of Java objects and their lifecycle is not done by the developers, hence the name Inversion Of Control. 
+
+Note: Spring IoC generally directly refers to a core container that uses the DI/DC pattern to implicitly provide an object reference in a class during runtime. The IoC container contains assembler code that handles the configuration management of application objects. 
+
+The following diagram depicts how the Container makes use of Configuration metadata and Java POJO classes to manage beans.
+
+
+
+So finally let us discuss out some major differences between BeanFactory vs ApplicationContext in order to get a clear cutaway understanding of the spring IoC container which is as shown below in a tabular format below as follows:
+
+|Feature | BeanFactory | ApplicationContext|
+|-------------------|-------------------|-------------------|
+|Annotation Support	|No |Yes|
+|Bean Instantiation/Wiring	|Yes|Yes|
+|Internationalization|No|Yes|
+|Enterprise Services	|No|Yes|
+|ApplicationEvent publication	|No |Yes|
+|Automatic BeanPostProcessor registration|No|Yes|
+|Loading Mechanism|	Lazy loading|	Aggressive loading|
+|Automatic BeanFactoryPostProcessor registration|No|Yes|
