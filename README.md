@@ -174,13 +174,11 @@ Follow the steps mentioned below to create a Spring Boot application using the S
 
 ### 23. Spring Vs Spring Boot?
 
-Spring is a framework that provides various modules for building enterprise-level applications.
-
-Spring Boot is a framework that simplifies Spring development by providing a pre-configured environment that enables developers to focus on building the application logic.
-
 Difference between Spring and Spring Boot
+
 |Spring|Spring Boot|
 |----------------------------------------------------|----------------------------------------------------|
+|Spring is a framework that provides various modules for building enterprise-level applications.|Spring Boot is a framework that simplifies Spring development by providing a pre-configured environment that enables developers to focus on building the application logic.|
 |Spring is an open-source lightweight framework widely used to develop enterprise applications.|Spring Boot is built on top of the conventional spring framework, widely used to develop REST APIs.|
 |The most important feature of the Spring Framework is dependency injection.|The most important feature of the Spring Boot is Autoconfiguration.|
 |It helps to create a loosely coupled application.|It helps to create a stand-alone application.|
