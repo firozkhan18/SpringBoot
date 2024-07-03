@@ -1127,14 +1127,14 @@ The easiest and recommended way to set up a new Spring boot application is using
 
 Another way to create a project is to Create New Maven Project wizard in IDEs such as Eclipse or IntelliJ. After creating the maven project, we need to include the spring-boot-starter-parent dependency in the pom.xml file, if the tool didn’t include it already.
 
-pom.xml
-pom.xml<parent>
+```pom
+<parent>
   <groupId>org.springframework.boot</groupId>
   <artifactId>spring-boot-starter-parent</artifactId>
   <version>3.1.2</version>
   <relativePath/> <!-- lookup parent from repository -->
 </parent>
-
+```
 #### 5. What is AutoConfiguration? How to Enable or Disable a Certain Configuration?
 Spring boot autoconfiguration scans the classpath, finds the libraries in the classpath and then attempts to guess the best default configuration for them, and finally configure all such beans.
 
@@ -1143,7 +1143,7 @@ Autoconfiguration tries to be as intelligent as possible and backs away as we de
 Autoconfiguration works with the help of @Conditional annotations such as @ConditionalOnBean and @ConditionalOnClass.
 
 For example, look at AopAutoConfiguration class. If classpath scanning finds EnableAspectJAutoProxy, Aspect, Advice and AnnotatedElement classes and spring.aop.auto=false is not present in the properties file, then Spring boot will configure the Spring AOP module for us.
-
+```java
 @Configuration
 @ConditionalOnClass({ EnableAspectJAutoProxy.class,
 			Aspect.class,
@@ -1157,7 +1157,7 @@ public class AopAutoConfiguration
 {
 	//code
 }
-
+```
 To enable an autoconfiguration, just importing the correct starter dependency is enough. Everything else works as discussed above.
 
 To disable an autoconfiguration, use the exclude attribute of the @EnableAutoConfiguration annotation. For instance, this code snippet disables the DataSourceAutoConfiguration:
@@ -1171,12 +1171,12 @@ Spring Boot starters are maven templates that contain a collection of all the re
 For example, If we want to create a Spring WebMVC application, we would have included all required dependencies ourselves in a traditional setup. It leaves the chances of version conflict which ultimately results in ClassCastException.
 
 With Spring boot, to create a WebMVC application, all we need to import is spring-boot-starter-web dependency. Transitively, this starter brings in all other required dependencies to build a web application, for example, spring-webmvc, spring-web, hibernate-validator, tomcat-embed-core, tomcat-embed-el, tomcat-embed-websocket, jackson-databind, jackson-datatype-jdk8, jackson-datatype-jsr310 and jackson-module-parameter-names.
-
+```pom
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-web</artifactId>
 </dependency>
-
+```
 #### 7. What are Some Important Spring Boot Annotations?
 The most commonly used and important spring boot annotations are as below:
 
@@ -1191,7 +1191,7 @@ The most commonly used and important spring boot annotations are as below:
 Creating a REST API is part of the Spring WebMVC module that is imported via spring-boot-starter-web dependency. With the web module, we get the annotations for creating REST APIs such as @RestController, @GetMapping, @PostMapping etc.
 
 The following is the simplest REST API which returns the message “Hello World!” when we access the API at URL “/hello”.
-
+```java
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -1203,9 +1203,9 @@ public class HelloWorldController {
     return "Hello, World!";
   }
 }
-
+```
 In a real-world application, we start with defining the REST resource model which is generally a POJO object with necessary fields and accessor methods.
-
+```java
 class Employee {
 
   private Long id;
@@ -1214,9 +1214,9 @@ class Employee {
 
   //Getters, Setters, constructors, toString, other fields
 }
-
+```
 Next, we write the REST controllers that handle the requests coming to resource mapping URLs. At this step, we connect to autowired DAO and other components to fetch the data from backend systems and return the response along with appropriate response codes.
-
+```java
 import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -1249,7 +1249,7 @@ class EmployeeController {
 
   //Other methods
 }
-
+```
 Also, we can use the annotations, such as @ControllerAdvice, to create a central exception handling mechanism.
 
 Optionally, based on requirements, we can plug-in additional functionalities such as request validations and HATEOAS.
@@ -1274,7 +1274,7 @@ Similarly, @PostMapping annotation maps HTTP POST requests onto specific handler
 To create a filter, we simply need to implement the javax.servlet.Filter interface. Also, for Spring to recognize a filter, we need to define it as a bean with the @Component annotation.
 
 Based on application needs, we override the filter methods init(), doFilter() and destroy().
-
+```java
 @Component
 public class TraceLoggingFilter implements Filter {
 
@@ -1287,9 +1287,9 @@ public class TraceLoggingFilter implements Filter {
       //...
     }
 }
-
+```
 To apply the filter on URL patterns, we need to register it as FilterRegistrationBean.
-
+```java
 @Bean
 public FilterRegistrationBean<TraceLoggingFilter> tracingFilter()
 {
@@ -1300,7 +1300,7 @@ public FilterRegistrationBean<TraceLoggingFilter> tracingFilter()
     filterBean.setOrder(1);
     return filterBean;    
 }
-
+```
 #### 12. Explain Embedded Server Support in Spring Boot
 Spring boot applications include embedded servers as part of spring-boot-starter-web dependency and configure Tomcat as the default embedded server. It means that we can run a web application from the command prompt without setting up any complex server infrastructure.
 
