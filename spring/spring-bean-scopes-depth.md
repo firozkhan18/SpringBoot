@@ -24,7 +24,8 @@ Only one shared instance of a singleton bean is managed, and all requests for be
 
 To put it another way, when you define a bean definition and it is scoped as a singleton, the Spring IoC container creates exactly one instance of the object defined by that bean definition. This single instance is stored in a cache of such singleton beans, and all subsequent requests and references for that named bean return the cached object. The following image shows how the singleton scope works:
 
-#### singleton
+![Desktop Screenshot](images/singleton.png)
+
 Spring’s concept of a singleton bean differs from the singleton pattern as defined in the Gang of Four (GoF) patterns book. The GoF singleton hard-codes the scope of an object such that one and only one instance of a particular class is created per ClassLoader. The scope of the Spring singleton is best described as being per-container and per-bean. This means that, if you define one bean for a particular class in a single Spring container, the Spring container creates one and only one instance of the class defined by that bean definition. The singleton scope is the default scope in Spring. To define a bean as a singleton in XML, you can define a bean as shown in the following example:
 
 <bean id="accountService" class="com.something.DefaultAccountService"/>
@@ -36,7 +37,8 @@ The non-singleton prototype scope of bean deployment results in the creation of 
 
 The following diagram illustrates the Spring prototype scope:
 
-#### prototype
+![Desktop Screenshot](images/prototype.png)
+
 (A data access object (DAO) is not typically configured as a prototype, because a typical DAO does not hold any conversational state. It was easier for us to reuse the core of the singleton diagram.)
 
 The following example defines a bean as a prototype in XML:
