@@ -2,7 +2,7 @@
 
 # Contents
 
-- [01 - How to Create GKE Cluster Using TERRAFORM from Scratch?](../lessons/069)
+- [01 - Building_Services](../lessons/069)
 - [02 - EKS Cluster Auto Scaling](../lessons/070)
 - [03 - Kubernetes Horizontal Pod Autoscaler](../lessons/071)
 - [04 - How to Install Prometheus on Kubernetes Cluster?](../lessons/072)
@@ -12,6 +12,18 @@
 - [08 - How to Build Slack Bot?](../lessons/076)
 - [09 - AWS Lambda Secrets Manager Example](../lessons/077)
 - [10 - How to Secure Nginx with Lets Encrypt on Ubuntu 20.04 with Certbot?](../lessons/078)
+
+Part_01_Spring_Boot_Microservices_Building_Services.md
+Part_02_Spring_Boot_Microservices_Inter_Service_Communication.md
+Part_03_Spring_Boot_Microservices_Service_Discovery.md
+Part_04_Spring_Boot_Microservices_API_Gateway.md
+Part_05_Spring_Boot_Microservices_Security.md
+Part_06_Spring_Boot_Microservices_Resilience4J_Circuit_Breaker.md
+Part_07_Spring_Boot_Microservices_Distributed_Tracing.md
+Part_08_Spring_Boot_Microservices_Event_Driven_Architecture_Using_Kafka.md
+Part_09_Spring_Boot_Microservices_Dockerize_The_Application.md
+Part_10_Spring_Boot_Microservices_Monitoring_Using_Prometheus_And_Grafana.md
+
 
 ## How to run the application using Docker
 
