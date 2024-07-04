@@ -35,11 +35,11 @@ Spring Cloud provides tools for developers to quickly build some of the common p
 
 ### Solution Architecture of Microservices
 
-![Desktop Screenshot](images/services-flow.PNG)
+![Desktop Screenshot](images/microservice-arch.PNG)
 
 ### Logical Architecture of Services
 
-![Desktop Screenshot](images/services-commu.PNG)
+![Desktop Screenshot](images/services-flow.PNG)
 
 ### Your First Microservice
 
