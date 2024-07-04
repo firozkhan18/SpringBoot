@@ -3,7 +3,7 @@
 # Contents
 
 - [01 - Spring Boot Microservices Building Services](Part_01_Spring_Boot_Microservices_Building_Services.md)
-- [02 - Spring Boot_Microservices_Inter_Service_Communication](Part_02_Spring_Boot_Microservices_Inter_Service_Communication.md)
+- [02 - Spring Boot Microservices Inter Service Communication](Part_02_Spring_Boot_Microservices_Inter_Service_Communication.md)
 - [03 - Spring Boot Microservices Service Discovery](Part_03_Spring_Boot_Microservices_Service_Discovery.md)
 - [04 - Spring Boot Microservices API Gateway](Part_04_Spring_Boot_Microservices_API_Gateway.md)
 - [05 - Spring Boot Microservices Security](Part_05_Spring_Boot_Microservices_Security.md)
