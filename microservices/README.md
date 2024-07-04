@@ -512,10 +512,10 @@ Child module notification-service pom.xml:
 </project>
 ```
 
-### Add the @EurekaServerClient annotation **product-service**, **order-service**, **inventory-service**, **notification-service** and **api-gateway** services main class.
-Add the EurekaClient properties in **application.properties** file
+### Register the microservices to Eureka Server by adding the **@EnableDiscoveryClient** annotation service main class and EurekaClient properties in **application.properties** file.
 
-### Register the **product-service** to Eureka Server by adding the **@EnableDiscoveryClient** annotation service main class.
+- **product-service**
+
 ```java
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -528,7 +528,7 @@ public class ProductServiceApplication {
     }
 }
 ```
-**product-service application.properties** file
+**application.properties**
 
 ```
 spring.data.mongodb.host=localhost
@@ -539,7 +539,7 @@ spring.application.name=product-service
 server.port=0
 ```
 
-### Register the **order-service** to Eureka Server by adding the **@EnableDiscoveryClient** annotation service main class.
+- **order-service**
 
 ```java
 import org.springframework.boot.SpringApplication;
@@ -554,7 +554,7 @@ public class OrderServiceApplication {
 
 }
 ```
-**order-service application.properties** file
+**application.properties**
 
 ```
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
@@ -568,7 +568,8 @@ eureka.client.serviceUrl.defaultZone=http://eureka:password@localhost:8761/eurek
 spring.application.name=order-service
 ```
 
-### Register the **inventory-service** to Eureka Server by adding the **@EnableDiscoveryClient** annotation service main class.
+- **inventory-service**
+
 ```java
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -582,7 +583,7 @@ public class InventoryServiceApplication {
 }
 ```
 
-**inventory-service application.properties** file
+**application.properties**
 
 ```
 server.port=0
@@ -594,16 +595,16 @@ spring.jpa.hibernate.ddl-auto=update
 eureka.client.serviceUrl.defaultZone=http://eureka:password@localhost:8761/eureka
 spring.application.name=inventory-service
 ```
-### Register the **notification-service** to Eureka Server by adding the **@EnableDiscoveryClient** annotation service main class.
+- **notification-service**
 
-**notification-service application.properties** file
+**application.properties** file
 
 ```
 eureka.client.serviceUrl.defaultZone=http://eureka:password@localhost:8761/eureka
 spring.application.name=notification-service
 server.port=0
 ```
-### Register the **api-gateway** to Eureka Server by adding the **@EnableDiscoveryClient** annotation service main class.
+- **api-gateway**
 
 ```java
 import org.springframework.boot.SpringApplication;
@@ -618,7 +619,7 @@ public class ApiGatewayApplication {
     }
 }
 ```
-**api-gateway application.properties** file
+**application.properties**
 ```
 spring.application.name=api-gateway
 eureka.client.serviceUrl.defaultZone=http://eureka:password@localhost:8761/eureka
@@ -646,7 +647,7 @@ spring.cloud.gateway.routes[3].uri=http://eureka:password@${app.eureka-server}:8
 spring.cloud.gateway.routes[3].predicates[0]=Path=/eureka/**
 ```
 
-### Register the **discovery-server** to Eureka Server by adding the **@EnableEurekaServer** annotation service main class.
+### Register the **discovery-server** to Eureka Server by adding the **@EnableEurekaServer** annotation service main class and in **application.properties** file.
 
 DiscoveryServerApplication.java
 
