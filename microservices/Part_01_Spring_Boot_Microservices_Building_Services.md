@@ -51,7 +51,7 @@ The Application Module includes Model Module, Service Implementation Module as d
 
 - product-service Module
 
-![Desktop Screenshot](images/product-service.PNG)
+![Desktop Screenshot](images/product-service-1.PNG)
 
 The Model Module contains Entities and Visual Objects to be used in the project.
 
