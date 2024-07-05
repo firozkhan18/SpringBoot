@@ -1,20 +1,134 @@
 ## [<<PREV](Part_03_Spring_Boot_Microservices_Service_Discovery.md) - MICROSERVICE API GATEWAY - [NEXT>>](Part_05_Spring_Boot_Microservices_Security.md)
 
 
-
-- Service-Discovery
-  - Create a new Spring Boot project for Service-Discovery using Netflix Eureka
-  - Add dependencies for Spring Cloud Eureka Server
-  - Configure Eureka Server to register and discover microservices
 - API-Gateway
   - Create a new Spring Boot project for API-Gateway using Spring Cloud Gateway
   - Add dependencies for Spring Cloud Gateway
   - Configure API Gateway to route requests to appropriate microservices based on the path
-- Notification-Service
-  - Create a new Spring Boot project for Notification-Service
-  - Implement REST endpoints for sending notifications to users
-  - Add dependencies for Spring Web and Spring Messaging
-  - Implement a messaging service to send notifications
+ 
+- api-gateway Module
+
+![Desktop Screenshot](images/api-gateway.PNG)
+
+The Service Implementation module implements the service. It depends on Repository Module and Service API Module.
+```
+api-gateway
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com
+|   |   |       └── springboot
+|   |   |           └── microservice
+|   |   |               └── apigateway
+|   |   |                   ├── ApiGatewayApplication.java
+|   |   |                   ├── controller
+|   |   |                   |   └── ApiGatewayController.java
+│   │   │                   ├── model
+│   │   │                   │   └── ApiGateway.java
+|   |   |                   ├── service
+|   |   |                   |   └── ApiGatewayService.java
+|   |   |                   └── repository
+|   |   |                       └── ApiGatewayRepository.java
+|   |   └── resources
+|   |       ├── application.properties
+|   |       ├── static
+|   |       ├── templates
+|   |       └── META-INF
+|   |           └── MANIFEST.MF
+|   └── src
+|       ├── test
+|       │   ├── java
+|       │   │   └── com
+|       │   │       └── springboot
+|       │   │           └── microservice
+|       │   │               └── apigateway
+|       │   │                   └── ApiGatewayApplicationTest.java
+|       └── resources
+|           └── application.properties
+└── pom.xml
+```
+In this structure:
+
+ApiGatewayApplication.java is the main class that contains the main method to run the Spring Boot application.
+
+controller package contains the controller classes with mapping endpoints.
+
+service package contains the service classes which contain business logic.
+
+repository package contains the repository classes that interact with the database.
+
+application.properties contains application-specific properties.
+
+static directory contains static resources like Javascript, CSS, etc.
+
+templates directory contains HTML templates for the application.
+
+META-INF directory contains the manifest file.
+
+
+```pom
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.3.1</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+  <groupId>com.springboot.microservice</groupId>
+  <artifactId>product-service</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>product-service</name>
+  <description>product-service</description>
+  <url/>  
+  <properties>
+    <java.version>17</java.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-mongodb</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+            </exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+```
+- application.properties
+```properties
+#MongoDB database congfiguration
+spring.data.mongodb.uri=mongodb://localhost:27017/product-service
+```
     
 By following this structure, you can create a modular and scalable microservice architecture using Spring Boot. Each microservice is responsible for a specific domain (such as products, orders, inventory, notifications) and can be easily extended or updated without affecting other services. Service Discovery and API Gateway help in managing communication between services and routing requests efficiently.
 
@@ -304,129 +418,12 @@ spring-boot-microservices
 - pom.xml: Main Maven project file that includes all the submodule dependencies
 
 
-- api-gateway Module
-
-![Desktop Screenshot](images/api-gateway.PNG)
-
-The Service Implementation module implements the service. It depends on Repository Module and Service API Module.
-```
-api-gateway
-├── src
-│   ├── main
-│   │   ├── java
-│   │   │   └── com
-|   |   |       └── springboot
-|   |   |           └── microservice
-|   |   |               └── apigateway
-|   |   |                   ├── ApiGatewayApplication.java
-|   |   |                   ├── controller
-|   |   |                   |   └── ApiGatewayController.java
-│   │   │                   ├── model
-│   │   │                   │   └── ApiGateway.java
-|   |   |                   ├── service
-|   |   |                   |   └── ApiGatewayService.java
-|   |   |                   └── repository
-|   |   |                       └── ApiGatewayRepository.java
-|   |   └── resources
-|   |       ├── application.properties
-|   |       ├── static
-|   |       ├── templates
-|   |       └── META-INF
-|   |           └── MANIFEST.MF
-|   └── src
-|       ├── test
-|       │   ├── java
-|       │   │   └── com
-|       │   │       └── springboot
-|       │   │           └── microservice
-|       │   │               └── apigateway
-|       │   │                   └── ApiGatewayApplicationTest.java
-|       └── resources
-|           └── application.properties
-└── pom.xml
-```
-In this structure:
-
-ApiGatewayApplication.java is the main class that contains the main method to run the Spring Boot application.
-
-controller package contains the controller classes with mapping endpoints.
-
-service package contains the service classes which contain business logic.
-
-repository package contains the repository classes that interact with the database.
-
-application.properties contains application-specific properties.
-
-static directory contains static resources like Javascript, CSS, etc.
-
-templates directory contains HTML templates for the application.
-
-META-INF directory contains the manifest file.
-
-
-```pom
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.3.1</version>
-    <relativePath/> <!-- lookup parent from repository -->
-  </parent>
-  <groupId>com.springboot.microservice</groupId>
-  <artifactId>product-service</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>product-service</name>
-  <description>product-service</description>
-  <url/>  
-  <properties>
-    <java.version>17</java.version>
-  </properties>
-  <dependencies>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-mongodb</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-            </exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-</project>
-```
-- application.properties
-```properties
-#MongoDB database congfiguration
-spring.data.mongodb.uri=mongodb://localhost:27017/product-service
-```
+- Notification-Service
+  - Create a new Spring Boot project for Notification-Service
+  - Implement REST endpoints for sending notifications to users
+  - Add dependencies for Spring Web and Spring Messaging
+  - Implement a messaging service to send notifications
+  
 - notification-service Module
 
 ![Desktop Screenshot](images/notification-service.PNG)
