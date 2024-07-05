@@ -248,7 +248,7 @@ dto package contains the request and response dto classes that interact with the
 ProductRequest.java
 
 - version-1: based on lombok
-
+```java
 package com.springboot.microservice.dto;
 
 import lombok.AllArgsConstructor;
@@ -267,7 +267,7 @@ public class ProductRequest {
     private String description;
     private BigDecimal price;
 }
-
+```
 - version-2: based on record
 
 ```java
@@ -281,7 +281,7 @@ public record ProductRequest(String name, String description, BigDecimal price) 
 ProductResponse.java
 
 - version-1: based on lombok
-
+```java
 package com.springboot.microservice.dto;
 
 import lombok.AllArgsConstructor;
@@ -301,7 +301,7 @@ public class ProductResponse {
     private String description;
     private BigDecimal price;
 }
-
+```
 - version-2: based on record
 ```java
 package com.springboot.microservice.dto;
