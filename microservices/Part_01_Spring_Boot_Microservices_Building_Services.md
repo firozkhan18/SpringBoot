@@ -577,12 +577,17 @@ order-service
 |   |   |                   ├── OrdreServiceApplication.java
 |   |   |                   ├── client
 |   |   |                   |   └── InventoryClient.java
+|   |   |                   ├── config
+|   |   |                   |   └── WebClientConfig.java (added in intial version)
 |   |   |                   ├── controller
 |   |   |                   |   └── OrderController.java
 │   │   │                   ├── dto
+│   │   │                   │   └── InventoryResponse.java
+│   │   │                   │   └── OrderLineItemsDto.java
 │   │   │                   │   └── OrderRequest.java
 │   │   │                   ├── model
 │   │   │                   │   └── Order.java
+│   │   │                   │   └── OrderLineItems.java
 |   |   |                   ├── service
 |   |   |                   |   └── OrderService.java
 |   |   |                   └── repository
@@ -613,23 +618,27 @@ In this structure:
 
 OrdreServiceApplication.java is the main class that contains the main method to run the Spring Boot application.
 
-InventoryClient.java:
+WebClientConfig.java
 
 ```java
-package com.springboot.microservice.order.client;
+package com.springboot.microservice.order.config;
 
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
 
-@FeignClient(value = "inventory", url = "${inventory.url}")
-public interface InventoryClient {
-    @RequestMapping(method = RequestMethod.GET, value = "/api/inventory")
-    boolean isInStock(@RequestParam String skuCode, @RequestParam Integer quantity);
+@Configuration
+public class WebClientConfig {
+
+    @Bean
+    public WebClient webClient(){
+        return WebClient.builder().build();
+    }
 }
 ```
+
 controller package contains the controller classes with mapping endpoints.
+
 ```java
 package com.springboot.microservice.order.controller;
 
@@ -654,14 +663,77 @@ public class OrderController {
     }
 }
 ```
+
 dto package contains the dto classes that interact with the database.
 
+OrderLineItemsDto.java
+
+```java
+package com.springboot.microservice.order.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderLineItemsDto {
+    private Long id;
+    private String skuCode;
+    private BigDecimal price;
+    private Integer quantity;
+}
+```
+
 OrderRequest.java
+
+- version-1: with lombok
+
+```java
+package com.springboot.microservice.order.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderRequest {
+    private List<OrderLineItemsDto> orderLineItemsDtoList;
+}
+```
+- version-2: with record
+
 ```java
 package com.springboot.microservice.order.dto;
 import java.math.BigDecimal;
 
 public record OrderRequest(Long id, String skuCode, BigDecimal price, Integer quantity) {
+}
+```
+InventoryResponse.java
+
+```java
+package com.springboot.microservice.order.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class InventoryResponse {
+    private String skuCode;
+    private boolean isInStock;
 }
 ```
 model package contains the model classes that interact with the database.
@@ -695,7 +767,112 @@ public class Order {
     private Integer quantity;
 }
 ```
+
+OrderLineItems.java
+
+```java
+package com.springboot.microservice.order.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.math.BigDecimal;
+
+@Entity
+@Table(name = "t_order_line_items")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderLineItems {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String skuCode;
+    private BigDecimal price;
+    private Integer quantity;
+}
+```
 service package contains the service classes which contain business logic.
+
+OrderService.java
+
+- version-1: with WebClient for inter-communication
+
+```java
+package com.programmingtechie.orderservice.service;
+
+import com.programmingtechie.orderservice.dto.InventoryResponse;
+import com.programmingtechie.orderservice.dto.OrderLineItemsDto;
+import com.programmingtechie.orderservice.dto.OrderRequest;
+import com.programmingtechie.orderservice.model.Order;
+import com.programmingtechie.orderservice.model.OrderLineItems;
+import com.programmingtechie.orderservice.repository.OrderRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class OrderService {
+
+    private final OrderRepository orderRepository;
+    private final WebClient webClient;
+
+    public void placeOrder(OrderRequest orderRequest) {
+        Order order = new Order();
+        order.setOrderNumber(UUID.randomUUID().toString());
+
+        List<OrderLineItems> orderLineItems = orderRequest.getOrderLineItemsDtoList()
+                .stream()
+                .map(this::mapToDto)
+                .toList();
+
+        order.setOrderLineItemsList(orderLineItems);
+
+        List<String> skuCodes = order.getOrderLineItemsList().stream()
+                .map(OrderLineItems::getSkuCode)
+                .toList();
+
+        // Call Inventory Service, and place order if product is in
+        // stock
+        InventoryResponse[] inventoryResponsArray = webClient.get()
+                .uri("http://localhost:8082/api/inventory",
+                        uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
+                .retrieve()
+                .bodyToMono(InventoryResponse[].class)
+                .block();
+
+        boolean allProductsInStock = Arrays.stream(inventoryResponsArray)
+                .allMatch(InventoryResponse::isInStock);
+
+        if(allProductsInStock){
+            orderRepository.save(order);
+        } else {
+            throw new IllegalArgumentException("Product is not in stock, please try again later");
+        }
+    }
+
+    private OrderLineItems mapToDto(OrderLineItemsDto orderLineItemsDto) {
+        OrderLineItems orderLineItems = new OrderLineItems();
+        orderLineItems.setPrice(orderLineItemsDto.getPrice());
+        orderLineItems.setQuantity(orderLineItemsDto.getQuantity());
+        orderLineItems.setSkuCode(orderLineItemsDto.getSkuCode());
+        return orderLineItems;
+    }
+}
+```
+- version-2: with FeignClient i.e. InventoryClient for inter-communication
+
 ```java
 package com.springboot.microservice.order.service;
 
@@ -747,9 +924,28 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface OrderRepository extends JpaRepository<Order, Long> {
 }
 ```
+InventoryClient.java:
+
+```java
+package com.springboot.microservice.order.client;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@FeignClient(value = "inventory", url = "${inventory.url}")
+public interface InventoryClient {
+    @RequestMapping(method = RequestMethod.GET, value = "/api/inventory")
+    boolean isInStock(@RequestParam String skuCode, @RequestParam Integer quantity);
+}
+```
+
 application.properties contains application-specific properties.
 
 ```
+#spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+#spring.datasource.url=jdbc:mysql://localhost:3306/order-service
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.datasource.url=jdbc:mysql://localhost:3306/order_service
 spring.datasource.username=root
@@ -968,6 +1164,61 @@ In this structure:
 
 InventoryServiceApplication.java is the main class that contains the main method to run the Spring Boot application.
 
+InventoryServiceApplication.java
+
+version 1:
+
+```java
+package com.springboot.microservice.inventory;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class InventoryServiceApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(InventoryServiceApplication.class, args);
+    }
+}
+```
+version 2:
+
+```java
+package com.springboot.microservice.inventory;
+
+import com.springboot.microservice.inventory.model.Inventory;
+import com.springboot.microservice.inventory.repository.InventoryRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+@SpringBootApplication
+public class InventoryServiceApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(InventoryServiceApplication.class, args);
+    }
+
+    @Bean
+    public CommandLineRunner loadData(InventoryRepository inventoryRepository) {
+        return args -> {
+            Inventory inventory = new Inventory();
+            inventory.setSkuCode("iphone_13");
+            inventory.setQuantity(100);
+
+            Inventory inventory1 = new Inventory();
+            inventory1.setSkuCode("iphone_13_red");
+            inventory1.setQuantity(0);
+
+            inventoryRepository.save(inventory);
+            inventoryRepository.save(inventory1);
+        };
+    }
+}
+```
+
 controller package contains the controller classes with mapping endpoints.
 ```java
 package com.springboot.microservice.inventory.controller;
@@ -984,6 +1235,17 @@ public class InventoryController {
 
     private final InventoryService inventoryService;
 
+    // Version-1 List<String> skuCode as RequestParam
+    // http://localhost:8082/api/inventory/iphone-13,iphone13-red
+    // http://localhost:8082/api/inventory?skuCode=iphone-13&skuCode=iphone13-red
+
+    /*@GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<InventoryResponse> isInStock(@RequestParam List<String> skuCode) {
+        return inventoryService.isInStock(skuCode);
+    }*/
+
+    // Version-2 skuCode & quantity as RequestParam
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public boolean isInStock(@RequestParam String skuCode, @RequestParam Integer quantity) {
@@ -992,6 +1254,30 @@ public class InventoryController {
 }
 ```
 dto package contains the dto classes that interact with the database.
+
+InventoryResponse.java
+
+Version-1:
+
+```java
+package com.springboot.microservice.inventory.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class InventoryResponse {
+    private String skuCode;
+    private boolean isInStock;
+}
+```
+Version-2:
+
 ```java
 package com.springboot.microservice.inventory.dto;
 
@@ -1026,6 +1312,40 @@ public class Inventory {
 ```
 
 service package contains the service classes which contain business logic.
+InventoryService.java
+
+version: 1 - with List<String> skuCode
+
+```java
+package com.springboot.microservice.inventory.service;
+
+import com.springboot.microservice.inventory.dto.InventoryResponse;
+import com.springboot.microservice.inventory.repository.InventoryRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class InventoryService {
+
+    private final InventoryRepository inventoryRepository;
+
+    @Transactional(readOnly = true)
+    public List<InventoryResponse> isInStock(List<String> skuCode) {
+        return inventoryRepository.findBySkuCodeIn(skuCode).stream()
+                .map(inventory ->
+                        InventoryResponse.builder()
+                                .skuCode(inventory.getSkuCode())
+                                .isInStock(inventory.getQuantity() > 0)
+                                .build()
+                ).toList();
+    }
+}
+```
+version: 2 - with skuCode & quantity
 ```java
 package com.springboot.microservice.inventory.service;
 
@@ -1054,6 +1374,8 @@ import com.springboot.microservice.inventory.model.Inventory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
+    //version: 1 - with List<String> skuCode
+    //List<Inventory> findBySkuCodeIn(List<String> skuCode);
     boolean existsBySkuCodeAndQuantityIsGreaterThanEqual(String skuCode, int quantity);
 }
 ```
@@ -1063,6 +1385,7 @@ spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.datasource.url=jdbc:mysql://localhost:3306/inventory_service
 spring.datasource.username=root
 spring.datasource.password=mysql
+#spring.jpa.hibernate.ddl-auto=create-drop
 spring.jpa.hibernate.ddl-auto=none
 server.port=8082
 ```
