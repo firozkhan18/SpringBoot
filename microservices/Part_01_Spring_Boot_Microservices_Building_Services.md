@@ -55,6 +55,55 @@ The Application Module includes Model Module, Service Implementation Module as d
 
 The Model Module contains Entities and Visual Objects to be used in the project.
 
+Spring Boot Project Structure
+ 
+product-service
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com
+|   |   |       └── springboot
+|   |   |           └── microservice
+|   |   |               └── product
+|   |   |                   ├── ProductApplication.java
+|   |   |                   ├── controller
+|   |   |                   |   └── ExampleController.java
+│   │   │                   ├── model
+│   │   │                   │   └── DemoModel.java
+|   |   |                   ├── service
+|   |   |                   |   └── ExampleService.java
+|   |   |                   └── repository
+|   |   |                       └── ExampleRepository.java
+|   |   └── resources
+|   |       ├── application.properties
+|   |       ├── static
+|   |       ├── templates
+|   |       └── META-INF
+|   |           └── MANIFEST.MF
+|   └── src
+|       ├── test
+|       │   ├── java
+|       │   │   └── com
+|       │   │       └── springboot
+|       │   │           └── microservice
+|       │   │               └── product
+|       │   │                   └── ProductApplicationTest.java
+|       └── resources
+|           └── application.properties
+└── pom.xml
+
+In this structure:
+
+DemoApplication.java is the main class that contains the main method to run the Spring Boot application.
+controller package contains the controller classes with mapping endpoints.
+service package contains the service classes which contain business logic.
+repository package contains the repository classes that interact with the database.
+application.properties contains application-specific properties.
+static directory contains static resources like Javascript, CSS, etc.
+templates directory contains HTML templates for the application.
+META-INF directory contains the manifest file.
+
+
 ```pom
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -137,11 +186,81 @@ spring.data.mongodb.uri=mongodb://root:password@localhost:27017/product-service?
 
 The Repository module contains repositories to be used in the project. It depends on the Model Module.
 
+product-service
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com
+|   |   |       └── springboot
+|   |   |           └── microservice
+|   |   |               └── product
+|   |   |                   ├── ProductApplication.java
+|   |   |                   ├── controller
+|   |   |                   |   └── ExampleController.java
+│   │   │                   ├── model
+│   │   │                   │   └── DemoModel.java
+|   |   |                   ├── service
+|   |   |                   |   └── ExampleService.java
+|   |   |                   └── repository
+|   |   |                       └── ExampleRepository.java
+|   |   └── resources
+|   |       ├── application.properties
+|   |       ├── static
+|   |       ├── templates
+|   |       └── META-INF
+|   |           └── MANIFEST.MF
+|   └── src
+|       ├── test
+|       │   ├── java
+|       │   │   └── com
+|       │   │       └── springboot
+|       │   │           └── microservice
+|       │   │               └── product
+|       │   │                   └── ProductApplicationTest.java
+|       └── resources
+|           └── application.properties
+└── pom.xml
+
 - inventory-service Module
 
 ![Desktop Screenshot](images/inventory-service.PNG)
 
 The Service API module contains all project services. It also depends on Model Module.
+
+product-service
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com
+|   |   |       └── springboot
+|   |   |           └── microservice
+|   |   |               └── product
+|   |   |                   ├── ProductApplication.java
+|   |   |                   ├── controller
+|   |   |                   |   └── ExampleController.java
+│   │   │                   ├── model
+│   │   │                   │   └── DemoModel.java
+|   |   |                   ├── service
+|   |   |                   |   └── ExampleService.java
+|   |   |                   └── repository
+|   |   |                       └── ExampleRepository.java
+|   |   └── resources
+|   |       ├── application.properties
+|   |       ├── static
+|   |       ├── templates
+|   |       └── META-INF
+|   |           └── MANIFEST.MF
+|   └── src
+|       ├── test
+|       │   ├── java
+|       │   │   └── com
+|       │   │       └── springboot
+|       │   │           └── microservice
+|       │   │               └── product
+|       │   │                   └── ProductApplicationTest.java
+|       └── resources
+|           └── application.properties
+└── pom.xml
 
 - registry-server Module
 
@@ -149,17 +268,122 @@ The Service API module contains all project services. It also depends on Model M
 
 The Service Implementation module implements the service. It depends on Repository Module and Service API Module.
 
+product-service
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com
+|   |   |       └── springboot
+|   |   |           └── microservice
+|   |   |               └── product
+|   |   |                   ├── ProductApplication.java
+|   |   |                   ├── controller
+|   |   |                   |   └── ExampleController.java
+│   │   │                   ├── model
+│   │   │                   │   └── DemoModel.java
+|   |   |                   ├── service
+|   |   |                   |   └── ExampleService.java
+|   |   |                   └── repository
+|   |   |                       └── ExampleRepository.java
+|   |   └── resources
+|   |       ├── application.properties
+|   |       ├── static
+|   |       ├── templates
+|   |       └── META-INF
+|   |           └── MANIFEST.MF
+|   └── src
+|       ├── test
+|       │   ├── java
+|       │   │   └── com
+|       │   │       └── springboot
+|       │   │           └── microservice
+|       │   │               └── product
+|       │   │                   └── ProductApplicationTest.java
+|       └── resources
+|           └── application.properties
+└── pom.xml
+
 - api-gateway Module
 
 ![Desktop Screenshot](images/api-gateway.PNG)
 
 The Service Implementation module implements the service. It depends on Repository Module and Service API Module.
 
+product-service
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com
+|   |   |       └── springboot
+|   |   |           └── microservice
+|   |   |               └── product
+|   |   |                   ├── ProductApplication.java
+|   |   |                   ├── controller
+|   |   |                   |   └── ExampleController.java
+│   │   │                   ├── model
+│   │   │                   │   └── DemoModel.java
+|   |   |                   ├── service
+|   |   |                   |   └── ExampleService.java
+|   |   |                   └── repository
+|   |   |                       └── ExampleRepository.java
+|   |   └── resources
+|   |       ├── application.properties
+|   |       ├── static
+|   |       ├── templates
+|   |       └── META-INF
+|   |           └── MANIFEST.MF
+|   └── src
+|       ├── test
+|       │   ├── java
+|       │   │   └── com
+|       │   │       └── springboot
+|       │   │           └── microservice
+|       │   │               └── product
+|       │   │                   └── ProductApplicationTest.java
+|       └── resources
+|           └── application.properties
+└── pom.xml
+
 - notification-service Module
 
 ![Desktop Screenshot](images/notification-service.PNG)
 
 The Service Implementation module implements the service. It depends on Repository Module and Service API Module.
+
+product-service
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com
+|   |   |       └── springboot
+|   |   |           └── microservice
+|   |   |               └── product
+|   |   |                   ├── ProductApplication.java
+|   |   |                   ├── controller
+|   |   |                   |   └── ExampleController.java
+│   │   │                   ├── model
+│   │   │                   │   └── DemoModel.java
+|   |   |                   ├── service
+|   |   |                   |   └── ExampleService.java
+|   |   |                   └── repository
+|   |   |                       └── ExampleRepository.java
+|   |   └── resources
+|   |       ├── application.properties
+|   |       ├── static
+|   |       ├── templates
+|   |       └── META-INF
+|   |           └── MANIFEST.MF
+|   └── src
+|       ├── test
+|       │   ├── java
+|       │   │   └── com
+|       │   │       └── springboot
+|       │   │           └── microservice
+|       │   │               └── product
+|       │   │                   └── ProductApplicationTest.java
+|       └── resources
+|           └── application.properties
+└── pom.xml
 
 - POM Aggregator (Parent POM)
 
