@@ -98,7 +98,7 @@ product-service
 In this structure:
 
 ProductServiceApplication.java is the main class that contains the main method to run the Spring Boot application.
-
+```java
 package com.springboot.microservice;
 
 import org.springframework.boot.SpringApplication;
@@ -111,6 +111,7 @@ public class ProductServiceApplication {
 		SpringApplication.run(ProductServiceApplication.class, args);
 	}
 }
+```
 controller package contains the ProductController class with mapping endpoints.
 
 ```java
