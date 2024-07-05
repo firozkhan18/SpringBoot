@@ -385,7 +385,9 @@ pom.xml:
 ![Desktop Screenshot](images/product-post.PNG)
 ![Desktop Screenshot](images/product-get.PNG)
 
-### Implement Automated Tests
+### Test Container:
+
+![Desktop Screenshot](images/testcontainer.PNG)
 
 ### Implement Automated Tests:
 
