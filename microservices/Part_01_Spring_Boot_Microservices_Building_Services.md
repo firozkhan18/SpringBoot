@@ -204,8 +204,6 @@ public class ProductService {
     }
 }
 ```
-![Desktop Screenshot](images/ProductService.PNG)
-
 repository package contains the repository classes that interact with the database.
 
 ```java
