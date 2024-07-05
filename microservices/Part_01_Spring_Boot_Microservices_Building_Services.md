@@ -393,6 +393,14 @@ pom.xml:
 
 ![Desktop Screenshot](images/testcontainer-maven.PNG)
 
+- For Multi dependencies
+  
+![Desktop Screenshot](images/testcontainer-multi.PNG)
+
+- For Mongo DB
+
+![Desktop Screenshot](images/testcontainer-mongodb.PNG)
+
 ### Implement Automated Tests:
 
 ProductServiceApplicationTests.java
