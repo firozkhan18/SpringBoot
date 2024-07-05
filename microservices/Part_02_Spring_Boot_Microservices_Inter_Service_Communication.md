@@ -1,6 +1,6 @@
 ## SPTINGBOOT MICROSERVICE INTER SERVICE COMMUNICATION
 
-- [01 - Introduction](#introduction)
+- [01 - Inter Service Communication](#inter-service-communication)
 - [02 - Solution Architecture of Microservices](#solution-architecture-of-microservices)
 - [03 - Logical Architecture of Services](#logical-architecture-of-services)
 - [04 - Create A Microservice](#create-a-microservice)
@@ -16,7 +16,9 @@
 - [14 - Implement Inventory Service](#implement-inventory-service)
 - [15 - Migrate to Maven Multi-Module Project](#migrate-to-maven-multi-module-project)
 - [16 - Bugfix in Inventory Service](#bugfix-in-inventory-service)
-- 
+
+### Inter Service Communication
+
 ![Desktop Screenshot](images/services-commu.PNG)
 
 - registry-server Module
