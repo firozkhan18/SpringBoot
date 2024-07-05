@@ -313,6 +313,24 @@ spring.data.mongodb.uri=mongodb://localhost:27017/product-service
 eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
 spring.application.name=product-service
 ```
+product-service ProductServiceApplication.java
+```java
+package com.springboot.microservice.product;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+
+@SpringBootApplication
+@EnableEurekaClient
+public class ProductServiceApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ProductServiceApplication.class, args);
+	}
+
+}
+```
 order-service pom.xml with Eureka Client dependency:
 
 ```pom
@@ -383,6 +401,116 @@ eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
 spring.application.name=order-service
 ```
 
+order-service OrderServiceApplication.java
+
+```java
+package com.springboot.microservice.order;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+
+@SpringBootApplication
+@EnableEurekaClient
+public class OrderServiceApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(OrderServiceApplication.class, args);
+	}
+}
+```
+WebClientConfig.java adding @LoadBalanced for client side loand balancing
+
+```java
+package com.springboot.microservice.order.config;
+
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
+
+@Configuration
+public class WebClientConfig {
+
+    @Bean
+    @LoadBalanced
+    public WebClient.Builder webClientBuilder() {
+        return WebClient.builder();
+    }
+}
+```
+OrderService.java update the URL and replace the WebClient to WebClient.Builder
+```java
+package com.springboot.microservice.order.service;
+
+import com.springboot.microservice.order.dto.InventoryResponse;
+import com.springboot.microservice.order.dto.OrderLineItemsDto;
+import com.springboot.microservice.order.dto.OrderRequest;
+import com.springboot.microservice.order.model.Order;
+import com.springboot.microservice.order.model.OrderLineItems;
+import com.springboot.microservice.order.repository.OrderRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class OrderService {
+
+    private final OrderRepository orderRepository;
+    private final WebClient.Builder webClientBuilder;
+
+    public void placeOrder(OrderRequest orderRequest) {
+        Order order = new Order();
+        order.setOrderNumber(UUID.randomUUID().toString());
+
+        List<OrderLineItems> orderLineItems = orderRequest.getOrderLineItemsDtoList()
+                .stream()
+                .map(this::mapToDto)
+                .toList();
+
+        order.setOrderLineItemsList(orderLineItems);
+
+        List<String> skuCodes = order.getOrderLineItemsList().stream()
+                .map(OrderLineItems::getSkuCode)
+                .toList();
+
+        // Call Inventory Service, and place order if product is in
+        // stock
+        InventoryResponse[] inventoryResponsArray = webClientBuilder.build().get()
+                .uri("http://inventory-service/api/inventory",
+                        uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
+                .retrieve()
+                .bodyToMono(InventoryResponse[].class)
+                .block();
+
+        boolean allProductsInStock = Arrays.stream(inventoryResponsArray)
+                .allMatch(InventoryResponse::isInStock);
+
+        if(allProductsInStock){
+            orderRepository.save(order);
+        } else {
+            throw new IllegalArgumentException("Product is not in stock, please try again later");
+        }
+    }
+
+    private OrderLineItems mapToDto(OrderLineItemsDto orderLineItemsDto) {
+        OrderLineItems orderLineItems = new OrderLineItems();
+        orderLineItems.setPrice(orderLineItemsDto.getPrice());
+        orderLineItems.setQuantity(orderLineItemsDto.getQuantity());
+        orderLineItems.setSkuCode(orderLineItemsDto.getSkuCode());
+        return orderLineItems;
+    }
+}
+```
+restart the order service and verify load balancing in postman.
+
 inventory-service pom.xml with Eureka Client dependency:
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -447,4 +575,41 @@ server.port=0
 eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
 spring.application.name=inventory-service
 ```
+inventory-service InventoryServiceApplication.java
 
+```java
+package com.springboot.microservice.inventory;
+
+import com.springboot.microservice.inventory.model.Inventory;
+import com.springboot.microservice.inventory.repository.InventoryRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.context.annotation.Bean;
+
+@SpringBootApplication
+@EnableEurekaClient
+public class InventoryServiceApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(InventoryServiceApplication.class, args);
+    }
+
+    @Bean
+    public CommandLineRunner loadData(InventoryRepository inventoryRepository) {
+        return args -> {
+            Inventory inventory = new Inventory();
+            inventory.setSkuCode("iphone_13");
+            inventory.setQuantity(100);
+
+            Inventory inventory1 = new Inventory();
+            inventory1.setSkuCode("iphone_13_red");
+            inventory1.setQuantity(0);
+
+            inventoryRepository.save(inventory);
+            inventoryRepository.save(inventory1);
+        };
+    }
+}
+```
