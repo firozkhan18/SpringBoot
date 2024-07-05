@@ -94,13 +94,20 @@ product-service
 ```
 In this structure:
 
-DemoApplication.java is the main class that contains the main method to run the Spring Boot application.
+ProductApplication.java is the main class that contains the main method to run the Spring Boot application.
+
 controller package contains the controller classes with mapping endpoints.
+
 service package contains the service classes which contain business logic.
+
 repository package contains the repository classes that interact with the database.
+
 application.properties contains application-specific properties.
+
 static directory contains static resources like Javascript, CSS, etc.
+
 templates directory contains HTML templates for the application.
+
 META-INF directory contains the manifest file.
 
 
