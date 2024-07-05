@@ -1,7 +1,7 @@
 ## [<<PREV](Part_01_Spring_Boot_Microservices_Building_Services.md) - MICROSERVICE INTER SERVICE COMMUNICATION - [NEXT>>](Part_03_Spring_Boot_Microservices_Service_Discovery.md)
 
 - [01 - Inter Service Communication](#inter-service-communication)
-- [02 - Solution Architecture of Microservices](#solution-architecture-of-microservices)
+- [02 - Inter Service Communication Between Order & Inventory Microservices](#inter-service-communication-between-order-and-inventory-microservices)
 - [03 - Logical Architecture of Services](#logical-architecture-of-services)
 - [04 - Create A Microservice](#create-a-microservice)
 - [05 - Implement Product Service](#implement-product-service)
@@ -20,6 +20,8 @@
 ### Inter Service Communication
 
 ![Desktop Screenshot](images/services-commu.PNG)
+
+### Inter Service Communication Between Order & Inventory Microservices
 
 ```
 order-service
