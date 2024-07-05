@@ -17,7 +17,7 @@
 - [13 - Generate Inventory Service](#generate-inventory-service)
 - [14 - Implement Inventory Service](#implement-inventory-service)
 - [15 - Migrate to Maven Multi-Module Project](#migrate-to-maven-multi-module-project)
-- [16 - Maven Multi-Module Project after Migration](#maven-multi-module-project-after-migration)
+- [16 - Maven Multi-Module Project After Migration](#maven-multi-module-project-after-migration)
 - [17 - Bugfix in Inventory Service](#bugfix-in-inventory-service)
 
 ### Introduction
@@ -1655,7 +1655,7 @@ pom.xml (parent pom)
     </build>
 </project>
 ```
-### Maven Multi-Module Project after Migration
+### Maven Multi-Module Project After Migration
 ```
 spring-boot-microservices
 ├───product-service
