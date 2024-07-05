@@ -1,26 +1,14 @@
 Build a Full Stack Reddit Clone with – Spring boot and Angular – Part 1
-2 Comments
 
-Author Image
-BY SAI UPADHYAYULA 
-
-September 30, 2019
-
-
-Share
-Tweet
-Pin
 What’s up, everybody!! In this series of blog posts, we will see how to build a Reddit Clone with Spring Boot and Angular. We will be using different Spring Technologies like Spring Data JPA, Spring Security with JWT Authentication and MySQL as the database. On the frontend side, we will be using Angular 8 as our frontend framework and Bootstrap as the CSS framework.
 
 If you are a visual learner like me, you can have a look at the youtube video I have created as a companion to this post.
 
 
 The source code of this project, is hosted on Github –
-Backend – https://github.com/SaiUpadhyayula/spring-reddit-clone
-Frontend – https://github.com/SaiUpadhyayula/angular-reddit-clone
 
 If you like this kind of tutorials, then besure to check my other tutorial series on how to build a blog using Spring boot and Angular here:
-https://programmingtechie.com/2019/03/17/how-to-build-a-simple-blog-application-using-spring-boot-and-angular/
+
 
 Here are some screenshots of the application:
 
