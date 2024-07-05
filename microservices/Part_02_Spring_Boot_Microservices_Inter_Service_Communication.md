@@ -2,8 +2,8 @@
 
 - [01 - Inter Service Communication](#inter-service-communication)
 - [02 - Inter Service Communication Between Order & Inventory Microservices](#inter-service-communication-between-order-and-inventory-microservices)
-- [03 - Update Order Service](#update-order-service)
-- [04 - Create A Microservice](#create-a-microservice)
+- [03 - Update Order Service Structure](#update-order-service-structure)
+- [04 - Update Order Service](#update-order-service)
 - [05 - Implement Product Service](#implement-product-service)
 - [06 - Manual Testing through Postman](#manual-testing-through-postman)
 - [07 - Implement Automated Tests](#implement-automated-tests)
