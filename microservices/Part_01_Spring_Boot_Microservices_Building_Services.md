@@ -378,6 +378,17 @@ pom.xml:
 	    <scope>test</scope>
 	</dependency>
   </dependencies>
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers-bom</artifactId>
+            <version>1.19.8</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
   <build>
     <plugins>
       <plugin>
@@ -1793,11 +1804,6 @@ spring.thymeleaf.cache = false
 After creating all the above files, the application module directory looks like the following:
 
 ### Spring Boot Multi-Module Project
-
-
-
-
-
 
 Create a multimodule project where parent module named as **spring-boot-microservice**.
 
