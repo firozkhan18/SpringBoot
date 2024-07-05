@@ -1,5 +1,22 @@
-# Spring Boot Microservices Inter Service Communication
+## SPTINGBOOT MICROSERVICE INTER SERVICE COMMUNICATION
 
+- [01 - Introduction](#introduction)
+- [02 - Solution Architecture of Microservices](#solution-architecture-of-microservices)
+- [03 - Logical Architecture of Services](#logical-architecture-of-services)
+- [04 - Create A Microservice](#create-a-microservice)
+- [05 - Implement Product Service](#implement-product-service)
+- [06 - Manual Testing through Postman](#manual-testing-through-postman)
+- [07 - Implement Automated Tests](#implement-automated-tests)
+- [08 - Test Containers](#test-containers)
+- [09 - Write Integration Tests](#write-wntegration-tests)
+- [10 - Generate Order Service](#generate-order-service)
+- [11 - Implement Order Service](#implement-order-service)
+- [12 - Test Order Service](#test-order-service)
+- [13 - Generate Inventory Service](#generate-inventory-service)
+- [14 - Implement Inventory Service](#implement-inventory-service)
+- [15 - Migrate to Maven Multi-Module Project](#migrate-to-maven-multi-module-project)
+- [16 - Bugfix in Inventory Service](#bugfix-in-inventory-service)
+- 
 ![Desktop Screenshot](images/services-commu.PNG)
 
 - registry-server Module
