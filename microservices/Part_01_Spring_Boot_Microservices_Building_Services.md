@@ -1,4 +1,4 @@
-## [PART 01] BUILDING SPTINGBOOT MICROSERVICE USING CLOUD - [PART 02](Part_02_Spring_Boot_Microservices_Inter_Service_Communication.md)
+## PART 01 - BUILDING SPTINGBOOT MICROSERVICE USING CLOUD - [>> PART 02](Part_02_Spring_Boot_Microservices_Inter_Service_Communication.md)
 
 - [01 - Introduction](#introduction)
 - [02 - Solution Architecture of Microservices](#solution-architecture-of-microservices)
