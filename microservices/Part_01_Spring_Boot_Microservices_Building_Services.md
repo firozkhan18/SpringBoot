@@ -206,7 +206,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface ProductRepository extends MongoRepository<Product, String> {
 }
 ```
-model package contains the model classes that interact with the database.
+model package contains the model classes that interact with the MongoDB database.
 
 ```java
 package com.springboot.microservice.model;
