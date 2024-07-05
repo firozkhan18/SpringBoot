@@ -1,4 +1,4 @@
-## SPTINGBOOT MICROSERVICE INTER SERVICE COMMUNICATION - [PART 01 - SPTINGBOOT MICROSERVICE BUILD SERVICES](Part_01_Spring_Boot_Microservices_Building_Services.md)
+## SPTINGBOOT MICROSERVICE INTER SERVICE COMMUNICATION - [PART 01 - BUILDING MICROSERVICES](Part_01_Spring_Boot_Microservices_Building_Services.md)
 
 - [01 - Inter Service Communication](#inter-service-communication)
 - [02 - Solution Architecture of Microservices](#solution-architecture-of-microservices)
