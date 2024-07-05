@@ -22,7 +22,9 @@
 
 ### Inter Service Communication
 
-![Desktop Screenshot](images/services-commu.PNG)
+![Desktop Screenshot](images/service-descovery-commu.PNG)
+![Desktop Screenshot](images/service-descovery-local.PNG)
+![Desktop Screenshot](images/service-descovery.PNG)
 
 ### Inter Service Communication Between Order And Inventory Microservices
 
