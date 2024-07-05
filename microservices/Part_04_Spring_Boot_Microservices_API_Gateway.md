@@ -182,43 +182,6 @@ spring-boot-microservices
 |   |       └── resources
 |   |           └── application.properties
 |   └── pom.xml
-├───notification-service
-|   ├── src
-|   │   ├── main
-|   │   │   ├── java
-|   │   │   │   └── com
-|   |   |   |       └── springboot
-|   |   |   |           └── microservice
-|   |   |   |               └── notification
-|   |   |   |                   ├── NotificationServiceApplication.java
-|   |   |   |                   ├── controller
-|   |   |   |                   |   └── NotificationController.java
-|   |   |   |                   ├── dto
-|   |   |   |                   |   ├── NotificationRequest.java
-|   |   |   |                   |   └── NotificationResponse.java
-│   |   │   │                   ├── model
-│   |   │   │                   │   └── Notification.java
-|   |   |   |                   ├── service
-|   |   |   |                   |   └── NotificationService.java
-|   |   |   |                   └── repository
-|   |   |   |                       └── NotificationRepository.java
-|   |   |   └── resources
-|   |   |       ├── application.properties
-|   |   |       ├── static
-|   |   |       ├── templates
-|   |   |       └── META-INF
-|   |   |           └── MANIFEST.MF
-|   |   └── src
-|   |       ├── test
-|   |       │   ├── java
-|   |       │   │   └── com
-|   |       │   │       └── springboot
-|   |       │   │           └── microservice
-|   |       │   │               └── notification
-|   |       │   │                   └── NotificationServiceApplicationTest.java
-|   |       └── resources
-|   |           └── application.properties
-|   └── pom.xml
 ├───service-discovery
 |   ├── src
 |   │   ├── main
@@ -256,7 +219,7 @@ spring-boot-microservices
 |   |       └── resources
 |   |           └── application.properties
 |   └── pom.xml
-└───api-gateway
+├───api-gateway
 |   ├── src
 |   │   ├── main
 |   │   │   ├── java
@@ -290,6 +253,43 @@ spring-boot-microservices
 |   |       │   │           └── microservice
 |   |       │   │               └── gateway
 |   |       │   │                   └── ApiGatewayApplicationTest.java
+|   |       └── resources
+|   |           └── application.properties
+|   └── pom.xml
+├───notification-service
+|   ├── src
+|   │   ├── main
+|   │   │   ├── java
+|   │   │   │   └── com
+|   |   |   |       └── springboot
+|   |   |   |           └── microservice
+|   |   |   |               └── notification
+|   |   |   |                   ├── NotificationServiceApplication.java
+|   |   |   |                   ├── controller
+|   |   |   |                   |   └── NotificationController.java
+|   |   |   |                   ├── dto
+|   |   |   |                   |   ├── NotificationRequest.java
+|   |   |   |                   |   └── NotificationResponse.java
+│   |   │   │                   ├── model
+│   |   │   │                   │   └── Notification.java
+|   |   |   |                   ├── service
+|   |   |   |                   |   └── NotificationService.java
+|   |   |   |                   └── repository
+|   |   |   |                       └── NotificationRepository.java
+|   |   |   └── resources
+|   |   |       ├── application.properties
+|   |   |       ├── static
+|   |   |       ├── templates
+|   |   |       └── META-INF
+|   |   |           └── MANIFEST.MF
+|   |   └── src
+|   |       ├── test
+|   |       │   ├── java
+|   |       │   │   └── com
+|   |       │   │       └── springboot
+|   |       │   │           └── microservice
+|   |       │   │               └── notification
+|   |       │   │                   └── NotificationServiceApplicationTest.java
 |   |       └── resources
 |   |           └── application.properties
 |   └── pom.xml
