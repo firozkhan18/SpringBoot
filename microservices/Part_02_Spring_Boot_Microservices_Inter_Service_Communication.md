@@ -1,5 +1,7 @@
 ## [<<PREV](Part_01_Spring_Boot_Microservices_Building_Services.md) - MICROSERVICE INTER SERVICE COMMUNICATION - [NEXT>>](Part_03_Spring_Boot_Microservices_Service_Discovery.md)
 
+### TABLE OF CONTENTS
+
 - [01 - Inter Service Communication](#inter-service-communication)
 - [02 - Inter Service Communication Between Order & Inventory Microservices](#inter-service-communication-between-order-and-inventory-microservices)
 - [03 - Update Order Service Structure](#update-order-service-structure)
