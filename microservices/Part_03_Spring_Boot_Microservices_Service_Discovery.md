@@ -226,6 +226,32 @@ server.port=8761
     </build>
 </project>
 ```
+Add below netflix-eureka-client dependency in **product-service**, **order-service** and **iventory-service** pom.xml
+
+```pom
+ <dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+ </dependency>
+```
+
+Add below netflix-eureka-client configuration in **product-service**, **order-service** and **iventory-service** application.properties.
+
+product-service application.properties:
+```
+eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
+spring.application.name=product-service
+```
+order-service application.properties:
+```
+eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
+spring.application.name=order-service
+```
+inventory-service application.properties:
+```
+eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
+spring.application.name=inventory-service
+```
 - api-gateway Module
 
 ![Desktop Screenshot](images/api-gateway.PNG)
