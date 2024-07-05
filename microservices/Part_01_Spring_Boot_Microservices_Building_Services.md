@@ -43,6 +43,263 @@ Spring Cloud provides tools for developers to quickly build some of the common p
 
 ### Create A Microservice
 
+The application module is the main module of the project. It contains the application class in which the main method is defined that is necessary to run the Spring Boot Application. It also contains application configuration properties, Controller, views, and resources.
+
+The Application Module includes Model Module, Service Implementation Module as dependency that contains Model Module, Repository Module, and Service API module.
+
+- product-service Module
+
+The Model Module contains Entities and Visual Objects to be used in the project.
+
+- order-service Module
+
+The Repository module contains repositories to be used in the project. It depends on the Model Module.
+
+- Service API Module
+
+The Service API module contains all project services. It also depends on Model Module.
+
+- Service Implementation Module
+
+The Service Implementation module implements the service. It depends on Repository Module and Service API Module.
+
+- POM Aggregator (Parent POM)
+
+The parent pom contains all the application modules. It also includes all the common dependencies and properties that are needed by more than one module. Dependencies are defined without version because the project has defined the Spring IO Platform as a parent.
+
+Let's understand the structure of the multi-module application that we have created.
+
+Spring-boot-microservices  
+├── pom.xml  
+│   └── REDME.adoc  
+├── application  
+│   ├── pom.xml  
+│   └── src  
+│       └── main  
+│           ├── java  
+│           │   └── sample  
+│           │       └── multimodule  
+│           │           ├── SampleWebJspApplication.java  
+│           │           └── web  
+│           │               └── WelcomeController.java  
+│           └── resources  
+│               ├── application.properties  
+│               └── templates  
+│                   └── welcome  
+│                       └── show.html  
+├── model  
+│   ├── pom.xml  
+│   └── src  
+│       └── main  
+│           └── java  
+│               └── sample  
+│                   └── multimodule  
+│                       └── domain  
+│                           └── entity  
+│                               └── Account.java  
+|  
+├── repository  
+│   ├── pom.xml  
+│   └── src  
+│       └── main  
+│           └── java  
+│               └── sample  
+│                   └── multimodule  
+│                       └── repository  
+│                           └── AccountRepository.java  
+├── service-api  
+│   ├── pom.xml  
+│   └── src  
+│       └── main  
+│           └── java  
+│               └── sample  
+│                   └── multimodule  
+│                       └── service  
+│                           └── api  
+│                               ├── AccountNotFoundException.java  
+│                               └── AccountService.java  
+└── service-impl  
+    ├── pom.xml  
+    └── src  
+        └── main  
+            └── java  
+                └── sample  
+                    └── multimodule  
+                        └── service  
+                            └── impl  
+                                └── AccountServiceImpl.java  
+                                
+Step 1: Create a Maven Project with the name spring-boot-microservices.
+
+Step 2: Open the pom.xml (parent pom) file and change the packaging type jar to pom.
+
+pom.xml (parent pom)
+```pom
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>  
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">  
+<modelVersion>4.0.0</modelVersion>  
+<!-- Spring IO Platform is the parent of the generated application to  
+be able to use Spring Boot and all its default configuration -->  
+<parent>  
+<groupId>io.spring.platform</groupId>  
+<artifactId>platform-bom</artifactId>  
+<version>2.0.1.RELEASE</version>  
+</parent>  
+<groupId>com.springboot.microservices</groupId>  
+<artifactId>spring-boot-microservices</artifactId>  
+<version>0.0.1-SNAPSHOT</version>  
+<packaging>pom</packaging>  
+<name>Parent - Pom Aggregator</name>  
+<properties>  
+<java.version>1.8</java.version>  
+</properties>  
+<dependencies>  
+<!-- Spring Boot dependencies -->  
+<dependency>  
+<groupId>org.springframework.boot</groupId>  
+<artifactId>spring-boot-starter</artifactId>  
+</dependency>  
+<dependency>  
+<groupId>org.springframework.boot</groupId>  
+<artifactId>spring-boot-starter-data-jpa</artifactId>  
+</dependency>  
+<dependency>  
+<groupId>org.springframework.boot</groupId>  
+<artifactId>spring-boot-starter-test</artifactId>  
+<scope>test</scope>  
+</dependency>  
+</dependencies>  
+</project>  
+```
+One thing to be noticed in the above pom file is that there is no maven module configured because we have not created yet. Now we will create Maven Modules one by one that we have specified above.
+
+Step 3: Create a Maven Module with the name application.
+
+Step 4: Open the pom.xml file of application module and ensure that the packaging type is jar.
+
+pom.xml
+```pom
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>  
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">  
+    <modelVersion>4.0.0</modelVersion>  
+    <parent>  
+        <groupId>sample.multimodule</groupId>  
+        <artifactId>sample.multimodule</artifactId>  
+        <version>0.0.1-SNAPSHOT</version>  
+    </parent>  
+    <artifactId>sample.multimodule.application</artifactId>  
+    <packaging>jar</packaging>  
+    <name>Project Module - Application</name>  
+    <dependencies>  
+      <!-- Project modules -->  
+      <dependency>  
+        <groupId>sample.multimodule</groupId>  
+        <artifactId>sample.multimodule.service.impl</artifactId>  
+        <version>${project.version}</version>  
+      </dependency>  
+  
+      <!-- Spring Boot dependencies -->  
+          <dependency>  
+              <groupId>org.apache.tomcat.embed</groupId>  
+              <artifactId>tomcat-embed-jasper</artifactId>  
+              <scope>provided</scope>  
+          </dependency>  
+      <dependency>  
+        <groupId>org.springframework.boot</groupId>  
+        <artifactId>spring-boot-starter-web</artifactId>  
+      </dependency>  
+      <dependency>  
+        <groupId>org.springframework.boot</groupId>  
+        <artifactId>spring-boot-starter-thymeleaf</artifactId>  
+      </dependency>  
+      
+    </dependencies>  
+      
+    <build>  
+        <plugins>  
+            <!-- Spring Boot plugins -->  
+            <plugin>  
+                <groupId>org.springframework.boot</groupId>  
+                <artifactId>spring-boot-maven-plugin</artifactId>  
+            </plugin>  
+        </plugins>  
+    </build>  
+  
+</project>
+```
+Step 5: Create the main class. It is the class that is to be run.
+```java
+SampleWebJspApplication.java
+
+package sample.multimodule;  
+import org.springframework.boot.autoconfigure.SpringBootApplication;  
+import org.springframework.boot.SpringApplication;  
+import org.springframework.boot.orm.jpa.EntityScan;  
+@SpringBootApplication  
+public class SampleWebJspApplication   
+{  
+public static void main(String[] args) throws Exception   
+{  
+SpringApplication.run(SampleWebJspApplication.class, args);  
+}  
+}
+```
+Step 6: Create a Controller class with the name WelocameController under the package smaple.multimodule.web.
+
+WelcomeController.java
+```java
+package sample.multimodule.web;  
+import java.util.Date;  
+import java.util.Map;  
+import org.springframework.beans.factory.annotation.Autowired;  
+import org.springframework.beans.factory.annotation.Value;  
+import org.springframework.stereotype.Controller;  
+import org.springframework.web.bind.annotation.RequestMapping;  
+import sample.multimodule.domain.entity.Account;  
+import sample.multimodule.service.api.AccountService;  
+@Controller  
+public class WelcomeController   
+{  
+@Value("${application.message:Hello World}")  
+private String message = "Hello World";  
+@Autowired  
+protected AccountService accountService;  
+@RequestMapping("/")  
+public String welcome(Map<String, Object> model)   
+{  
+// Trying to obtain 23 account  
+Account account = accountService.findOne("23");  
+if(account == null){  
+// If there's some problem creating account, return show view with error status  
+model.put("message", "Error getting account!");  
+model.put("account", "");  
+return "welcome/show";  
+}    
+// Return show view with 23 account info  
+String accountInfo = "Your account number is ".concat(account.getNumber());  
+model.put("message", this.message);  
+model.put("account", accountInfo);  
+return "welcome/show";  
+}  
+@RequestMapping("foo")  
+public String foo(Map<String, Object> model) {  
+throw new RuntimeException("Foo");  
+}  
+}
+```
+Step 7: Open theapplication.properties file, configure the application message and thymeleaf cache to false.
+
+application.properties
+```
+# Application messages  
+application.message = Hello User!  
+dummy.type = type-inside-the-war  
+# Spring Thymeleaf config  
+spring.thymeleaf.cache = false
+```
+After creating all the above files, the application module directory looks like the following:
+
+Spring Boot Multi-Module Project
 
 ### Implement Product Service
 
@@ -788,4 +1045,5 @@ eureka.client.fetch-registry=false
 eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka/
 server.port=8761
 ```
+
 
