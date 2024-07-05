@@ -21,7 +21,7 @@
 - [16 - Bugfix in Inventory Service](#bugfix-in-inventory-service)
 
 ### Inter Service Communication
-
+![Desktop Screenshot](images/service-reg.PNG)
 ![Desktop Screenshot](images/service-descovery-commu.PNG)
 ![Desktop Screenshot](images/service-descovery-local.PNG)
 ![Desktop Screenshot](images/service-descovery.PNG)
