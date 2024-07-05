@@ -188,7 +188,16 @@ public class ProductService {
 
         return products.stream().map(this::mapToProductResponse).toList();
     }
-
+    // for lombok version
+    /*private ProductResponse mapToProductResponse(Product product) {
+        return new ProductResponse.builder()
+			.id(product.getId())
+			.name(product.getName())
+			.description(product.getDescription())
+			.price(product.getPrice())
+			.build();
+    }*/
+    // for record version -replaced
     private ProductResponse mapToProductResponse(Product product) {
         return new ProductResponse(product.getId(), product.getName(),
                 product.getDescription(), product.getPrice());
