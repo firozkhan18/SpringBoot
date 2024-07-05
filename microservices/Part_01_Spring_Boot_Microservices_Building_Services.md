@@ -49,6 +49,8 @@ The application module is the main module of the project. It contains the applic
 
 The Application Module includes Model Module, Service Implementation Module as dependency that contains Model Module, Repository Module, and Service API module.
 
+### Generate Product Service
+
 - 1. product-service Module
 
 ![Desktop Screenshot](images/product-service-1.PNG)
@@ -95,6 +97,9 @@ product-service
 |           └── application.properties
 └── pom.xml
 ```
+
+### Implement Product Service
+
 In this structure:
 
 ProductServiceApplication.java is the main class that contains the main method to run the Spring Boot application.
@@ -319,6 +324,11 @@ pom.xml:
   </build>
 </project>
 ```
+### Manual Testing through Postman
+
+
+### Implement Automated Tests
+
 ### Implement Automated Tests:
 
 ProductServiceApplicationTests.java
@@ -376,9 +386,12 @@ class ProductServiceApplicationTests {
     }
 }
 ```
+
 ### Test Containers
 
+
 ### Write Integration Tests
+
 
 ### Generate Order Service
 
@@ -429,6 +442,8 @@ order-service
 |           └── application.properties
 └── pom.xml
 ```
+### Implement Order Service
+
 In this structure:
 
 OrdreServiceApplication.java is the main class that contains the main method to run the Spring Boot application.
@@ -649,7 +664,9 @@ pom.xml:
 #MongoDB database congfiguration
 spring.data.mongodb.uri=mongodb://localhost:27017/product-service
 ```
-Implement Automated Tests:
+### Test Order Service
+
+### Implement Automated Tests:
 
 InventoryStubs.java
 
@@ -735,6 +752,8 @@ class OrderServiceApplicationTests {
     }
 }
 ```
+### Generate Inventory Service
+
 - inventory-service Module
 
 ![Desktop Screenshot](images/inventory-service.PNG)
@@ -778,6 +797,8 @@ inventory-service
 |           └── application.properties
 └── pom.xml
 ```
+### Implement Inventory Service
+
 In this structure:
 
 InventoryServiceApplication.java is the main class that contains the main method to run the Spring Boot application.
@@ -951,8 +972,9 @@ pom.xml:
 #MongoDB database congfiguration
 spring.data.mongodb.uri=mongodb://localhost:27017/product-service
 ```
+### Test Inventory Service
 
-Implement Automated Tests:
+### Implement Automated Tests:
 
 InventoryServiceApplicationTests.java
 
@@ -1621,36 +1643,7 @@ spring.thymeleaf.cache = false
 ```
 After creating all the above files, the application module directory looks like the following:
 
-Spring Boot Multi-Module Project
-
-### Implement Product Service
-
-
-### Manual Testing through Postman
-
-
-### Implement Automated Tests
-
-
-### Test Containers
-
-
-### Write Integration Tests
-
-
-### Generate Order Service
-
-
-### Implement Order Service
-
-
-### Test Order Service
-
-
-### Generate Inventory Service
-
-
-### Implement Inventory Service
+### Spring Boot Multi-Module Project
 
 
 ### Migrate to Maven Multi-Module Project
