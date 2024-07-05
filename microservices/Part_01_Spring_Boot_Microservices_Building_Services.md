@@ -1,4 +1,4 @@
-## SPTINGBOOT MICROSERVICE USING CLOUD
+## BUILDING SPTINGBOOT MICROSERVICE USING CLOUD
 
 - [01 - Introduction](#introduction)
 - [02 - Solution Architecture of Microservices](#solution-architecture-of-microservices)
