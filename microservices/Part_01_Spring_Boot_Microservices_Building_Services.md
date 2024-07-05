@@ -362,6 +362,21 @@ pom.xml:
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-testcontainers</artifactId>
+	    <scope>test</scope>
+	</dependency>
+	<dependency>
+	    <groupId>org.testcontainers</groupId>
+	    <artifactId>mongodb</artifactId>
+	    <scope>test</scope>
+	</dependency>
+	<dependency>
+	    <groupId>org.testcontainers</groupId>
+	    <artifactId>junit-jupiter</artifactId>
+	    <scope>test</scope>
+	</dependency>
   </dependencies>
   <build>
     <plugins>
