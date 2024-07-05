@@ -72,7 +72,7 @@ To run your own server use the **spring-cloud-starter-netflix-eureka-server** de
 
 - dicovery-server Module
 
-![Desktop Screenshot](images/dicovery-server.PNG)
+![Desktop Screenshot](images/discovery-server.PNG)
 
 The Service Implementation module implements the service. It depends on Repository Module and Service API Module.
 ```
