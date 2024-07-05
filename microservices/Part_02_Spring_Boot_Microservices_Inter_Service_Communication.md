@@ -21,7 +21,7 @@
 
 ![Desktop Screenshot](images/services-commu.PNG)
 
-### Inter Service Communication Between Order & Inventory Microservices
+### Inter Service Communication Between Order And Inventory Microservices
 
 ```
 order-service
