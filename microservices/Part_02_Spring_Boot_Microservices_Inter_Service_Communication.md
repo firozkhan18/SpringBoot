@@ -95,7 +95,6 @@ public class WebClientConfig {
     }
 }
 ```
-
 controller package contains the controller classes with mapping endpoints.
 
 ```java
@@ -122,7 +121,6 @@ public class OrderController {
     }
 }
 ```
-
 dto package contains the dto classes that interact with the database.
 
 OrderLineItemsDto.java
@@ -146,7 +144,6 @@ public class OrderLineItemsDto {
     private Integer quantity;
 }
 ```
-
 OrderRequest.java
 
 - version-1: with lombok
@@ -259,7 +256,7 @@ service package contains the service classes which contain business logic.
 
 OrderService.java
 
-- version-1: with WebClient for inter-communication
+- version-2: with WebClient implementation for inter-communication
 
 ```java
 package com.programmingtechie.orderservice.service;
@@ -360,7 +357,16 @@ templates directory contains HTML templates for the application.
 
 META-INF directory contains the manifest file.
 
-pom.xml:
+Update the pom.xml for implementing WebClient:
+
+```pom
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-webflux</artifactId>
+</dependency>
+```
+
+So, the update version of pom.xml: 
 
 ```pom
 <?xml version="1.0" encoding="UTF-8"?>
@@ -385,11 +391,20 @@ pom.xml:
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-mongodb</artifactId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+     <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webflux</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -564,24 +579,6 @@ InventoryServiceApplication.java is the main class that contains the main method
 
 InventoryServiceApplication.java
 
-version 1:
-
-```java
-package com.springboot.microservice.inventory;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication
-public class InventoryServiceApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(InventoryServiceApplication.class, args);
-    }
-}
-```
-version 2:
-
 ```java
 package com.springboot.microservice.inventory;
 
@@ -637,18 +634,12 @@ public class InventoryController {
     // http://localhost:8082/api/inventory/iphone-13,iphone13-red
     // http://localhost:8082/api/inventory?skuCode=iphone-13&skuCode=iphone13-red
 
-    /*@GetMapping
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<InventoryResponse> isInStock(@RequestParam List<String> skuCode) {
         return inventoryService.isInStock(skuCode);
-    }*/
-
-    // Version-2 skuCode & quantity as RequestParam
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public boolean isInStock(@RequestParam String skuCode, @RequestParam Integer quantity) {
-        return inventoryService.isInStock(skuCode, quantity);
     }
+
 }
 ```
 dto package contains the dto classes that interact with the database.
@@ -672,14 +663,6 @@ import lombok.NoArgsConstructor;
 public class InventoryResponse {
     private String skuCode;
     private boolean isInStock;
-}
-```
-Version-2:
-
-```java
-package com.springboot.microservice.inventory.dto;
-
-public record InventoryResponse(String skuCode, boolean isInStock) {
 }
 ```
 model package contains the model classes that interact with the database.
@@ -743,27 +726,7 @@ public class InventoryService {
     }
 }
 ```
-version: 2 - with skuCode & quantity
-```java
-package com.springboot.microservice.inventory.service;
 
-import com.springboot.microservice.inventory.repository.InventoryRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-@Service
-@RequiredArgsConstructor
-public class InventoryService {
-
-    private final InventoryRepository inventoryRepository;
-
-    @Transactional(readOnly = true)
-    public boolean isInStock(String skuCode, Integer quantity) {
-        return inventoryRepository.existsBySkuCodeAndQuantityIsGreaterThanEqual(skuCode, quantity);
-    }
-}
-```
 repository package contains the repository classes that interact with the database.
 ```java
 package com.springboot.microservice.inventory.repository;
@@ -773,8 +736,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
     //version: 1 - with List<String> skuCode
-    //List<Inventory> findBySkuCodeIn(List<String> skuCode);
-    boolean existsBySkuCodeAndQuantityIsGreaterThanEqual(String skuCode, int quantity);
+    List<Inventory> findBySkuCodeIn(List<String> skuCode);
 }
 ```
 application.properties contains application-specific properties.
@@ -817,12 +779,17 @@ pom.xml:
   </properties>
   <dependencies>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-mongodb</artifactId>
+       <groupId>org.springframework.boot</groupId>
+       <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
+       <groupId>org.springframework.boot</groupId>
+       <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
