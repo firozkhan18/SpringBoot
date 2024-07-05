@@ -65,15 +65,18 @@ product-service
 |   |   |       └── springboot
 |   |   |           └── microservice
 |   |   |               └── product
-|   |   |                   ├── ProductApplication.java
+|   |   |                   ├── ProductServiceApplication.java
 |   |   |                   ├── controller
-|   |   |                   |   └── ExampleController.java
+|   |   |                   |   └── ProductController.java
+|   |   |                   ├── dto
+|   |   |                   |   └── ProductRequest.java
+|   |   |                   |   └── ProductResponse.java
 │   │   │                   ├── model
-│   │   │                   │   └── DemoModel.java
+│   │   │                   │   └── Product.java
 |   |   |                   ├── service
-|   |   |                   |   └── ExampleService.java
+|   |   |                   |   └── ProductService.java
 |   |   |                   └── repository
-|   |   |                       └── ExampleRepository.java
+|   |   |                       └── ProductRepository.java
 |   |   └── resources
 |   |       ├── application.properties
 |   |       ├── static
@@ -87,14 +90,14 @@ product-service
 |       │   │       └── springboot
 |       │   │           └── microservice
 |       │   │               └── product
-|       │   │                   └── ProductApplicationTest.java
+|       │   │                   └── ProductServiceApplicationTest.java
 |       └── resources
 |           └── application.properties
 └── pom.xml
 ```
 In this structure:
 
-ProductApplication.java is the main class that contains the main method to run the Spring Boot application.
+ProductServiceApplication.java is the main class that contains the main method to run the Spring Boot application.
 
 controller package contains the controller classes with mapping endpoints.
 
@@ -180,23 +183,27 @@ spring.data.mongodb.uri=mongodb://localhost:27017/product-service
 
 The Repository module contains repositories to be used in the project. It depends on the Model Module.
 ```
-product-service
+order-service
 ├── src
 │   ├── main
 │   │   ├── java
 │   │   │   └── com
 |   |   |       └── springboot
 |   |   |           └── microservice
-|   |   |               └── product
-|   |   |                   ├── ProductApplication.java
+|   |   |               └── order
+|   |   |                   ├── OrdreServiceApplication.java
+|   |   |                   ├── client
+|   |   |                   |   └── InventoryClient.java
 |   |   |                   ├── controller
-|   |   |                   |   └── ExampleController.java
+|   |   |                   |   └── OrderController.java
+│   │   │                   ├── dto
+│   │   │                   │   └── OrderRequest.java
 │   │   │                   ├── model
-│   │   │                   │   └── DemoModel.java
+│   │   │                   │   └── Order.java
 |   |   |                   ├── service
-|   |   |                   |   └── ExampleService.java
+|   |   |                   |   └── OrderService.java
 |   |   |                   └── repository
-|   |   |                       └── ExampleRepository.java
+|   |   |                       └── OrderRepository.java
 |   |   └── resources
 |   |       ├── application.properties
 |   |       ├── static
@@ -209,15 +216,17 @@ product-service
 |       │   │   └── com
 |       │   │       └── springboot
 |       │   │           └── microservice
-|       │   │               └── product
-|       │   │                   └── ProductApplicationTest.java
+|       │   │               └── order
+|       │   │                   ├── stub
+|       │   │                   │    └── InventoryStub.java
+|       │   │                   └── OrderServiceApplicationTest.java
 |       └── resources
 |           └── application.properties
 └── pom.xml
 ```
 In this structure:
 
-ProductApplication.java is the main class that contains the main method to run the Spring Boot application.
+OrdreServiceApplication.java is the main class that contains the main method to run the Spring Boot application.
 
 controller package contains the controller classes with mapping endpoints.
 
@@ -303,23 +312,25 @@ spring.data.mongodb.uri=mongodb://localhost:27017/product-service
 
 The Service API module contains all project services. It also depends on Model Module.
 ```
-product-service
+inventory-service
 ├── src
 │   ├── main
 │   │   ├── java
 │   │   │   └── com
 |   |   |       └── springboot
 |   |   |           └── microservice
-|   |   |               └── product
-|   |   |                   ├── ProductApplication.java
+|   |   |               └── inventory
+|   |   |                   ├── InventoryServiceApplication.java
 |   |   |                   ├── controller
-|   |   |                   |   └── ExampleController.java
+|   |   |                   |   └── InventoryController.java
+│   │   │                   ├── dto
+│   │   │                   │   └── InventoryResponse.java
 │   │   │                   ├── model
-│   │   │                   │   └── DemoModel.java
+│   │   │                   │   └── Inventory.java
 |   |   |                   ├── service
-|   |   |                   |   └── ExampleService.java
+|   |   |                   |   └── InventoryService.java
 |   |   |                   └── repository
-|   |   |                       └── ExampleRepository.java
+|   |   |                       └── InventoryRepository.java
 |   |   └── resources
 |   |       ├── application.properties
 |   |       ├── static
@@ -332,15 +343,15 @@ product-service
 |       │   │   └── com
 |       │   │       └── springboot
 |       │   │           └── microservice
-|       │   │               └── product
-|       │   │                   └── ProductApplicationTest.java
+|       │   │               └── inventory
+|       │   │                   └── InventoryServiceApplicationTest.java
 |       └── resources
 |           └── application.properties
 └── pom.xml
 ```
 In this structure:
 
-ProductApplication.java is the main class that contains the main method to run the Spring Boot application.
+InventoryServiceApplication.java is the main class that contains the main method to run the Spring Boot application.
 
 controller package contains the controller classes with mapping endpoints.
 
@@ -426,23 +437,23 @@ spring.data.mongodb.uri=mongodb://localhost:27017/product-service
 
 The Service Implementation module implements the service. It depends on Repository Module and Service API Module.
 ```
-product-service
+registry-server
 ├── src
 │   ├── main
 │   │   ├── java
 │   │   │   └── com
 |   |   |       └── springboot
 |   |   |           └── microservice
-|   |   |               └── product
-|   |   |                   ├── ProductApplication.java
+|   |   |               └── registry
+|   |   |                   ├── RegistryServiceApplication.java
 |   |   |                   ├── controller
-|   |   |                   |   └── ExampleController.java
+|   |   |                   |   └── RegistryController.java
 │   │   │                   ├── model
-│   │   │                   │   └── DemoModel.java
+│   │   │                   │   └── Registry.java
 |   |   |                   ├── service
-|   |   |                   |   └── ExampleService.java
+|   |   |                   |   └── RegistryService.java
 |   |   |                   └── repository
-|   |   |                       └── ExampleRepository.java
+|   |   |                       └── RegistryRepository.java
 |   |   └── resources
 |   |       ├── application.properties
 |   |       ├── static
@@ -455,15 +466,15 @@ product-service
 |       │   │   └── com
 |       │   │       └── springboot
 |       │   │           └── microservice
-|       │   │               └── product
-|       │   │                   └── ProductApplicationTest.java
+|       │   │               └── registry
+|       │   │                   └── RegistryServiceApplicationTest.java
 |       └── resources
 |           └── application.properties
 └── pom.xml
 ```
 In this structure:
 
-ProductApplication.java is the main class that contains the main method to run the Spring Boot application.
+RegistryServiceApplication.java is the main class that contains the main method to run the Spring Boot application.
 
 controller package contains the controller classes with mapping endpoints.
 
@@ -549,23 +560,23 @@ spring.data.mongodb.uri=mongodb://localhost:27017/product-service
 
 The Service Implementation module implements the service. It depends on Repository Module and Service API Module.
 ```
-product-service
+api-gateway
 ├── src
 │   ├── main
 │   │   ├── java
 │   │   │   └── com
 |   |   |       └── springboot
 |   |   |           └── microservice
-|   |   |               └── product
-|   |   |                   ├── ProductApplication.java
+|   |   |               └── apigateway
+|   |   |                   ├── ApiGatewayApplication.java
 |   |   |                   ├── controller
-|   |   |                   |   └── ExampleController.java
+|   |   |                   |   └── ApiGatewayController.java
 │   │   │                   ├── model
-│   │   │                   │   └── DemoModel.java
+│   │   │                   │   └── ApiGateway.java
 |   |   |                   ├── service
-|   |   |                   |   └── ExampleService.java
+|   |   |                   |   └── ApiGatewayService.java
 |   |   |                   └── repository
-|   |   |                       └── ExampleRepository.java
+|   |   |                       └── ApiGatewayRepository.java
 |   |   └── resources
 |   |       ├── application.properties
 |   |       ├── static
@@ -578,15 +589,15 @@ product-service
 |       │   │   └── com
 |       │   │       └── springboot
 |       │   │           └── microservice
-|       │   │               └── product
-|       │   │                   └── ProductApplicationTest.java
+|       │   │               └── apigateway
+|       │   │                   └── ApiGatewayApplicationTest.java
 |       └── resources
 |           └── application.properties
 └── pom.xml
 ```
 In this structure:
 
-ProductApplication.java is the main class that contains the main method to run the Spring Boot application.
+ApiGatewayApplication.java is the main class that contains the main method to run the Spring Boot application.
 
 controller package contains the controller classes with mapping endpoints.
 
@@ -672,23 +683,23 @@ spring.data.mongodb.uri=mongodb://localhost:27017/product-service
 
 The Service Implementation module implements the service. It depends on Repository Module and Service API Module.
 ```
-product-service
+notification-service
 ├── src
 │   ├── main
 │   │   ├── java
 │   │   │   └── com
 |   |   |       └── springboot
 |   |   |           └── microservice
-|   |   |               └── product
-|   |   |                   ├── ProductApplication.java
+|   |   |               └── notification
+|   |   |                   ├── NotificationApplication.java
 |   |   |                   ├── controller
-|   |   |                   |   └── ExampleController.java
+|   |   |                   |   └── NotificationController.java
 │   │   │                   ├── model
-│   │   │                   │   └── DemoModel.java
+│   │   │                   │   └── Notification.java
 |   |   |                   ├── service
-|   |   |                   |   └── ExampleService.java
+|   |   |                   |   └── NotificationService.java
 |   |   |                   └── repository
-|   |   |                       └── ExampleRepository.java
+|   |   |                       └── NotificationRepository.java
 |   |   └── resources
 |   |       ├── application.properties
 |   |       ├── static
@@ -701,7 +712,7 @@ product-service
 |       │   │   └── com
 |       │   │       └── springboot
 |       │   │           └── microservice
-|       │   │               └── product
+|       │   │               └── notification
 |       │   │                   └── ProductApplicationTest.java
 |       └── resources
 |           └── application.properties
@@ -709,7 +720,7 @@ product-service
 ```
 In this structure:
 
-ProductApplication.java is the main class that contains the main method to run the Spring Boot application.
+NotificationApplication.java is the main class that contains the main method to run the Spring Boot application.
 
 controller package contains the controller classes with mapping endpoints.
 
