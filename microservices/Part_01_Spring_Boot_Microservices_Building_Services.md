@@ -195,6 +195,8 @@ public class ProductService {
     }
 }
 ```
+![Desktop Screenshot](images/ProductService.PNG)
+
 repository package contains the repository classes that interact with the database.
 
 ```java
@@ -237,6 +239,30 @@ public class Product {
 dto package contains the request and response dto classes that interact with the database.
 
 ProductRequest.java
+
+- version-1: based on lombok
+
+package com.springboot.microservice.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
+public class ProductRequest {
+    private String name;
+    private String description;
+    private BigDecimal price;
+}
+
+- version-2: based on record
+
 ```java
 package com.springboot.microservice.dto;
 
@@ -246,6 +272,30 @@ public record ProductRequest(String name, String description, BigDecimal price) 
 }
 ```
 ProductResponse.java
+
+- version-1: based on lombok
+
+package com.springboot.microservice.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
+public class ProductResponse {
+    private String id;
+    private String name;
+    private String description;
+    private BigDecimal price;
+}
+
+- version-2: based on record
 ```java
 package com.springboot.microservice.dto;
 
@@ -325,7 +375,8 @@ pom.xml:
 </project>
 ```
 ### Manual Testing through Postman
-
+![Desktop Screenshot](images/product-post.PNG)
+![Desktop Screenshot](images/product-get.PNG)
 
 ### Implement Automated Tests
 
