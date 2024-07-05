@@ -1,6 +1,53 @@
 ## [<<PREV](Part_03_Spring_Boot_Microservices_Service_Discovery.md) - MICROSERVICE API GATEWAY - [NEXT>>](Part_05_Spring_Boot_Microservices_Security.md)
 
 
+### Spring Cloud Gateway
+
+This project provides a libraries for building an API Gateway on top of Spring WebFlux or Spring WebMVC. Spring Cloud Gateway aims to provide a simple, yet effective way to route to APIs and provide cross cutting concerns to them such as: security, monitoring/metrics, and resiliency.
+
+### Features
+
+Spring Cloud Gateway features:
+- Built on Spring Framework and Spring Boot
+- Able to match routes on any request attribute.
+- Predicates and filters are specific to routes.
+- Circuit Breaker integration.
+- Spring Cloud DiscoveryClient integration
+- Easy to write Predicates and Filters
+- Request Rate Limiting
+- Path Rewriting
+
+### Getting Started
+```java
+@SpringBootApplication
+public class DemogatewayApplication {
+	@Bean
+	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+		return builder.routes()
+			.route("path_route", r -> r.path("/get")
+				.uri("http://httpbin.org"))
+			.route("host_route", r -> r.host("*.myhost.org")
+				.uri("http://httpbin.org"))
+			.route("rewrite_route", r -> r.host("*.rewrite.org")
+				.filters(f -> f.rewritePath("/foo/(?<segment>.*)", "/${segment}"))
+				.uri("http://httpbin.org"))
+			.route("hystrix_route", r -> r.host("*.hystrix.org")
+				.filters(f -> f.hystrix(c -> c.setName("slowcmd")))
+				.uri("http://httpbin.org"))
+			.route("hystrix_fallback_route", r -> r.host("*.hystrixfallback.org")
+				.filters(f -> f.hystrix(c -> c.setName("slowcmd").setFallbackUri("forward:/hystrixfallback")))
+				.uri("http://httpbin.org"))
+			.route("limit_route", r -> r
+				.host("*.limited.org").and().path("/anything/**")
+				.filters(f -> f.requestRateLimiter(c -> c.setRateLimiter(redisRateLimiter())))
+				.uri("http://httpbin.org"))
+			.build();
+	}
+}
+```
+To run your own gateway use the spring-cloud-starter-gateway dependency.
+
+
 - API-Gateway
   - Create a new Spring Boot project for API-Gateway using Spring Cloud Gateway
   - Add dependencies for Spring Cloud Gateway
