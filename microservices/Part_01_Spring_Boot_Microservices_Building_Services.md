@@ -431,6 +431,8 @@ pom.xml:
 
 ![Desktop Screenshot](images/testcontainer-junit.PNG)
 
+### Write Integration Tests
+
 ### Implement Automated Tests:
 
 ProductServiceApplicationTests.java
@@ -555,12 +557,6 @@ class ProductServiceApplicationTests {
     }
 }
 ```
-
-### Test Containers
-
-
-### Write Integration Tests
-
 
 ### Generate Order Service
 
