@@ -401,6 +401,10 @@ pom.xml:
 
 ![Desktop Screenshot](images/testcontainer-mongodb.PNG)
 
+- For JUnit
+
+![Desktop Screenshot](images/testcontainer-junit.PNG)
+
 ### Implement Automated Tests:
 
 ProductServiceApplicationTests.java
