@@ -127,19 +127,7 @@ META-INF directory contains the manifest file.
   <version>0.0.1-SNAPSHOT</version>
   <name>product-service</name>
   <description>product-service</description>
-  <url/>
-  <licenses>
-    <license/>
-  </licenses>
-  <developers>
-    <developer/>
-  </developers>
-  <scm>
-    <connection/>
-    <developerConnection/>
-    <tag/>
-    <url/>
-  </scm>
+  <url/>  
   <properties>
     <java.version>17</java.version>
   </properties>
@@ -152,7 +140,6 @@ META-INF directory contains the manifest file.
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -164,7 +151,6 @@ META-INF directory contains the manifest file.
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -181,9 +167,9 @@ META-INF directory contains the manifest file.
       </plugin>
     </plugins>
   </build>
-
 </project>
 ```
+- applicayion.properties
 ```properties
 #MongoDB database congfiguration
 spring.data.mongodb.uri=mongodb://localhost:27017/product-service
@@ -264,19 +250,7 @@ META-INF directory contains the manifest file.
   <version>0.0.1-SNAPSHOT</version>
   <name>product-service</name>
   <description>product-service</description>
-  <url/>
-  <licenses>
-    <license/>
-  </licenses>
-  <developers>
-    <developer/>
-  </developers>
-  <scm>
-    <connection/>
-    <developerConnection/>
-    <tag/>
-    <url/>
-  </scm>
+  <url/>  
   <properties>
     <java.version>17</java.version>
   </properties>
@@ -289,7 +263,6 @@ META-INF directory contains the manifest file.
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -301,7 +274,6 @@ META-INF directory contains the manifest file.
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -318,9 +290,9 @@ META-INF directory contains the manifest file.
       </plugin>
     </plugins>
   </build>
-
 </project>
 ```
+- applicayion.properties
 ```properties
 #MongoDB database congfiguration
 spring.data.mongodb.uri=mongodb://localhost:27017/product-service
@@ -401,19 +373,7 @@ META-INF directory contains the manifest file.
   <version>0.0.1-SNAPSHOT</version>
   <name>product-service</name>
   <description>product-service</description>
-  <url/>
-  <licenses>
-    <license/>
-  </licenses>
-  <developers>
-    <developer/>
-  </developers>
-  <scm>
-    <connection/>
-    <developerConnection/>
-    <tag/>
-    <url/>
-  </scm>
+  <url/>  
   <properties>
     <java.version>17</java.version>
   </properties>
@@ -426,7 +386,6 @@ META-INF directory contains the manifest file.
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -438,7 +397,6 @@ META-INF directory contains the manifest file.
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -455,9 +413,9 @@ META-INF directory contains the manifest file.
       </plugin>
     </plugins>
   </build>
-
 </project>
 ```
+- applicayion.properties
 ```properties
 #MongoDB database congfiguration
 spring.data.mongodb.uri=mongodb://localhost:27017/product-service
@@ -538,19 +496,7 @@ META-INF directory contains the manifest file.
   <version>0.0.1-SNAPSHOT</version>
   <name>product-service</name>
   <description>product-service</description>
-  <url/>
-  <licenses>
-    <license/>
-  </licenses>
-  <developers>
-    <developer/>
-  </developers>
-  <scm>
-    <connection/>
-    <developerConnection/>
-    <tag/>
-    <url/>
-  </scm>
+  <url/>  
   <properties>
     <java.version>17</java.version>
   </properties>
@@ -563,7 +509,6 @@ META-INF directory contains the manifest file.
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -575,7 +520,6 @@ META-INF directory contains the manifest file.
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -592,9 +536,9 @@ META-INF directory contains the manifest file.
       </plugin>
     </plugins>
   </build>
-
 </project>
 ```
+- applicayion.properties
 ```properties
 #MongoDB database congfiguration
 spring.data.mongodb.uri=mongodb://localhost:27017/product-service
@@ -675,19 +619,7 @@ META-INF directory contains the manifest file.
   <version>0.0.1-SNAPSHOT</version>
   <name>product-service</name>
   <description>product-service</description>
-  <url/>
-  <licenses>
-    <license/>
-  </licenses>
-  <developers>
-    <developer/>
-  </developers>
-  <scm>
-    <connection/>
-    <developerConnection/>
-    <tag/>
-    <url/>
-  </scm>
+  <url/>  
   <properties>
     <java.version>17</java.version>
   </properties>
@@ -700,7 +632,6 @@ META-INF directory contains the manifest file.
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -712,7 +643,6 @@ META-INF directory contains the manifest file.
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -729,9 +659,9 @@ META-INF directory contains the manifest file.
       </plugin>
     </plugins>
   </build>
-
 </project>
 ```
+- applicayion.properties
 ```properties
 #MongoDB database congfiguration
 spring.data.mongodb.uri=mongodb://localhost:27017/product-service
@@ -812,19 +742,7 @@ META-INF directory contains the manifest file.
   <version>0.0.1-SNAPSHOT</version>
   <name>product-service</name>
   <description>product-service</description>
-  <url/>
-  <licenses>
-    <license/>
-  </licenses>
-  <developers>
-    <developer/>
-  </developers>
-  <scm>
-    <connection/>
-    <developerConnection/>
-    <tag/>
-    <url/>
-  </scm>
+  <url/>  
   <properties>
     <java.version>17</java.version>
   </properties>
@@ -837,7 +755,6 @@ META-INF directory contains the manifest file.
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
-
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -849,7 +766,6 @@ META-INF directory contains the manifest file.
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -866,9 +782,9 @@ META-INF directory contains the manifest file.
       </plugin>
     </plugins>
   </build>
-
 </project>
 ```
+- applicayion.properties
 ```properties
 #MongoDB database congfiguration
 spring.data.mongodb.uri=mongodb://localhost:27017/product-service
