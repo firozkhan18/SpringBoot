@@ -2,7 +2,7 @@
 
 - [01 - Inter Service Communication](#inter-service-communication)
 - [02 - Inter Service Communication Between Order & Inventory Microservices](#inter-service-communication-between-order-and-inventory-microservices)
-- [03 - Logical Architecture of Services](#logical-architecture-of-services)
+- [03 - Update Order Service](#update-order-service)
 - [04 - Create A Microservice](#create-a-microservice)
 - [05 - Implement Product Service](#implement-product-service)
 - [06 - Manual Testing through Postman](#manual-testing-through-postman)
@@ -23,6 +23,7 @@
 
 ### Inter Service Communication Between Order And Inventory Microservices
 
+### Update Order Service Structure
 ```
 order-service
 ├── src
@@ -70,7 +71,7 @@ order-service
 |           └── application.properties
 └── pom.xml
 ```
-### Implement Order Service
+### Update Order Service
 
 In this structure:
 
