@@ -169,7 +169,7 @@ META-INF directory contains the manifest file.
   </build>
 </project>
 ```
-- applicayion.properties
+- application.properties
 ```properties
 #MongoDB database congfiguration
 spring.data.mongodb.uri=mongodb://localhost:27017/product-service
@@ -292,7 +292,7 @@ META-INF directory contains the manifest file.
   </build>
 </project>
 ```
-- applicayion.properties
+- application.properties
 ```properties
 #MongoDB database congfiguration
 spring.data.mongodb.uri=mongodb://localhost:27017/product-service
@@ -415,7 +415,7 @@ META-INF directory contains the manifest file.
   </build>
 </project>
 ```
-- applicayion.properties
+- application.properties
 ```properties
 #MongoDB database congfiguration
 spring.data.mongodb.uri=mongodb://localhost:27017/product-service
@@ -538,7 +538,7 @@ META-INF directory contains the manifest file.
   </build>
 </project>
 ```
-- applicayion.properties
+- application.properties
 ```properties
 #MongoDB database congfiguration
 spring.data.mongodb.uri=mongodb://localhost:27017/product-service
@@ -661,7 +661,7 @@ META-INF directory contains the manifest file.
   </build>
 </project>
 ```
-- applicayion.properties
+- application.properties
 ```properties
 #MongoDB database congfiguration
 spring.data.mongodb.uri=mongodb://localhost:27017/product-service
@@ -784,7 +784,7 @@ META-INF directory contains the manifest file.
   </build>
 </project>
 ```
-- applicayion.properties
+- application.properties
 ```properties
 #MongoDB database congfiguration
 spring.data.mongodb.uri=mongodb://localhost:27017/product-service
