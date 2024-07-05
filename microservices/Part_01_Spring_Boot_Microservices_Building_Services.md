@@ -385,9 +385,13 @@ pom.xml:
 ![Desktop Screenshot](images/product-post.PNG)
 ![Desktop Screenshot](images/product-get.PNG)
 
-### Test Container:
+### Test Containers:
 
 ![Desktop Screenshot](images/testcontainer.PNG)
+
+- Test Containers maven dependency
+
+![Desktop Screenshot](images/testcontainer-maven.PNG)
 
 ### Implement Automated Tests:
 
