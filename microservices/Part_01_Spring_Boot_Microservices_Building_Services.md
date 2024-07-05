@@ -577,26 +577,6 @@ templates directory contains HTML templates for the application.
 
 META-INF directory contains the manifest file.
 
-InventoryStubs.java
-
-```java
-package com.springboot.microservice.order.stub;
-
-import lombok.experimental.UtilityClass;
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
-
-@UtilityClass
-public class InventoryStubs {
-
-    public void stubInventoryCall(String skuCode, Integer quantity) {
-        stubFor(get(urlEqualTo("/api/inventory?skuCode=" + skuCode + "&quantity=" + quantity))
-                .willReturn(aResponse()
-                        .withStatus(200)
-                        .withHeader("Content-Type", "application/json")
-                        .withBody("true")));
-    }
-}
-```
 pom.xml:
 
 ```pom
@@ -663,6 +643,27 @@ pom.xml:
 spring.data.mongodb.uri=mongodb://localhost:27017/product-service
 ```
 Implement Automated Tests:
+
+InventoryStubs.java
+
+```java
+package com.springboot.microservice.order.stub;
+
+import lombok.experimental.UtilityClass;
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+
+@UtilityClass
+public class InventoryStubs {
+
+    public void stubInventoryCall(String skuCode, Integer quantity) {
+        stubFor(get(urlEqualTo("/api/inventory?skuCode=" + skuCode + "&quantity=" + quantity))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withHeader("Content-Type", "application/json")
+                        .withBody("true")));
+    }
+}
+```
 
 OrderServiceApplicationTests.java
 
