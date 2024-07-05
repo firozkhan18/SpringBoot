@@ -1,1 +1,1 @@
-## [<<PREV](Part_01_Spring_Boot_Microservices_Building_Services.md) - MICROSERVICE SERVICE DISCOVERY - [NEXT>>](Part_04_Spring_Boot_Microservices_API_Gateway.md)
+## [<<PREV](Part_02_Spring_Boot_Microservices_Inter_Service_Communication.md) - MICROSERVICE SERVICE DISCOVERY - [NEXT>>](Part_04_Spring_Boot_Microservices_API_Gateway.md)
