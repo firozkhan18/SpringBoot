@@ -47,6 +47,11 @@ public class DemogatewayApplication {
 ```
 To run your own gateway use the spring-cloud-starter-gateway dependency.
 
+![Desktop Screenshot](images/api-gateway.PNG)
+
+![Desktop Screenshot](images/api-gateway-2.PNG)
+
+![Desktop Screenshot](images/api-gateway-3.PNG)
 
 - API-Gateway
   - Create a new Spring Boot project for API-Gateway using Spring Cloud Gateway
