@@ -35,7 +35,38 @@ Service Registry Local Copy:
 
 ![Desktop Screenshot](images/service-descovery.PNG)
 
-### Inter Service Communication Between Order And Inventory Microservices
+### Spring Cloud Netflix
+
+**Spring Cloud Netflix** provides **Netflix OSS integrations** for Spring Boot apps through autoconfiguration and binding to the Spring Environment and other Spring programming model idioms. With a few simple annotations, you can quickly enable and configure the common patterns inside your application and build large distributed systems with battle-tested **Netflix** components. The patterns provided include **Service Discovery (Eureka)**.
+
+### Features
+Spring Cloud Netflix features:
+
+- **Service Discovery**: **Eureka instances** can be registered and clients can discover the instances using Spring-managed beans
+
+- **Service Discovery**: an **embedded Eureka server** can be created with declarative Java configuration
+
+### Getting Started
+
+As long as Spring Cloud Netflix and Eureka Core are on the classpath any Spring Boot application with **@EnableEurekaClient** will try to contact a Eureka server on [http://localhost:8761](http://localhost:8761) (the default value of `eureka.client.serviceUrl.defaultZone`):
+
+```java
+@SpringBootApplication
+@EnableEurekaClient
+@RestController
+public class Application {
+
+  @RequestMapping("/")
+  public String home() {
+    return "Hello World";
+  }
+
+  public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+  }
+}
+```
+To run your own server use the **spring-cloud-starter-netflix-eureka-server** dependency and **@EnableEurekaServer**.
 
 ### Update Order Service Structure
 ```
