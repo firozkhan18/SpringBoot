@@ -319,7 +319,7 @@ pom.xml:
   </build>
 </project>
 ```
-Implement Automated Tests:
+### Implement Automated Tests:
 
 ProductServiceApplicationTests.java
 
@@ -376,6 +376,11 @@ class ProductServiceApplicationTests {
     }
 }
 ```
+### Test Containers
+
+### Write Integration Tests
+
+### Generate Order Service
 
 - 2. order-service Module
 
@@ -469,6 +474,7 @@ public class OrderController {
     }
 }
 ```
+dto package contains the dto classes that interact with the database.
 
 OrderRequest.java
 ```java
@@ -478,6 +484,7 @@ import java.math.BigDecimal;
 public record OrderRequest(Long id, String skuCode, BigDecimal price, Integer quantity) {
 }
 ```
+model package contains the model classes that interact with the database.
 
 Order.java
 
@@ -591,10 +598,10 @@ pom.xml:
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.springboot.microservice</groupId>
-  <artifactId>product-service</artifactId>
+  <artifactId>order-service</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>product-service</name>
-  <description>product-service</description>
+  <description>order-service</description>
   <url/>  
   <properties>
     <java.version>17</java.version>
@@ -798,12 +805,14 @@ public class InventoryController {
     }
 }
 ```
+dto package contains the dto classes that interact with the database.
 ```java
 package com.springboot.microservice.inventory.dto;
 
 public record InventoryResponse(String skuCode, boolean isInStock) {
 }
 ```
+model package contains the model classes that interact with the database.
 ```java
 package com.springboot.microservice.inventory.model;
 
@@ -891,10 +900,10 @@ pom.xml:
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.springboot.microservice</groupId>
-  <artifactId>product-service</artifactId>
+  <artifactId>inventory-service</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>product-service</name>
-  <description>product-service</description>
+  <description>inventory-service</description>
   <url/>  
   <properties>
     <java.version>17</java.version>
