@@ -99,12 +99,155 @@ In this structure:
 
 ProductServiceApplication.java is the main class that contains the main method to run the Spring Boot application.
 
-controller package contains the controller classes with mapping endpoints.
+package com.springboot.microservice;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class ProductServiceApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ProductServiceApplication.class, args);
+	}
+}
+controller package contains the ProductController class with mapping endpoints.
+
+```java
+package com.springboot.microservice.controller;
+
+import com.programmingtechie.productservice.dto.ProductRequest;
+import com.programmingtechie.productservice.dto.ProductResponse;
+import com.programmingtechie.productservice.service.ProductService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/product")
+@RequiredArgsConstructor
+public class ProductController {
+
+    private final ProductService productService;
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createProduct(@RequestBody ProductRequest productRequest) {
+        productService.createProduct(productRequest);
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<ProductResponse> getAllProducts() {
+        return productService.getAllProducts();
+    }
+}
+```
 service package contains the service classes which contain business logic.
+```java
 
+package com.springboot.microservice.service;
+
+import com.programmingtechie.productservice.dto.ProductRequest;
+import com.programmingtechie.productservice.dto.ProductResponse;
+import com.programmingtechie.productservice.model.Product;
+import com.programmingtechie.productservice.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class ProductService {
+
+    private final ProductRepository productRepository;
+
+    public void createProduct(ProductRequest productRequest) {
+        Product product = Product.builder()
+                .name(productRequest.name())
+                .description(productRequest.description())
+                .price(productRequest.price())
+                .build();
+
+        productRepository.save(product);
+        log.info("Product {} is saved", product.getId());
+    }
+
+    public List<ProductResponse> getAllProducts() {
+        List<Product> products = productRepository.findAll();
+
+        return products.stream().map(this::mapToProductResponse).toList();
+    }
+
+    private ProductResponse mapToProductResponse(Product product) {
+        return new ProductResponse(product.getId(), product.getName(),
+                product.getDescription(), product.getPrice());
+    }
+}
+```
 repository package contains the repository classes that interact with the database.
 
+```java
+package com.springboot.microservice.repository;
+
+import com.programmingtechie.productservice.model.Product;
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface ProductRepository extends MongoRepository<Product, String> {
+}
+```
+model package contains the model classes that interact with the database.
+
+```java
+package com.springboot.microservice.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.math.BigDecimal;
+
+@Document(value = "product")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
+public class Product {
+
+    @Id
+    private String id;
+    private String name;
+    private String description;
+    private BigDecimal price;
+}
+```
+dto package contains the request and response dto classes that interact with the database.
+
+ProductRequest.java
+```java
+package com.springboot.microservice.dto;
+
+import java.math.BigDecimal;
+
+public record ProductRequest(String name, String description, BigDecimal price) {
+}
+```
+ProductResponse.java
+```java
+package com.springboot.microservice.dto;
+
+import java.math.BigDecimal;
+
+public record ProductResponse(String id, String name, String description, BigDecimal price) {
+}
+```
 application.properties contains application-specific properties.
 
 static directory contains static resources like Javascript, CSS, etc.
@@ -113,7 +256,66 @@ templates directory contains HTML templates for the application.
 
 META-INF directory contains the manifest file.
 
+ProductServiceApplicationTests.java
 
+```java
+package com.springboot.microservice.products;
+
+import com.programmingtechie.productservice.dto.ProductRequest;
+import io.restassured.RestAssured;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.testcontainers.containers.MongoDBContainer;
+
+import java.math.BigDecimal;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class ProductServiceApplicationTests {
+
+    @ServiceConnection
+    static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:7.0.7");
+    @LocalServerPort
+    private Integer port;
+
+    @BeforeEach
+    void setup() {
+        RestAssured.baseURI = "http://localhost";
+        RestAssured.port = port;
+    }
+
+    static {
+        mongoDBContainer.start();
+    }
+
+    @Test
+    void shouldCreateProduct() throws Exception {
+        ProductRequest productRequest = getProductRequest();
+
+        RestAssured.given()
+                .contentType("application/json")
+                .body(productRequest)
+                .when()
+                .post("/api/product")
+                .then()
+                .log().all()
+                .statusCode(201)
+                .body("id", Matchers.notNullValue())
+                .body("name", Matchers.equalTo(productRequest.name()))
+                .body("description", Matchers.equalTo(productRequest.description()))
+                .body("price", Matchers.is(productRequest.price().intValueExact()));
+    }
+
+    private ProductRequest getProductRequest() {
+        return new ProductRequest("iPhone 13", "iPhone 13", BigDecimal.valueOf(1200));
+    }
+
+}
+```
+pom.xml:
 ```pom
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
