@@ -51,17 +51,37 @@ The Application Module includes Model Module, Service Implementation Module as d
 
 - product-service Module
 
+![Desktop Screenshot](images/product-service.PNG)
+
 The Model Module contains Entities and Visual Objects to be used in the project.
 
 - order-service Module
 
+![Desktop Screenshot](images/order-service.PNG)
+
 The Repository module contains repositories to be used in the project. It depends on the Model Module.
 
-- Service API Module
+- inventory-service Module
+
+![Desktop Screenshot](images/inventory-service.PNG)
 
 The Service API module contains all project services. It also depends on Model Module.
 
-- Service Implementation Module
+- registry-server Module
+
+![Desktop Screenshot](images/registry-server.PNG)
+
+The Service Implementation module implements the service. It depends on Repository Module and Service API Module.
+
+- api-gateway Module
+
+![Desktop Screenshot](images/api-gateway.PNG)
+
+The Service Implementation module implements the service. It depends on Repository Module and Service API Module.
+
+- notification-service Module
+
+![Desktop Screenshot](images/notification-service.PNG)
 
 The Service Implementation module implements the service. It depends on Repository Module and Service API Module.
 
