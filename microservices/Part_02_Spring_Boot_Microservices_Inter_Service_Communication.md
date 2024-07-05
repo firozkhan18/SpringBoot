@@ -12,8 +12,8 @@
 - [10 - Generate Order Service](#generate-order-service)
 - [11 - Implement Order Service](#implement-order-service)
 - [12 - Test Order Service](#test-order-service)
-- [13 - Generate Inventory Service](#generate-inventory-service)
-- [14 - Implement Inventory Service](#implement-inventory-service)
+- [13 - Update Inventory Service Structure](#update-inventory-service-structure)
+- [14 - Update Inventory Service](#update-inventory-service)
 - [15 - Migrate to Maven Multi-Module Project](#migrate-to-maven-multi-module-project)
 - [16 - Bugfix in Inventory Service](#bugfix-in-inventory-service)
 
@@ -572,11 +572,9 @@ class OrderServiceApplicationTests {
     }
 }
 ```
-### Generate Inventory Service
+### Update Inventory Service Structure
 
 - inventory-service Module
-
-![Desktop Screenshot](images/inventory-service.PNG)
 
 The Service API module contains all project services. It also depends on Model Module.
 ```
@@ -617,7 +615,7 @@ inventory-service
 |           └── application.properties
 └── pom.xml
 ```
-### Implement Inventory Service
+### Update Inventory Service
 
 In this structure:
 
