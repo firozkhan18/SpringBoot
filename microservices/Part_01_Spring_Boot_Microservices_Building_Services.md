@@ -56,7 +56,7 @@ The Application Module includes Model Module, Service Implementation Module as d
 The Model Module contains Entities and Visual Objects to be used in the project.
 
 Spring Boot Project Structure
- 
+``` 
 product-service
 ├── src
 │   ├── main
@@ -91,7 +91,7 @@ product-service
 |       └── resources
 |           └── application.properties
 └── pom.xml
-
+```
 In this structure:
 
 DemoApplication.java is the main class that contains the main method to run the Spring Boot application.
@@ -185,7 +185,7 @@ spring.data.mongodb.uri=mongodb://root:password@localhost:27017/product-service?
 ![Desktop Screenshot](images/order-service.PNG)
 
 The Repository module contains repositories to be used in the project. It depends on the Model Module.
-
+```
 product-service
 ├── src
 │   ├── main
@@ -220,13 +220,13 @@ product-service
 |       └── resources
 |           └── application.properties
 └── pom.xml
-
+```
 - inventory-service Module
 
 ![Desktop Screenshot](images/inventory-service.PNG)
 
 The Service API module contains all project services. It also depends on Model Module.
-
+```
 product-service
 ├── src
 │   ├── main
@@ -261,13 +261,13 @@ product-service
 |       └── resources
 |           └── application.properties
 └── pom.xml
-
+```
 - registry-server Module
 
 ![Desktop Screenshot](images/registry-server.PNG)
 
 The Service Implementation module implements the service. It depends on Repository Module and Service API Module.
-
+```
 product-service
 ├── src
 │   ├── main
@@ -302,13 +302,13 @@ product-service
 |       └── resources
 |           └── application.properties
 └── pom.xml
-
+```
 - api-gateway Module
 
 ![Desktop Screenshot](images/api-gateway.PNG)
 
 The Service Implementation module implements the service. It depends on Repository Module and Service API Module.
-
+```
 product-service
 ├── src
 │   ├── main
@@ -343,13 +343,13 @@ product-service
 |       └── resources
 |           └── application.properties
 └── pom.xml
-
+```
 - notification-service Module
 
 ![Desktop Screenshot](images/notification-service.PNG)
 
 The Service Implementation module implements the service. It depends on Repository Module and Service API Module.
-
+```
 product-service
 ├── src
 │   ├── main
@@ -384,7 +384,7 @@ product-service
 |       └── resources
 |           └── application.properties
 └── pom.xml
-
+```
 - POM Aggregator (Parent POM)
 
 The parent pom contains all the application modules. It also includes all the common dependencies and properties that are needed by more than one module. Dependencies are defined without version because the project has defined the Spring IO Platform as a parent.
