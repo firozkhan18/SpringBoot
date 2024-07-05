@@ -185,7 +185,8 @@ META-INF directory contains the manifest file.
 </project>
 ```
 ```properties
-spring.data.mongodb.uri=mongodb://root:password@localhost:27017/product-service?authSource=admin
+#MongoDB database congfiguration
+spring.data.mongodb.uri=mongodb://localhost:27017/product-service
 ```
 - order-service Module
 
@@ -228,6 +229,102 @@ product-service
 |           └── application.properties
 └── pom.xml
 ```
+In this structure:
+
+ProductApplication.java is the main class that contains the main method to run the Spring Boot application.
+
+controller package contains the controller classes with mapping endpoints.
+
+service package contains the service classes which contain business logic.
+
+repository package contains the repository classes that interact with the database.
+
+application.properties contains application-specific properties.
+
+static directory contains static resources like Javascript, CSS, etc.
+
+templates directory contains HTML templates for the application.
+
+META-INF directory contains the manifest file.
+
+
+```pom
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.3.1</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+  <groupId>com.springboot.microservice</groupId>
+  <artifactId>product-service</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>product-service</name>
+  <description>product-service</description>
+  <url/>
+  <licenses>
+    <license/>
+  </licenses>
+  <developers>
+    <developer/>
+  </developers>
+  <scm>
+    <connection/>
+    <developerConnection/>
+    <tag/>
+    <url/>
+  </scm>
+  <properties>
+    <java.version>17</java.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-mongodb</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+            </exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
+```
+```properties
+#MongoDB database congfiguration
+spring.data.mongodb.uri=mongodb://localhost:27017/product-service
+```
 - inventory-service Module
 
 ![Desktop Screenshot](images/inventory-service.PNG)
@@ -268,6 +365,102 @@ product-service
 |       └── resources
 |           └── application.properties
 └── pom.xml
+```
+In this structure:
+
+ProductApplication.java is the main class that contains the main method to run the Spring Boot application.
+
+controller package contains the controller classes with mapping endpoints.
+
+service package contains the service classes which contain business logic.
+
+repository package contains the repository classes that interact with the database.
+
+application.properties contains application-specific properties.
+
+static directory contains static resources like Javascript, CSS, etc.
+
+templates directory contains HTML templates for the application.
+
+META-INF directory contains the manifest file.
+
+
+```pom
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.3.1</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+  <groupId>com.springboot.microservice</groupId>
+  <artifactId>product-service</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>product-service</name>
+  <description>product-service</description>
+  <url/>
+  <licenses>
+    <license/>
+  </licenses>
+  <developers>
+    <developer/>
+  </developers>
+  <scm>
+    <connection/>
+    <developerConnection/>
+    <tag/>
+    <url/>
+  </scm>
+  <properties>
+    <java.version>17</java.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-mongodb</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+            </exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
+```
+```properties
+#MongoDB database congfiguration
+spring.data.mongodb.uri=mongodb://localhost:27017/product-service
 ```
 - registry-server Module
 
@@ -310,6 +503,102 @@ product-service
 |           └── application.properties
 └── pom.xml
 ```
+In this structure:
+
+ProductApplication.java is the main class that contains the main method to run the Spring Boot application.
+
+controller package contains the controller classes with mapping endpoints.
+
+service package contains the service classes which contain business logic.
+
+repository package contains the repository classes that interact with the database.
+
+application.properties contains application-specific properties.
+
+static directory contains static resources like Javascript, CSS, etc.
+
+templates directory contains HTML templates for the application.
+
+META-INF directory contains the manifest file.
+
+
+```pom
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.3.1</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+  <groupId>com.springboot.microservice</groupId>
+  <artifactId>product-service</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>product-service</name>
+  <description>product-service</description>
+  <url/>
+  <licenses>
+    <license/>
+  </licenses>
+  <developers>
+    <developer/>
+  </developers>
+  <scm>
+    <connection/>
+    <developerConnection/>
+    <tag/>
+    <url/>
+  </scm>
+  <properties>
+    <java.version>17</java.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-mongodb</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+            </exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
+```
+```properties
+#MongoDB database congfiguration
+spring.data.mongodb.uri=mongodb://localhost:27017/product-service
+```
 - api-gateway Module
 
 ![Desktop Screenshot](images/api-gateway.PNG)
@@ -351,6 +640,102 @@ product-service
 |           └── application.properties
 └── pom.xml
 ```
+In this structure:
+
+ProductApplication.java is the main class that contains the main method to run the Spring Boot application.
+
+controller package contains the controller classes with mapping endpoints.
+
+service package contains the service classes which contain business logic.
+
+repository package contains the repository classes that interact with the database.
+
+application.properties contains application-specific properties.
+
+static directory contains static resources like Javascript, CSS, etc.
+
+templates directory contains HTML templates for the application.
+
+META-INF directory contains the manifest file.
+
+
+```pom
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.3.1</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+  <groupId>com.springboot.microservice</groupId>
+  <artifactId>product-service</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>product-service</name>
+  <description>product-service</description>
+  <url/>
+  <licenses>
+    <license/>
+  </licenses>
+  <developers>
+    <developer/>
+  </developers>
+  <scm>
+    <connection/>
+    <developerConnection/>
+    <tag/>
+    <url/>
+  </scm>
+  <properties>
+    <java.version>17</java.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-mongodb</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+            </exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
+```
+```properties
+#MongoDB database congfiguration
+spring.data.mongodb.uri=mongodb://localhost:27017/product-service
+```
 - notification-service Module
 
 ![Desktop Screenshot](images/notification-service.PNG)
@@ -391,6 +776,102 @@ product-service
 |       └── resources
 |           └── application.properties
 └── pom.xml
+```
+In this structure:
+
+ProductApplication.java is the main class that contains the main method to run the Spring Boot application.
+
+controller package contains the controller classes with mapping endpoints.
+
+service package contains the service classes which contain business logic.
+
+repository package contains the repository classes that interact with the database.
+
+application.properties contains application-specific properties.
+
+static directory contains static resources like Javascript, CSS, etc.
+
+templates directory contains HTML templates for the application.
+
+META-INF directory contains the manifest file.
+
+
+```pom
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.3.1</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+  <groupId>com.springboot.microservice</groupId>
+  <artifactId>product-service</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>product-service</name>
+  <description>product-service</description>
+  <url/>
+  <licenses>
+    <license/>
+  </licenses>
+  <developers>
+    <developer/>
+  </developers>
+  <scm>
+    <connection/>
+    <developerConnection/>
+    <tag/>
+    <url/>
+  </scm>
+  <properties>
+    <java.version>17</java.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-mongodb</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+            </exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
+```
+```properties
+#MongoDB database congfiguration
+spring.data.mongodb.uri=mongodb://localhost:27017/product-service
 ```
 - POM Aggregator (Parent POM)
 
