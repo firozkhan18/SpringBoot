@@ -428,20 +428,176 @@ In this structure:
 
 OrdreServiceApplication.java is the main class that contains the main method to run the Spring Boot application.
 
+InventoryClient.java:
+
+```java
+package com.springboot.microservice.order.client;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@FeignClient(value = "inventory", url = "${inventory.url}")
+public interface InventoryClient {
+    @RequestMapping(method = RequestMethod.GET, value = "/api/inventory")
+    boolean isInStock(@RequestParam String skuCode, @RequestParam Integer quantity);
+}
+```
 controller package contains the controller classes with mapping endpoints.
+```java
+package com.springboot.microservice.order.controller;
 
+import com.springboot.microservice.order.dto.OrderRequest;
+import com.springboot.microservice.order.service.OrderService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/order")
+@RequiredArgsConstructor
+public class OrderController {
+
+    private final OrderService orderService;
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public String placeOrder(@RequestBody OrderRequest orderRequest) {
+        orderService.placeOrder(orderRequest);
+        return "Order Placed Successfully";
+    }
+}
+```
+
+OrderRequest.java
+```java
+package com.springboot.microservice.order.dto;
+import java.math.BigDecimal;
+
+public record OrderRequest(Long id, String skuCode, BigDecimal price, Integer quantity) {
+}
+```
+
+Order.java
+
+```java
+package com.springboot.microservice.order.model;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.math.BigDecimal;
+
+@Entity
+@Table(name = "t_orders")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String orderNumber;
+    private String skuCode;
+    private BigDecimal price;
+    private Integer quantity;
+}
+```
 service package contains the service classes which contain business logic.
+```java
+package com.springboot.microservice.order.service;
 
+import com.springboot.microservice.order.client.InventoryClient;
+import com.springboot.microservice.order.dto.OrderRequest;
+import com.springboot.microservice.order.model.Order;
+import com.springboot.microservice.order.repository.OrderRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class OrderService {
+
+    private final OrderRepository orderRepository;
+    private final InventoryClient inventoryClient;
+
+    public void placeOrder(OrderRequest orderRequest) {
+        boolean inStock = inventoryClient.isInStock(orderRequest.skuCode(), orderRequest.quantity());
+        if (inStock) {
+            var order = mapToOrder(orderRequest);
+            orderRepository.save(order);
+        } else {
+            throw new RuntimeException("Product with Skucode " + orderRequest.skuCode() + "is not in stock");
+        }
+    }
+
+    private static Order mapToOrder(OrderRequest orderRequest) {
+        Order order = new Order();
+        order.setOrderNumber(UUID.randomUUID().toString());
+        order.setPrice(orderRequest.price());
+        order.setQuantity(orderRequest.quantity());
+        order.setSkuCode(orderRequest.skuCode());
+        return order;
+    }
+}
+```
 repository package contains the repository classes that interact with the database.
+```java
+package com.springboot.microservice.order.repository;
 
+import com.springboot.microservice.order.model.Order;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface OrderRepository extends JpaRepository<Order, Long> {
+}
+```
 application.properties contains application-specific properties.
 
+```
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/order_service
+spring.datasource.username=root
+spring.datasource.password=mysql
+spring.jpa.hibernate.ddl-auto=none
+server.port=8081
+inventory.url=http://localhost:8082
+```
 static directory contains static resources like Javascript, CSS, etc.
 
 templates directory contains HTML templates for the application.
 
 META-INF directory contains the manifest file.
 
+InventoryStubs.java
+
+```java
+package com.springboot.microservice.order.stub;
+
+import lombok.experimental.UtilityClass;
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
+
+@UtilityClass
+public class InventoryStubs {
+
+    public void stubInventoryCall(String skuCode, Integer quantity) {
+        stubFor(get(urlEqualTo("/api/inventory?skuCode=" + skuCode + "&quantity=" + quantity))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withHeader("Content-Type", "application/json")
+                        .withBody("true")));
+    }
+}
+```
+pom.xml:
 
 ```pom
 <?xml version="1.0" encoding="UTF-8"?>
@@ -505,6 +661,71 @@ META-INF directory contains the manifest file.
 ```properties
 #MongoDB database congfiguration
 spring.data.mongodb.uri=mongodb://localhost:27017/product-service
+```
+Implement Automated Tests:
+
+OrderServiceApplicationTests.java
+
+```java
+package com.programmingtechie.orderservice;
+
+import com.springboot.microservice.order.stub.InventoryStubs;
+import io.restassured.RestAssured;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
+import org.testcontainers.containers.MySQLContainer;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureWireMock(port = 0)
+class OrderServiceApplicationTests {
+
+    @ServiceConnection
+    static MySQLContainer mySQLContainer = new MySQLContainer("mysql:8.3.0");
+    @LocalServerPort
+    private Integer port;
+
+    @BeforeEach
+    void setup() {
+        RestAssured.baseURI = "http://localhost";
+        RestAssured.port = port;
+    }
+
+    static {
+        mySQLContainer.start();
+    }
+
+    @Test
+    void shouldSubmitOrder() {
+        String submitOrderJson = """
+                {
+                     "skuCode": "iphone_15",
+                     "price": 1000,
+                     "quantity": 1
+                }
+                """;
+
+        InventoryStubs.stubInventoryCall("iphone_15", 1);
+        var responseBodyString = RestAssured.given()
+                .contentType("application/json")
+                .body(submitOrderJson)
+                .when()
+                .post("/api/order")
+                .then()
+                .log().all()
+                .statusCode(201)
+                .extract()
+                .body().asString();
+
+        assertThat(responseBodyString, Matchers.is("Order Placed Successfully"));
+    }
+}
 ```
 - inventory-service Module
 
@@ -554,19 +775,108 @@ In this structure:
 InventoryServiceApplication.java is the main class that contains the main method to run the Spring Boot application.
 
 controller package contains the controller classes with mapping endpoints.
+```java
+package com.springboot.microservice.inventory.controller;
+
+import com.springboot.microservice.inventory.service.InventoryService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/inventory")
+@RequiredArgsConstructor
+public class InventoryController {
+
+    private final InventoryService inventoryService;
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public boolean isInStock(@RequestParam String skuCode, @RequestParam Integer quantity) {
+        return inventoryService.isInStock(skuCode, quantity);
+    }
+}
+```
+```java
+package com.springboot.microservice.inventory.dto;
+
+public record InventoryResponse(String skuCode, boolean isInStock) {
+}
+```
+```java
+package com.springboot.microservice.inventory.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "t_inventory")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class Inventory {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String skuCode;
+    private Integer quantity;
+}
+```
 
 service package contains the service classes which contain business logic.
+```java
+package com.springboot.microservice.inventory.service;
 
+import com.springboot.microservice.inventory.repository.InventoryRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@RequiredArgsConstructor
+public class InventoryService {
+
+    private final InventoryRepository inventoryRepository;
+
+    @Transactional(readOnly = true)
+    public boolean isInStock(String skuCode, Integer quantity) {
+        return inventoryRepository.existsBySkuCodeAndQuantityIsGreaterThanEqual(skuCode, quantity);
+    }
+}
+```
 repository package contains the repository classes that interact with the database.
+```java
+package com.springboot.microservice.inventory.repository;
 
+import com.springboot.microservice.inventory.model.Inventory;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface InventoryRepository extends JpaRepository<Inventory, Long> {
+    boolean existsBySkuCodeAndQuantityIsGreaterThanEqual(String skuCode, int quantity);
+}
+```
 application.properties contains application-specific properties.
-
+```
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/inventory_service
+spring.datasource.username=root
+spring.datasource.password=mysql
+spring.jpa.hibernate.ddl-auto=none
+server.port=8082
+```
 static directory contains static resources like Javascript, CSS, etc.
 
 templates directory contains HTML templates for the application.
 
 META-INF directory contains the manifest file.
 
+pom.xml:
 
 ```pom
 <?xml version="1.0" encoding="UTF-8"?>
@@ -631,6 +941,71 @@ META-INF directory contains the manifest file.
 #MongoDB database congfiguration
 spring.data.mongodb.uri=mongodb://localhost:27017/product-service
 ```
+
+Implement Automated Tests:
+
+InventoryServiceApplicationTests.java
+
+```java
+
+package com.springboot.microservice.inventory;
+
+import com.jayway.jsonpath.JsonPath;
+import io.restassured.RestAssured;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.testcontainers.containers.MySQLContainer;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class InventoryServiceApplicationTests {
+
+    @ServiceConnection
+    static MySQLContainer mySQLContainer = new MySQLContainer("mysql:8.3.0");
+    @LocalServerPort
+    private Integer port;
+
+    @BeforeEach
+    void setup() {
+        RestAssured.baseURI = "http://localhost";
+        RestAssured.port = port;
+    }
+
+    static {
+        mySQLContainer.start();
+    }
+
+    @Test
+    void shouldReadInventory() {
+        var response = RestAssured.given()
+                .when()
+                .get("/api/inventory?skuCode=iphone_15&quantity=1")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .extract().response().as(Boolean.class);
+        assertTrue(response);
+
+        var negativeResponse = RestAssured.given()
+                .when()
+                .get("/api/inventory?skuCode=iphone_15&quantity=1000")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .extract().response().as(Boolean.class);
+        assertFalse(negativeResponse);
+
+    }
+}
+```
+
 - registry-server Module
 
 ![Desktop Screenshot](images/registry-server.PNG)
