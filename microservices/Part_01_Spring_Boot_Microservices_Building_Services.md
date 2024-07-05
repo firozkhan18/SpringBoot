@@ -117,9 +117,9 @@ controller package contains the ProductController class with mapping endpoints.
 ```java
 package com.springboot.microservice.controller;
 
-import com.programmingtechie.productservice.dto.ProductRequest;
-import com.programmingtechie.productservice.dto.ProductResponse;
-import com.programmingtechie.productservice.service.ProductService;
+import com.springboot.microservice.dto.ProductRequest;
+import com.springboot.microservice.dto.ProductResponse;
+import com.springboot.microservice.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -151,10 +151,10 @@ service package contains the service classes which contain business logic.
 
 package com.springboot.microservice.service;
 
-import com.programmingtechie.productservice.dto.ProductRequest;
-import com.programmingtechie.productservice.dto.ProductResponse;
-import com.programmingtechie.productservice.model.Product;
-import com.programmingtechie.productservice.repository.ProductRepository;
+import com.springboot.microservice.dto.ProductRequest;
+import com.springboot.microservice.dto.ProductResponse;
+import com.springboot.microservice.model.Product;
+import com.springboot.microservice.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -195,7 +195,7 @@ repository package contains the repository classes that interact with the databa
 ```java
 package com.springboot.microservice.repository;
 
-import com.programmingtechie.productservice.model.Product;
+import com.springboot.microservice.model.Product;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface ProductRepository extends MongoRepository<Product, String> {
@@ -250,7 +250,10 @@ public record ProductResponse(String id, String name, String description, BigDec
 }
 ```
 application.properties contains application-specific properties.
-
+```properties
+#MongoDB database congfiguration
+spring.data.mongodb.uri=mongodb://localhost:27017/product-service
+```
 static directory contains static resources like Javascript, CSS, etc.
 
 templates directory contains HTML templates for the application.
@@ -262,7 +265,7 @@ ProductServiceApplicationTests.java
 ```java
 package com.springboot.microservice.products;
 
-import com.programmingtechie.productservice.dto.ProductRequest;
+import com.springboot.microservice.dto.ProductRequest;
 import io.restassured.RestAssured;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -271,7 +274,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.testcontainers.containers.MongoDBContainer;
-
 import java.math.BigDecimal;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -295,7 +297,6 @@ class ProductServiceApplicationTests {
     @Test
     void shouldCreateProduct() throws Exception {
         ProductRequest productRequest = getProductRequest();
-
         RestAssured.given()
                 .contentType("application/json")
                 .body(productRequest)
@@ -309,11 +310,9 @@ class ProductServiceApplicationTests {
                 .body("description", Matchers.equalTo(productRequest.description()))
                 .body("price", Matchers.is(productRequest.price().intValueExact()));
     }
-
     private ProductRequest getProductRequest() {
         return new ProductRequest("iPhone 13", "iPhone 13", BigDecimal.valueOf(1200));
     }
-
 }
 ```
 pom.xml:
@@ -375,11 +374,7 @@ pom.xml:
   </build>
 </project>
 ```
-- application.properties
-```properties
-#MongoDB database congfiguration
-spring.data.mongodb.uri=mongodb://localhost:27017/product-service
-```
+
 - order-service Module
 
 ![Desktop Screenshot](images/order-service.PNG)
