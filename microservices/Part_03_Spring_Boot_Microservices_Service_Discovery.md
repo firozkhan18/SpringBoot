@@ -3,7 +3,7 @@
 
 ### TABLE OF CONTENTS
 
-- [01 - Inter Service Communication](#inter-service-communication)
+- [01 - Service Registry communication](#service-registry-communication)
 - [02 - Inter Service Communication Between Order & Inventory Microservices](#inter-service-communication-between-order-and-inventory-microservices)
 - [03 - Update Order Service Structure](#update-order-service-structure)
 - [04 - Update Order Service](#update-order-service)
@@ -20,10 +20,19 @@
 - [15 - Migrate to Maven Multi-Module Project](#migrate-to-maven-multi-module-project)
 - [16 - Bugfix in Inventory Service](#bugfix-in-inventory-service)
 
-### Inter Service Communication
+### Service Registry communication
 ![Desktop Screenshot](images/service-reg.PNG)
+
+Service Registry communication:
+
 ![Desktop Screenshot](images/service-descovery-commu.PNG)
+
+Service Registry Local Copy:
+
 ![Desktop Screenshot](images/service-descovery-local.PNG)
+
+Service Registry Local Copy:
+
 ![Desktop Screenshot](images/service-descovery.PNG)
 
 ### Inter Service Communication Between Order And Inventory Microservices
