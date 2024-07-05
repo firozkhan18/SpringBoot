@@ -1542,6 +1542,54 @@ class InventoryServiceApplicationTests {
 ```
 ### Migrate to Maven Multi-Module Project
 
+Step 1: Create a Maven Project with the name spring-boot-microservices.
+
+Step 2: Open the pom.xml (parent pom) file and change the packaging type jar to pom.
+
+pom.xml (parent pom)
+```pom
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.4</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>com.springboot.microservice</groupId>
+    <artifactId>spring-boot-microservices</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+```
+One thing to be noticed in the above pom file is that there is no maven module configured because we have not created yet. Now we will create Maven Modules one by one that we have specified above.
+
 - Product-Service
 	- Create a new Spring Boot project for Product-Service
 	- Implement REST endpoints for CRUD operations on products
@@ -1573,9 +1621,7 @@ class InventoryServiceApplicationTests {
   
 By following this structure, you can create a modular and scalable microservice architecture using Spring Boot. Each microservice is responsible for a specific domain (such as products, orders, inventory, notifications) and can be easily extended or updated without affecting other services. Service Discovery and API Gateway help in managing communication between services and routing requests efficiently.
 
-Step 1: Create a Maven Project with the name spring-boot-microservices.
-
-Step 2: Open the pom.xml (parent pom) file and change the packaging type jar to pom.
+Step 3: Open the pom.xml (parent pom) file.
 
 pom.xml (parent pom)
 ```pom
@@ -1592,8 +1638,8 @@ pom.xml (parent pom)
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.programming.techie</groupId>
-    <artifactId>microservices-new</artifactId>
+    <groupId>com.springboot.microservice</groupId>
+    <artifactId>spring-boot-microservices</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
@@ -1626,7 +1672,7 @@ pom.xml (parent pom)
     </build>
 </project>
 ```
-One thing to be noticed in the above pom file is that there is no maven module configured because we have not created yet. Now we will create Maven Modules one by one that we have specified above.
+
 ```
 spring-boot-microservices
 ├───product-service
@@ -1861,6 +1907,7 @@ spring-boot-microservices
 - service-discovery: This module contains the code for service discovery using Eureka or Consul.
 - api-gateway: This module contains the code for API gateway using Zuul or Spring Cloud Gateway.
 - pom.xml: Main Maven project file that includes all the submodule dependencies.
+  
 ### Bugfix in Inventory Service
 
 
