@@ -31,6 +31,7 @@ Click Keycloak next to master realm, then click Create Realm.
 Enter myrealm in the Realm name field.
 
 Click Create.
+
 ![Desktop Screenshot](images/add-realm.png)
 
 ### Create a user
