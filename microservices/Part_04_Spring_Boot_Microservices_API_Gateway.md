@@ -102,22 +102,52 @@ api-gateway
 In this structure:
 
 ApiGatewayApplication.java is the main class that contains the main method to run the Spring Boot application.
+```java
+package com.programming.techie.apigateway;
 
-controller package contains the controller classes with mapping endpoints.
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
-service package contains the service classes which contain business logic.
-
-repository package contains the repository classes that interact with the database.
-
+@SpringBootApplication
+@EnableEurekaClient
+public class ApiGatewayApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ApiGatewayApplication.class, args);
+    }
+}
+```
 application.properties contains application-specific properties.
 
-static directory contains static resources like Javascript, CSS, etc.
+```properties
+eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
+spring.application.name=api-gateway
+logging.level.root= INFO
+logging.level.org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator= INFO
+logging.level.org.springframework.cloud.gateway= TRACE
 
-templates directory contains HTML templates for the application.
+## Product Service Route
+spring.cloud.gateway.routes[0].id=product-service
+spring.cloud.gateway.routes[0].uri=lb://product-service
+spring.cloud.gateway.routes[0].predicates[0]=Path=/api/product
 
-META-INF directory contains the manifest file.
+## Order Service Route
+spring.cloud.gateway.routes[1].id=order-service
+spring.cloud.gateway.routes[1].uri=lb://order-service
+spring.cloud.gateway.routes[1].predicates[0]=Path=/api/order
 
+## Discover Server Route
+spring.cloud.gateway.routes[2].id=discovery-server
+spring.cloud.gateway.routes[2].uri=http://localhost:8761
+spring.cloud.gateway.routes[2].predicates[0]=Path=/eureka/web
+spring.cloud.gateway.routes[2].filters[0]=SetPath=/
 
+## Discover Server Static Resources Route
+spring.cloud.gateway.routes[3].id=discovery-server-static
+spring.cloud.gateway.routes[3].uri=http://localhost:8761
+spring.cloud.gateway.routes[3].predicates[0]=Path=/eureka/**
+```
+pom.xml
 ```pom
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -130,58 +160,28 @@ META-INF directory contains the manifest file.
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.springboot.microservice</groupId>
-  <artifactId>product-service</artifactId>
+  <artifactId>api-gateway</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>product-service</name>
+  <name>api-gateway</name>
   <description>product-service</description>
   <url/>  
   <properties>
-    <java.version>17</java.version>
-  </properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
   <dependencies>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-mongodb</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-            </exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+    </dependencies>
 </project>
 ```
-- application.properties
-```properties
-#MongoDB database congfiguration
-spring.data.mongodb.uri=mongodb://localhost:27017/product-service
-```
-    
+
 By following this structure, you can create a modular and scalable microservice architecture using Spring Boot. Each microservice is responsible for a specific domain (such as products, orders, inventory, notifications) and can be easily extended or updated without affecting other services. Service Discovery and API Gateway help in managing communication between services and routing requests efficiently.
 
 Open the pom.xml (parent pom) file.
@@ -209,13 +209,34 @@ pom.xml (parent pom)
         <module>product-service</module>
         <module>order-service</module>
         <module>inventory-service</module>
+        <module>discovery-server</module>
+        <module>api-gateway</module>
     </modules>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <spring-cloud.version>2023.0.1</spring-cloud.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <spring-cloud.version>2021.0.2</spring-cloud.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>1.16.3</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
@@ -229,6 +250,14 @@ pom.xml (parent pom)
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>16</source>
+                    <target>16</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -422,43 +451,6 @@ spring-boot-microservices
 |   |       └── resources
 |   |           └── application.properties
 |   └── pom.xml
-├───notification-service
-|   ├── src
-|   │   ├── main
-|   │   │   ├── java
-|   │   │   │   └── com
-|   |   |   |       └── springboot
-|   |   |   |           └── microservice
-|   |   |   |               └── notification
-|   |   |   |                   ├── NotificationServiceApplication.java
-|   |   |   |                   ├── controller
-|   |   |   |                   |   └── NotificationController.java
-|   |   |   |                   ├── dto
-|   |   |   |                   |   ├── NotificationRequest.java
-|   |   |   |                   |   └── NotificationResponse.java
-│   |   │   │                   ├── model
-│   |   │   │                   │   └── Notification.java
-|   |   |   |                   ├── service
-|   |   |   |                   |   └── NotificationService.java
-|   |   |   |                   └── repository
-|   |   |   |                       └── NotificationRepository.java
-|   |   |   └── resources
-|   |   |       ├── application.properties
-|   |   |       ├── static
-|   |   |       ├── templates
-|   |   |       └── META-INF
-|   |   |           └── MANIFEST.MF
-|   |   └── src
-|   |       ├── test
-|   |       │   ├── java
-|   |       │   │   └── com
-|   |       │   │       └── springboot
-|   |       │   │           └── microservice
-|   |       │   │               └── notification
-|   |       │   │                   └── NotificationServiceApplicationTest.java
-|   |       └── resources
-|   |           └── application.properties
-|   └── pom.xml
 └── pom.xml
 ```
 - product-service: This module contains the code for managing products.
@@ -469,136 +461,6 @@ spring-boot-microservices
 - api-gateway: This module contains the code for API gateway using Zuul or Spring Cloud Gateway.
 - pom.xml: Main Maven project file that includes all the submodule dependencies
 
-
-- Notification-Service
-  - Create a new Spring Boot project for Notification-Service
-  - Implement REST endpoints for sending notifications to users
-  - Add dependencies for Spring Web and Spring Messaging
-  - Implement a messaging service to send notifications
-  
-- notification-service Module
-
-![Desktop Screenshot](images/notification-service.PNG)
-
-The Service Implementation module implements the service. It depends on Repository Module and Service API Module.
-```
-notification-service
-├── src
-│   ├── main
-│   │   ├── java
-│   │   │   └── com
-|   |   |       └── springboot
-|   |   |           └── microservice
-|   |   |               └── notification
-|   |   |                   ├── NotificationApplication.java
-|   |   |                   ├── controller
-|   |   |                   |   └── NotificationController.java
-│   │   │                   ├── model
-│   │   │                   │   └── Notification.java
-|   |   |                   ├── service
-|   |   |                   |   └── NotificationService.java
-|   |   |                   └── repository
-|   |   |                       └── NotificationRepository.java
-|   |   └── resources
-|   |       ├── application.properties
-|   |       ├── static
-|   |       ├── templates
-|   |       └── META-INF
-|   |           └── MANIFEST.MF
-|   └── src
-|       ├── test
-|       │   ├── java
-|       │   │   └── com
-|       │   │       └── springboot
-|       │   │           └── microservice
-|       │   │               └── notification
-|       │   │                   └── ProductApplicationTest.java
-|       └── resources
-|           └── application.properties
-└── pom.xml
-```
-In this structure:
-
-NotificationApplication.java is the main class that contains the main method to run the Spring Boot application.
-
-controller package contains the controller classes with mapping endpoints.
-
-service package contains the service classes which contain business logic.
-
-repository package contains the repository classes that interact with the database.
-
-application.properties contains application-specific properties.
-
-static directory contains static resources like Javascript, CSS, etc.
-
-templates directory contains HTML templates for the application.
-
-META-INF directory contains the manifest file.
-
-
-```pom
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.3.1</version>
-    <relativePath/> <!-- lookup parent from repository -->
-  </parent>
-  <groupId>com.springboot.microservice</groupId>
-  <artifactId>product-service</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>product-service</name>
-  <description>product-service</description>
-  <url/>  
-  <properties>
-    <java.version>17</java.version>
-  </properties>
-  <dependencies>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-mongodb</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-            </exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-</project>
-```
-- application.properties
-```properties
-#MongoDB database congfiguration
-spring.data.mongodb.uri=mongodb://localhost:27017/product-service
-```
 - POM Aggregator (Parent POM)
 
 The parent pom contains all the application modules. It also includes all the common dependencies and properties that are needed by more than one module. Dependencies are defined without version because the project has defined the Spring IO Platform as a parent.
