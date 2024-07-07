@@ -22,7 +22,7 @@ About
 This repository contains source code to demonstrate OAuth2 features using Spring Security and KeyCloak Authorization Server
 
 
-==============================================================================================================================================================
+=======================================================================================
 
 ### Create and configure Keycloak OAuth 2.0 authorization server
 
