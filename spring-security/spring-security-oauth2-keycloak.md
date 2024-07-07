@@ -174,6 +174,7 @@ The status is Up so everything look fine :). If for some reasons it's not the ca
 ### Adding realm, client, roles and users
 As we have a confirmation that Keycloak is running, let’s login to it. Therefore, in your browser go to http://keycloak:8080, it will lead you to a home page.
 
+![Desktop Screenshot](images/keyclock-1.png)
 
 Select Administration Console, it will redirect you to the login page, where you need to provide an admin credentials which are (same as they were definited in docker-compose.yaml file):
 ```
@@ -182,14 +183,17 @@ passowrd: admin
 ```
 After login you should now be inside of Keycloak’s Master realm.
 
+![Desktop Screenshot](images/keyclock-2.png)
 
 But what is realm? It’s purely a Keycloak thing and it’s used to for grouping resources like users, clients etc. Realms are isolated from each other so users from one realm will not be visible in another one, so these realms could be treated as separte instances of authorization servers.
 
-To create a new realm click on the dropdown list located in the top left corner on the name of a current realm Master. Then click a button Add Realm.
+To create a new realm click on the dropdown list located in the top left corner on the name of a current realm Master. Then click a button **Add Realm**.
 
+![Desktop Screenshot](images/keyclock-3.png)
 
-Next page is fairly simple, only thing to do is to provide a realm name here. I’m going with a name test.
+Next page is fairly simple, only thing to do is to provide a realm name here. I’m going with a name **test**.
 
+![Desktop Screenshot](images/keyclock-4.png)
 
 After hitting Create button a new realm is successfully created.
 
@@ -200,12 +204,15 @@ Creation of a client for a frontend app I’ll cover in relevant article. Right 
 
 Therefore go to the Clients page (it’s located in the left menu) and click Create button located on a right.
 
+![Desktop Screenshot](images/keyclock-5.png)
 
 In a new view we need to provide only a client name, which will be test_client.
 
+![Desktop Screenshot](images/keyclock-6.png)
 
 After hitting the Save button a detailed page for newly created client will show up. To finish configurating frontend client we need first set an Access Type to confidential and then switch on Service Accounts Enabled and Authorization Enabled. And finally we need to provide a Redirect URI which in our case will be http://localhost:80, http://localhost:4200 which are base URL of frontend application (will be build in upcoming article).
 
+![Desktop Screenshot](images/keyclock-7.png)
 
 Let’s now test if we’re be able to receive tokens using using client_credentials OAuth 2.0 grant type. In short, this grant type is used when there is no resource owner (person, user), but a client application needs to get to the protected resource using an access token. In this flow a client application is providing only its credentials and scope to the authorization server and as a result it returns valid tokens.
 
@@ -227,8 +234,11 @@ client_secret: 8ac27a39-fa84-46b9-8c30-b485056e0cea
 ```
 If you’re set up your own Keycloak instance a client_secret might be different for you. To check it out go back to the test_client client page in Keycloak and select Credentials tab. There you should find your secret.
 
+![Desktop Screenshot](images/keyclock-8.png)
 
 And finally, after clicking Send button you should get a following response with access, identity and refresh token:
+
+![Desktop Screenshot](images/keyclock-9.png)
 
 ```json
 {
@@ -252,18 +262,23 @@ First step would be to define two roles — VISITOR & ADMIN. Their naming and ac
 
 Therefore to define a VISITOR open Keycloak realm page and go to Roles available on the left panel. Then click Add Role button. On a new screen provide the Role Name and some Description and hit Save.
 
+![Desktop Screenshot](images/keyclock-10.png)
 
 For the ADMIN role do the same.
 
+![Desktop Screenshot](images/keyclock-11.png)
 
 Now we move to registering a new user. Therefore click on the Users button available on the left panel and then click the Add User button. On a first page we need to provide some basic information about the user, like username, email etc.
 
+![Desktop Screenshot](images/keyclock-12.png)
 
 After hiting the Save button luke's detailed page will appear. To assign just created role we need to go the Role Mappings tab, select the role (in my case VISITOR) and then click the Add selected button.
 
+![Desktop Screenshot](images/keyclock-13.png)
 
 And finally we need to set up a password for this user, so go to the Credentials tab and provide it (in my case its password). Make sure that Temporary toggle is switched off.
 
+![Desktop Screenshot](images/keyclock-14.png)
 
 If you want, you can create a second user which will be assigned to a second role.
 
@@ -282,8 +297,12 @@ client_secret: 8ac27a39-fa84-46b9-8c30-b485056e0cea
 username: luke
 password: password
 ```
+
+![Desktop Screenshot](images/keyclock-16.png)
+
 As a result again, we get set of tokens. If we then copy-paste an access token to the JWT.io to decode it we can see that it holds basic information about the user and assigned roles.
 
+![Desktop Screenshot](images/keyclock-18.png)
 
 Great! We’ve got a fully operation authorization server!
 
