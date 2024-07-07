@@ -334,3 +334,30 @@ keycloak:
 Next we need to copy realm-test.json to a new folder /infra/keycloak (or wherever you would like to put it).
 
 Now if you remove all Docker containers and volumes and start Keycloak again you will see the same data that you have provided before!
+
+
+
+What is OAuth 2.0? Understanding OAuth Terminology What is OIDC ? Keycloak Authorization Code Flow Demo Implement Authorization Code Flow What is PKCE Authorization Code Flow PKCE Authorization Code Flow Demo Implement PKCE Authorization Code Flow What is Client Credentials Flow Client Credentials Demo Implement Client Credentials Flow Introduction to Token Relay What is Refresh Token Flow Refresh Token Flow Demo What is Password Grant Flow Password Grant Flow Demo What is Single Sign-On Single Sign-On Demo Implement Single Sign-On using Github
+
+
+OAuth 2.0 is an open standard for access delegation, commonly used as a way for Internet users to grant websites or applications access to their information on other websites without sharing their login credentials. It provides a secure and standardized way for authentication and authorization processes.
+
+OIDC, or OpenID Connect, is an authentication layer built on top of OAuth 2.0. It allows clients to verify the identity of the end-user based on the authentication performed by an authorization server, as well as to obtain basic profile information about the end-user in an interoperable and REST-like manner.
+
+Keycloak is an open-source identity and access management solution that supports OAuth 2.0 and OIDC protocols, providing centralized authentication, authorization, and user management for applications and services.
+
+Authorization Code Flow is a secure way to obtain access tokens from an authorization server by exchanging an authorization code. It is commonly used in web applications where the client can securely store the client secret.
+
+PKCE, or Proof Key for Code Exchange, is an extension to the Authorization Code Flow that helps mitigate the security risks of handling authorization codes in mobile and native applications.
+
+Client Credentials Flow is a simplified OAuth 2.0 flow where the client application authenticates directly with the authorization server using its client credentials to obtain an access token.
+
+Token Relay is a method where a client application forwards an access token obtained through OAuth 2.0 to another application to access protected resources on behalf of the end-user.
+
+Refresh Token Flow is a way to obtain a new access token when the current access token expires without requiring the end-user to re-enter their credentials.
+
+Password Grant Flow is a way for clients to exchange a user's username and password for an access token directly with the authorization server. It is considered less secure than other OAuth 2.0 flows, as it requires the client to handle user credentials.
+
+Single Sign-On (SSO) is a mechanism that allows users to access multiple applications or services with a single set of login credentials. It simplifies the user experience and improves security by centralizing authentication.
+
+Implementing Single Sign-On using Github involves integrating Github as an identity provider to authenticate users across multiple applications using OAuth 2.0 or OIDC. This allows users to log in with their Github account and access different services without having to log in again.
