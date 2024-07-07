@@ -171,7 +171,7 @@ f9a67e3b9756  jboss/keycloak:11.0.2  Up 33 seconds    keycloak
 ```
 The status is Up so everything look fine :). If for some reasons it's not the case for you, check if you do not have any kind of a typo.
 
-Adding realm, client, roles and users
+### Adding realm, client, roles and users
 As we have a confirmation that Keycloak is running, let’s login to it. Therefore, in your browser go to http://keycloak:8080, it will lead you to a home page.
 
 
