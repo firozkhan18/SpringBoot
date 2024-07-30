@@ -358,6 +358,182 @@ public class MyService {
 
 In this example, the `LoggingAspect` class uses the `@Before` annotation to log information before any method in the `com.example.service` package is executed.
 
+Aspect-Oriented Programming (AOP) in Spring is a programming paradigm that provides a way to modularize cross-cutting concerns, which are aspects of a program that affect multiple parts of the application, such as logging, security, transaction management, etc. AOP allows you to separate these concerns from the main business logic of your application, making your code cleaner and more modular.
+
+### Key Concepts of AOP
+
+1. **Aspect:** A module that defines a cross-cutting concern. It encapsulates advice and pointcuts. In Spring, an aspect is typically defined using the `@Aspect` annotation.
+
+2. **Advice:** The code that is executed at certain join points. It is categorized into types:
+   - **Before:** Executes before the join point.
+   - **After:** Executes after the join point, regardless of the outcome.
+   - **AfterReturning:** Executes after the join point completes successfully.
+   - **AfterThrowing:** Executes if the join point throws an exception.
+   - **Around:** Surrounds the join point, allowing you to control when and whether the join point is executed.
+
+3. **Join Point:** A point during the execution of a program, such as a method execution or an object instantiation. Join points where advice should be applied are defined by pointcuts.
+
+4. **Pointcut:** An expression that specifies the join points where advice should be applied. Pointcuts are used to define where and when the advice should run.
+
+5. **Weaving:** The process of integrating aspects into the codebase. Weaving can occur at different times:
+   - **Compile-time**
+   - **Load-time**
+   - **Runtime** (Spring AOP performs weaving at runtime)
+
+### AOP Using XML Configuration
+
+**1. Define the Aspect:**
+
+**Aspect Class:**
+
+```java
+package com.example;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+
+@Aspect
+public class LoggingAspect {
+
+    @Before("execution(* com.example.service.*.*(..))")
+    public void logBefore(JoinPoint joinPoint) {
+        System.out.println("Before method: " + joinPoint.getSignature());
+    }
+
+    @After("execution(* com.example.service.*.*(..))")
+    public void logAfter(JoinPoint joinPoint) {
+        System.out.println("After method: " + joinPoint.getSignature());
+    }
+}
+```
+
+**2. Configure AOP in XML:**
+
+**beans.xml:**
+
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- Enable AOP support -->
+    <aop:aspectj-autoproxy/>
+
+    <!-- Define the aspect -->
+    <bean id="loggingAspect" class="com.example.LoggingAspect"/>
+
+    <!-- Define a service bean -->
+    <bean id="myService" class="com.example.service.MyService"/>
+</beans>
+```
+
+### AOP Using Annotation-Based Configuration
+
+**1. Define the Aspect:**
+
+**Aspect Class:**
+
+```java
+package com.example;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.springframework.stereotype.Component;
+
+@Aspect
+@Component
+public class LoggingAspect {
+
+    @Before("execution(* com.example.service.*.*(..))")
+    public void logBefore(JoinPoint joinPoint) {
+        System.out.println("Before method: " + joinPoint.getSignature());
+    }
+
+    @After("execution(* com.example.service.*.*(..))")
+    public void logAfter(JoinPoint joinPoint) {
+        System.out.println("After method: " + joinPoint.getSignature());
+    }
+}
+```
+
+**2. Enable AspectJ Support in Configuration:**
+
+**Java Configuration Class:**
+
+```java
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+
+@Configuration
+@EnableAspectJAutoProxy
+@ComponentScan(basePackages = "com.example")
+public class AppConfig {
+}
+```
+
+**3. Service Class:**
+
+```java
+package com.example.service;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class MyService {
+    public void performOperation() {
+        System.out.println("Performing operation...");
+    }
+}
+```
+
+### How to Run the Example
+
+1. **Setup Spring Application Context:**
+
+   **Java Main Class:**
+
+   ```java
+   import org.springframework.context.ApplicationContext;
+   import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+   public class AopExample {
+       public static void main(String[] args) {
+           ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+           MyService myService = context.getBean(MyService.class);
+           myService.performOperation();
+       }
+   }
+   ```
+
+2. **Expected Output:**
+
+   When you run the application, you should see:
+
+   ```
+   Before method: public void com.example.service.MyService.performOperation()
+   Performing operation...
+   After method: public void com.example.service.MyService.performOperation()
+   ```
+
+### Summary
+
+- **Aspect-Oriented Programming (AOP)** in Spring allows you to modularize cross-cutting concerns such as logging, security, and transaction management.
+- **Aspects** define the behavior you want to apply, **advice** specifies when the behavior should run, and **pointcuts** determine where the advice applies.
+- **XML Configuration** involves defining aspects and advice in XML and configuring AOP support.
+- **Annotation-Based Configuration** involves using annotations like `@Aspect`, `@Before`, and `@After` along with `@EnableAspectJAutoProxy` in a Java configuration class.
+
+Both methods achieve the same goal but offer different approaches for defining and managing aspects.
+
 ### 6. **What is Spring Data JPA?**
 
 **Answer:**
