@@ -118,6 +118,187 @@ public class MyService {
 }
 ```
 
+In Spring, dependency injection (DI) is a core concept that allows you to manage the dependencies between objects in a flexible and decoupled manner. There are two primary types of dependency injection in Spring: **constructor-based** and **setter-based**. Both can be configured using XML or annotations.
+
+### 1. **Constructor-Based Dependency Injection**
+
+**Constructor-based dependency injection** involves passing dependencies through the constructor of a class. This type of DI is recommended when the dependency is mandatory and should be provided at the time of object creation.
+
+**XML-Based Example:**
+
+**XML Configuration (beans.xml):**
+
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Define the dependency bean -->
+    <bean id="dependencyBean" class="com.example.DependencyBean"/>
+
+    <!-- Define the main bean with constructor-based injection -->
+    <bean id="mainBean" class="com.example.MainBean">
+        <constructor-arg ref="dependencyBean"/>
+    </bean>
+
+</beans>
+```
+
+**Java Classes:**
+
+```java
+// Dependency Bean
+package com.example;
+
+public class DependencyBean {
+    // Implementation
+}
+
+// Main Bean with Constructor Injection
+package com.example;
+
+public class MainBean {
+    private final DependencyBean dependencyBean;
+
+    // Constructor-based dependency injection
+    public MainBean(DependencyBean dependencyBean) {
+        this.dependencyBean = dependencyBean;
+    }
+
+    // Getter and other methods
+}
+```
+
+**Annotation-Based Example:**
+
+**Java Configuration:**
+
+```java
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class AppConfig {
+
+    @Bean
+    public DependencyBean dependencyBean() {
+        return new DependencyBean();
+    }
+
+    @Bean
+    public MainBean mainBean() {
+        return new MainBean(dependencyBean());
+    }
+}
+```
+
+**Java Classes:**
+
+The `DependencyBean` and `MainBean` classes are the same as in the XML example.
+
+### 2. **Setter-Based Dependency Injection**
+
+**Setter-based dependency injection** involves injecting dependencies through setter methods. This type of DI is useful when the dependency is optional or if you need to change the dependency after object creation.
+
+**XML-Based Example:**
+
+**XML Configuration (beans.xml):**
+
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Define the dependency bean -->
+    <bean id="dependencyBean" class="com.example.DependencyBean"/>
+
+    <!-- Define the main bean with setter-based injection -->
+    <bean id="mainBean" class="com.example.MainBean">
+        <property name="dependencyBean" ref="dependencyBean"/>
+    </bean>
+
+</beans>
+```
+
+**Java Classes:**
+
+```java
+// Dependency Bean
+package com.example;
+
+public class DependencyBean {
+    // Implementation
+}
+
+// Main Bean with Setter Injection
+package com.example;
+
+public class MainBean {
+    private DependencyBean dependencyBean;
+
+    // Setter-based dependency injection
+    public void setDependencyBean(DependencyBean dependencyBean) {
+        this.dependencyBean = dependencyBean;
+    }
+
+    // Getter and other methods
+}
+```
+
+**Annotation-Based Example:**
+
+**Java Configuration:**
+
+```java
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class AppConfig {
+
+    @Bean
+    public DependencyBean dependencyBean() {
+        return new DependencyBean();
+    }
+
+    @Bean
+    public MainBean mainBean() {
+        MainBean mainBean = new MainBean();
+        mainBean.setDependencyBean(dependencyBean());
+        return mainBean;
+    }
+}
+```
+
+**Java Classes:**
+
+The `DependencyBean` class remains the same. The `MainBean` class will use a setter method for injection:
+
+```java
+// Main Bean with Setter Injection
+package com.example;
+
+public class MainBean {
+    private DependencyBean dependencyBean;
+
+    // Setter-based dependency injection
+    public void setDependencyBean(DependencyBean dependencyBean) {
+        this.dependencyBean = dependencyBean;
+    }
+
+    // Getter and other methods
+}
+```
+
+### Summary
+
+- **Constructor-Based Dependency Injection:** Dependencies are injected through the constructor. This approach is ideal for mandatory dependencies and ensures that the bean is fully initialized upon creation.
+
+- **Setter-Based Dependency Injection:** Dependencies are injected through setter methods. This approach is suitable for optional dependencies and allows modification of dependencies after bean creation.
+
+**XML-Based Configuration** provides a way to define DI using XML files, while **Annotation-Based Configuration** (using Java classes) offers a more modern and type-safe approach. Both methods achieve the same result but offer different ways of configuring your Spring beans.
 ### 4. **What is Spring Boot and how does it relate to the Spring Framework?**
 
 **Answer:**
